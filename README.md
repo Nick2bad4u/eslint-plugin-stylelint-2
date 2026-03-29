@@ -1,32 +1,14 @@
-# eslint-plugin-typefest
+# eslint-plugin-stylelint-2
 
-[![npm license.](https://flat.badgen.net/npm/license/eslint-plugin-typefest?color=purple)](https://github.com/Nick2bad4u/eslint-plugin-typefest/blob/main/LICENSE) [![npm total downloads.](https://flat.badgen.net/npm/dt/eslint-plugin-typefest?color=pink)](https://www.npmjs.com/package/eslint-plugin-typefest) [![latest GitHub release.](https://flat.badgen.net/github/release/Nick2bad4u/eslint-plugin-typefest?color=cyan)](https://github.com/Nick2bad4u/eslint-plugin-typefest/releases) [![GitHub stars.](https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-typefest?color=yellow)](https://github.com/Nick2bad4u/eslint-plugin-typefest/stargazers) [![GitHub forks.](https://flat.badgen.net/github/forks/Nick2bad4u/eslint-plugin-typefest?color=green)](https://github.com/Nick2bad4u/eslint-plugin-typefest/forks) [![GitHub open issues.](https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-typefest?color=red)](https://github.com/Nick2bad4u/eslint-plugin-typefest/issues) [![codecov.](https://flat.badgen.net/codecov/github/Nick2bad4u/eslint-plugin-typefest?color=blue)](https://codecov.io/gh/Nick2bad4u/eslint-plugin-typefest) [![Mutation testing badge.](https://img.shields.io/endpoint?style=flat-square\&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FNick2bad4u%2Feslint-plugin-typefest%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/Nick2bad4u/eslint-plugin-typefest/main)
+`eslint-plugin-stylelint-2` brings Stylelint reporting and autofix support into ESLint while also adding Stylelint-specific authoring rules for Stylelint config files.
 
-ESLint plugin for teams that want consistent TypeScript-first conventions based on:
-
-- [`type-fest`](https://github.com/sindresorhus/type-fest)
-- [`ts-extras`](https://github.com/sindresorhus/ts-extras)
-
-The plugin ships focused rule sets for modern flat config usage, with parser setup
-included in each preset config.
-
-## Table of contents
-
-1. [Installation](#installation)
-2. [Quick start (flat config)](#quick-start-flat-config)
-3. [Presets](#presets)
-4. [Configuration examples by preset](#configuration-examples-by-preset)
-5. [Global settings](#global-settings)
-6. [Rules](#rules)
-7. [Contributors ✨](#contributors-)
+This package exists as `eslint-plugin-stylelint-2` on npm because `eslint-plugin-stylelint` is already taken.
 
 ## Installation
 
 ```sh
-npm install --save-dev eslint-plugin-typefest typescript
+npm install --save-dev eslint-plugin-stylelint-2 eslint stylelint
 ```
-
-> `@typescript-eslint/parser` is loaded automatically by plugin presets.
 
 ### Compatibility
 
@@ -34,278 +16,111 @@ npm install --save-dev eslint-plugin-typefest typescript
 - **Config system:** Flat Config only (`eslint.config.*`)
 - **Node.js runtime:** `>=22.0.0`
 
-## Quick start (flat config)
+## Quick start
 
-```js
-import typefest from "eslint-plugin-typefest";
+```ts
+import stylelint2 from "eslint-plugin-stylelint-2";
 
-export default [typefest.configs.recommended];
+export default [
+    ...stylelint2.configs.recommended,
+];
 ```
-
-That is enough for TypeScript files (`**/*.{ts,tsx,mts,cts}`).
 
 ## Presets
 
-This plugin intentionally exports eight presets:
+| Preset                           | Purpose                                                            |
+| -------------------------------- | ------------------------------------------------------------------ |
+| `stylelint2.configs.recommended` | Enable stylesheet linting plus Stylelint config authoring guidance |
+| `stylelint2.configs.stylesheets` | Enable only the Stylelint bridge rule for CSS files                |
+| `stylelint2.configs.configs`     | Enable only the Stylelint config authoring rule                    |
+| `stylelint2.configs.all`         | Currently the same as `recommended`                                |
 
-| Preset                                                                                                                                                                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [`typefest.configs.minimal`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal)                                                       |
-| [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [`typefest.configs.recommended`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended)                                           |
-| [🟠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended-type-checked) [`typefest.configs["recommended-type-checked"]`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended-type-checked) |
-| [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [`typefest.configs.strict`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict)                                                          |
-| [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [`typefest.configs.all`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                   |
-| [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental) [`typefest.configs.experimental`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                        |
-| [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types) [`typefest.configs["type-fest/types"]`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                            |
-| [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards) [`typefest.configs["ts-extras/type-guards"]`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)          |
+## Configuration examples
 
-## Configuration examples by preset
+### Recommended
 
-```js
-import typefest from "eslint-plugin-typefest";
+```ts
+import stylelint2 from "eslint-plugin-stylelint-2";
 
 export default [
-  // Smallest baseline footprint.
-  typefest.configs.minimal,
-
-  // Balanced default for most teams.
-  // typefest.configs.recommended,
-
-  // Recommended plus type-aware ts-extras helper rules.
-  // typefest.configs["recommended-type-checked"],
-
-  // Recommended plus additional stable runtime utilities.
-  // typefest.configs.strict,
-
-  // Every stable rule.
-  // typefest.configs.all,
-
-  // Every stable rule plus experimental candidate rules.
-  // typefest.configs.experimental,
-
-  // Focused subsets:
-  // typefest.configs["type-fest/types"],
-  // typefest.configs["ts-extras/type-guards"],
+    ...stylelint2.configs.recommended,
 ];
 ```
 
-### Parser setup behavior
+### Stylesheets only
 
-Each preset already includes:
-
-- `files: ["**/*.{ts,tsx,mts,cts}"]`
-- `languageOptions.parser` (`@typescript-eslint/parser`)
-- `languageOptions.parserOptions`:
-  - `ecmaVersion: "latest"`
-  - `projectService: true` (for presets that include typed rules, such as `recommended-type-checked`, `strict`, `all`, and `experimental`)
-  - `sourceType: "module"`
-
-End users usually do **not** need to wire parser config manually.
-
-If you need custom parser options (for example `tsconfigRootDir`), extend a preset:
-
-```js
-import typefest from "eslint-plugin-typefest";
-
-const recommended = typefest.configs.recommended;
+```ts
+import stylelint2 from "eslint-plugin-stylelint-2";
 
 export default [
-  {
-    ...recommended,
-    languageOptions: {
-      ...recommended.languageOptions,
-      parserOptions: {
-        ...recommended.languageOptions?.parserOptions,
-        // Add projectService only when you opt into a type-aware preset.
-      },
+    stylelint2.configs.stylesheets,
+];
+```
+
+### Stylelint config files only
+
+```ts
+import stylelint2 from "eslint-plugin-stylelint-2";
+
+export default [
+    stylelint2.configs.configs,
+];
+```
+
+### Passing Stylelint options
+
+```ts
+import stylelint2 from "eslint-plugin-stylelint-2";
+
+export default [
+    {
+        ...stylelint2.configs.stylesheets,
+        rules: {
+            "stylelint-2/stylelint": [
+                "error",
+                {
+                    configFile: "./stylelint.config.mjs",
+                    customSyntax: "postcss-scss",
+                },
+            ],
+        },
     },
-  },
 ];
 ```
-
-## Global settings
-
-You can globally disable autofixes that add missing imports while still keeping
-rule reports and non-import autofixes enabled.
-
-```js
-import typefest from "eslint-plugin-typefest";
-
-export default [
-  {
-    ...typefest.configs.recommended,
-    settings: {
-      typefest: {
-        // Disable all autofixes while keeping suggestions enabled.
-        // disableAllAutofixes: true,
-
-        // Disable only autofixes that add missing imports.
-        disableImportInsertionFixes: true,
-      },
-    },
-  },
-];
-```
-
-When `settings.typefest.disableImportInsertionFixes` is `true`, rules that
-would normally add a missing `type-fest` or `ts-extras` import will report
-without applying that import-adding autofix. Autofixes that do not require
-inserting a new import (for example, when the replacement symbol is already in
-scope) still apply.
-
-When `settings.typefest.disableAllAutofixes` is `true`, all rule autofixes are
-suppressed, but reports and suggestions remain available.
-
-If both settings are enabled, `disableAllAutofixes` takes precedence for
-autofix behavior.
 
 ## Rules
 
 - `Fix` legend:
   - `🔧` = autofixable
-  - `💡` = suggestions available
   - `—` = report only
 - `Preset key` legend:
-  - [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) — [`typefest.configs.minimal`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal)
-  - [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) — [`typefest.configs.recommended`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended)
-  - [🟠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended-type-checked) — [`typefest.configs["recommended-type-checked"]`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended-type-checked)
-  - [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) — [`typefest.configs.strict`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict)
-  - [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) — [`typefest.configs.all`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)
-  - [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental) — [`typefest.configs.experimental`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)
-  - [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types) — [`typefest.configs["type-fest/types"]`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)
-  - [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards) — [`typefest.configs["ts-extras/type-guards"]`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)
+  - `🟡` = `stylelint2.configs.recommended`
+  - `🎨` = `stylelint2.configs.stylesheets`
+  - `🛠️` = `stylelint2.configs.configs`
+  - `🟣` = `stylelint2.configs.all`
 
-| Rule                                                                                                                                              |  Fix  | Preset key                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| ------------------------------------------------------------------------------------------------------------------------------------------------- | :---: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`prefer-ts-extras-array-at`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-array-at)                           |   🔧  | [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                  |
-| [`prefer-ts-extras-array-concat`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-array-concat)                   |   🔧  | [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                  |
-| [`prefer-ts-extras-array-find`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-array-find)                       |   🔧  | [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                                                                                                      |
-| [`prefer-ts-extras-array-find-last`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-array-find-last)             |   🔧  | [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                  |
-| [`prefer-ts-extras-array-find-last-index`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-array-find-last-index) |   🔧  | [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                                                                                                      |
-| [`prefer-ts-extras-array-first`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-array-first)                     | 🔧 💡 | [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                  |
-| [`prefer-ts-extras-array-includes`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-array-includes)               | 🔧 💡 | [🟠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended-type-checked) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                         |
-| [`prefer-ts-extras-array-join`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-array-join)                       |   🔧  | [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                  |
-| [`prefer-ts-extras-array-last`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-array-last)                       | 🔧 💡 | [🟠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended-type-checked) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                            |
-| [`prefer-ts-extras-as-writable`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-as-writable)                     |   🔧  | [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                  |
-| [`prefer-ts-extras-assert-defined`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-assert-defined)               | 🔧 💡 | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-assert-error`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-assert-error)                   |   💡  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-assert-present`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-assert-present)               | 🔧 💡 | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-is-defined`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-defined)                       |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-is-defined-filter`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-defined-filter)         |   🔧  | [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards) |
-| [`prefer-ts-extras-is-empty`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-empty)                           |   🔧  | [🟠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended-type-checked) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                         |
-| [`prefer-ts-extras-is-equal-type`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-equal-type)                 |   💡  | [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                                                                                                      |
-| [`prefer-ts-extras-is-finite`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-finite)                         |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-is-infinite`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-infinite)                     |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-is-integer`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-integer)                       |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-is-present`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-present)                       |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-is-present-filter`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-present-filter)         |   🔧  | [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards) |
-| [`prefer-ts-extras-is-safe-integer`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-safe-integer)             |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-key-in`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-key-in)                               |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-not`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-not)                                     |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-object-entries`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-object-entries)               |   🔧  | [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                  |
-| [`prefer-ts-extras-object-from-entries`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-object-from-entries)     |   🔧  | [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                  |
-| [`prefer-ts-extras-object-has-in`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-object-has-in)                 | 🔧 💡 | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-object-has-own`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-object-has-own)               | 🔧 💡 | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                                      |
-| [`prefer-ts-extras-object-keys`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-object-keys)                     |   🔧  | [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                  |
-| [`prefer-ts-extras-object-map-values`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-object-map-values)         |   —   | [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                                                                                                                                                                                                                                                                                                                                             |
-| [`prefer-ts-extras-object-values`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-object-values)                 |   🔧  | [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                  |
-| [`prefer-ts-extras-safe-cast-to`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-safe-cast-to)                   |   🔧  | [🟠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended-type-checked) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                         |
-| [`prefer-ts-extras-set-has`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-set-has)                             | 🔧 💡 | [🟠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended-type-checked) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [✴️](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/ts-extras-type-guards)                                                                         |
-| [`prefer-ts-extras-string-split`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-string-split)                   |   🔧  | [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                                                                                                                                  |
-| [`prefer-type-fest-abstract-constructor`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-abstract-constructor)   |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-and-all`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-and-all)                             |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-array-length`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-array-length)                   |   🔧  | [🟠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended-type-checked) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all)                                                                                                                                                                            |
-| [`prefer-type-fest-arrayable`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-arrayable)                         |   🔧  | [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)       |
-| [`prefer-type-fest-async-return-type`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-async-return-type)         |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-asyncify`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-asyncify)                           |   —   | [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                                                                                                                                                                                                                                                                                                                                             |
-| [`prefer-type-fest-conditional-except`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-conditional-except)       |   —   | [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                                                                                                                                                                                                                                                                                                                                             |
-| [`prefer-type-fest-conditional-keys`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-conditional-keys)           |   —   | [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                                                                                                                                                                                                                                                                                                                                             |
-| [`prefer-type-fest-conditional-pick`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-conditional-pick)           |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-conditional-pick-deep`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-conditional-pick-deep) |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-constructor`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-constructor)                     |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-distributed-omit`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-distributed-omit)           |   —   | [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                                                                                                                                                                                                                                                                                                                                             |
-| [`prefer-type-fest-distributed-pick`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-distributed-pick)           |   —   | [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                                                                                                                                                                                                                                                                                                                                             |
-| [`prefer-type-fest-except`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-except)                               |   🔧  | [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)       |
-| [`prefer-type-fest-if`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-if)                                       |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-iterable-element`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-iterable-element)           |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-json-array`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-json-array)                       |   🔧  | [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)       |
-| [`prefer-type-fest-json-object`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-json-object)                     |   🔧  | [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)       |
-| [`prefer-type-fest-json-primitive`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-json-primitive)               |   🔧  | [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)       |
-| [`prefer-type-fest-json-value`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-json-value)                       |   💡  | [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)       |
-| [`prefer-type-fest-keys-of-union`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-keys-of-union)                 |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-less-than`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-less-than)                         |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-less-than-or-equal`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-less-than-or-equal)       |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-literal-union`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-literal-union)                 |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-merge`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-merge)                                 |   —   | [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                                                                                                                                                                                                                                                                                                                                             |
-| [`prefer-type-fest-merge-exclusive`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-merge-exclusive)             |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-non-empty-tuple`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-non-empty-tuple)             |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-omit-index-signature`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-omit-index-signature)   |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-optional`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-optional)                           |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-or-all`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-or-all)                               |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-partial-deep`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-partial-deep)                   |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-pick-index-signature`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-pick-index-signature)   |   —   | [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                                                                                                                                                                                                                                                                                                                                             |
-| [`prefer-type-fest-primitive`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-primitive)                         |   🔧  | [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)       |
-| [`prefer-type-fest-promisable`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-promisable)                       |   🔧  | [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)       |
-| [`prefer-type-fest-readonly-deep`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-readonly-deep)                 |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-require-all-or-none`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-require-all-or-none)     |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-require-at-least-one`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-require-at-least-one)   |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-require-exactly-one`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-require-exactly-one)     |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-require-one-or-none`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-require-one-or-none)     |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-required-deep`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-required-deep)                 |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-schema`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-schema)                               |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-set-non-nullable`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-set-non-nullable)           |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-set-optional`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-set-optional)                   |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-set-readonly`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-set-readonly)                   |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-set-required`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-set-required)                   |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-set-return-type`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-set-return-type)             |   —   | [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                                                                                                                                                                                                                                                                                                                                             |
-| [`prefer-type-fest-simplify`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-simplify)                           |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-stringified`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-stringified)                     |   —   | [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                                                                                                                                                                                                                                                                                                                                             |
-| [`prefer-type-fest-tagged-brands`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-tagged-brands)                 |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-tuple-of`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-tuple-of)                           |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-union-member`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-union-member)                   |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-union-to-intersection`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-union-to-intersection) |   —   | [🧪](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/experimental)                                                                                                                                                                                                                                                                                                                                                             |
-| [`prefer-type-fest-union-to-tuple`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-union-to-tuple)               |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-unknown-array`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-unknown-array)                 |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-unknown-map`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-unknown-map)                     |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-unknown-record`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-unknown-record)               |   🔧  | [🟢](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/minimal) [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)       |
-| [`prefer-type-fest-unknown-set`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-unknown-set)                     |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-unwrap-tagged`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-unwrap-tagged)                 |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-value-of`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-value-of)                           |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-writable`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-writable)                           |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
-| [`prefer-type-fest-writable-deep`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-writable-deep)                 |   🔧  | [🟡](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/all) [💠](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/presets/type-fest-types)                                                                                            |
+| Rule                                                                                                                               | Fix | Preset key |
+| ---------------------------------------------------------------------------------------------------------------------------------- | :-: | :--------- |
+| [`stylelint`](https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/stylelint)                                           |  🔧 | 🟡 🎨 🟣   |
+| [`prefer-stylelint-define-config`](https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/prefer-stylelint-define-config) |  🔧 | 🟡 🛠️ 🟣  |
+
+## Why use this plugin?
+
+Use this plugin when you want ESLint to become the single command and editor integration that reports:
+
+- JavaScript and TypeScript issues
+- CSS issues from Stylelint
+- Stylelint config authoring issues
+
+If your team prefers running Stylelint separately, this package may be unnecessary.
+
+## Documentation
+
+- [Overview](./docs/rules/overview.md)
+- [Getting started](./docs/rules/getting-started.md)
+- [Presets](./docs/rules/presets/index.md)
+- [Rule docs](./docs/rules/stylelint.md)
 
 ## Contributors ✨
 
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors.](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
-
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
-<!-- prettier-ignore-start -->
-
-<!-- markdownlint-disable -->
-
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="25%"><a href="https://github.com/Nick2bad4u"><img src="https://avatars.githubusercontent.com/u/20943337?v=4?s=80" width="80px;" alt="Nick2bad4u"/><br /><sub><b>Nick2bad4u</b></sub></a><br /><a href="https://github.com/Nick2bad4u/eslint-plugin-typefest/issues?q=author%3ANick2bad4u" title="Bug reports">🐛</a> <a href="https://github.com/Nick2bad4u/eslint-plugin-typefest/commits?author=Nick2bad4u" title="Code">💻</a> <a href="https://github.com/Nick2bad4u/eslint-plugin-typefest/commits?author=Nick2bad4u" title="Documentation">📖</a> <a href="#ideas-Nick2bad4u" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-Nick2bad4u" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-Nick2bad4u" title="Maintenance">🚧</a> <a href="https://github.com/Nick2bad4u/eslint-plugin-typefest/pulls?q=is%3Apr+reviewed-by%3ANick2bad4u" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/Nick2bad4u/eslint-plugin-typefest/commits?author=Nick2bad4u" title="Tests">⚠️</a> <a href="#tool-Nick2bad4u" title="Tools">🔧</a></td>
-      <td align="center" valign="top" width="25%"><a href="https://snyk.io/"><img src="https://avatars.githubusercontent.com/u/19733683?v=4?s=80" width="80px;" alt="Snyk bot"/><br /><sub><b>Snyk bot</b></sub></a><br /><a href="#security-snyk-bot" title="Security">🛡️</a> <a href="#infra-snyk-bot" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-snyk-bot" title="Maintenance">🚧</a> <a href="https://github.com/Nick2bad4u/eslint-plugin-typefest/pulls?q=is%3Apr+reviewed-by%3Asnyk-bot" title="Reviewed Pull Requests">👀</a></td>
-      <td align="center" valign="top" width="25%"><a href="https://www.stepsecurity.io/"><img src="https://avatars.githubusercontent.com/u/89328645?v=4?s=80" width="80px;" alt="StepSecurity Bot"/><br /><sub><b>StepSecurity Bot</b></sub></a><br /><a href="#security-step-security-bot" title="Security">🛡️</a> <a href="#infra-step-security-bot" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-step-security-bot" title="Maintenance">🚧</a></td>
-      <td align="center" valign="top" width="25%"><a href="https://github.com/apps/dependabot"><img src="https://avatars.githubusercontent.com/in/29110?v=4?s=80" width="80px;" alt="dependabot[bot]"/><br /><sub><b>dependabot[bot]</b></sub></a><br /><a href="#infra-dependabot[bot]" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#security-dependabot[bot]" title="Security">🛡️</a></td>
-    </tr>
-    <tr>
-      <td align="center" valign="top" width="25%"><a href="https://github.com/apps/github-actions"><img src="https://avatars.githubusercontent.com/in/15368?v=4?s=80" width="80px;" alt="github-actions[bot]"/><br /><sub><b>github-actions[bot]</b></sub></a><br /><a href="https://github.com/Nick2bad4u/eslint-plugin-typefest/commits?author=github-actions[bot]" title="Code">💻</a> <a href="#infra-github-actions[bot]" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- markdownlint-restore -->
-
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+See [CONTRIBUTORS.md](./CONTRIBUTORS.md).

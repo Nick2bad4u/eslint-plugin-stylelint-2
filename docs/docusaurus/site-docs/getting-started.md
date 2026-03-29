@@ -1,38 +1,22 @@
 ---
-sidebar_position: 2
+title: Getting Started
+description: Minimal docs-site getting-started guide for eslint-plugin-stylelint-2.
 ---
 
 # Getting Started
 
-Install the plugin:
+Install the package:
 
 ```bash
-npm install --save-dev eslint-plugin-typefest
+npm install --save-dev eslint-plugin-stylelint-2 eslint stylelint
 ```
 
-Then enable it in your Flat Config:
+Then enable the recommended preset:
 
 ```ts
-import typefest from "eslint-plugin-typefest";
+import stylelint2 from "eslint-plugin-stylelint-2";
 
 export default [
-    {
-        plugins: {
-            typefest,
-        },
-        rules: {
-            "typefest/prefer-ts-extras-is-defined": "error",
-        },
-    },
+    ...stylelint2.configs.recommended,
 ];
 ```
-
-## Recommended approach
-
-- Start with one ruleset (`typefest.configs.recommended` or `typefest.configs.strict`).
-- Fix violations in small batches.
-- Promote warnings to errors after stabilization.
-
-## Rule navigation
-
-Use the sidebar **Rules** section for the full list of rule docs synced from the repository.

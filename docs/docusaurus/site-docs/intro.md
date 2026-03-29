@@ -1,20 +1,18 @@
 ---
-sidebar_position: 1
+title: Overview
+description: Overview of eslint-plugin-stylelint-2.
 ---
 
-# eslint-plugin-typefest
+# eslint-plugin-stylelint-2
 
-`eslint-plugin-typefest` helps TypeScript codebases adopt more explicit, safer patterns with:
+`eslint-plugin-stylelint-2` helps teams keep ESLint as the single lint command for both code and stylesheets.
 
-- [`type-fest`](https://github.com/sindresorhus/type-fest) utility types.
-- [`ts-extras`](https://github.com/sindresorhus/ts-extras) runtime helpers.
+It currently focuses on two workflows:
 
-## What this documentation includes
+- run Stylelint through ESLint for CSS files
+- standardize `defineConfig()` usage in Stylelint config files
 
-- A complete **rule reference** with examples for every rule.
-- **Getting Started** guidance for Flat Config projects.
-- A small **Developer API** section generated with TypeDoc.
+## Start here
 
-## Next step
-
-Next, open the **Getting Started** page in the sidebar to enable the plugin in your project.
+- Open the Rules section in the navbar for rule reference pages.
+- Open Getting Started in this docs section for the fastest setup path.

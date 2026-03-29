@@ -1,75 +1,84 @@
 ---
 title: Getting Started
-description: Enable eslint-plugin-typefest quickly in Flat Config.
+description: Enable eslint-plugin-stylelint-2 quickly in Flat Config.
 ---
 
 # Getting Started
 
-Install the plugin:
+Install the plugin and Stylelint:
 
 ```bash
-npm install --save-dev eslint-plugin-typefest typescript
+npm install --save-dev eslint-plugin-stylelint-2 eslint stylelint
 ```
 
-Enable one preset in your Flat Config:
+Then enable the recommended preset:
 
 ```ts
-import typefest from "eslint-plugin-typefest";
+import stylelint2 from "eslint-plugin-stylelint-2";
 
 export default [
-    typefest.configs.recommended,
+    ...stylelint2.configs.recommended,
 ];
 ```
 
-`recommended` does not require type information.
+## What `recommended` includes
 
-If you want the same baseline plus type-aware helper rules, use
-`typefest.configs["recommended-type-checked"]`.
+`recommended` returns an array of flat config entries, not a single object.
 
-## Alternative: manual scoped setup
+It currently adds:
 
-If you prefer to apply plugin rules inside your own file-scoped config object, spread the preset rules manually.
+1. a CSS-targeted config that enables `stylelint-2/stylelint`
+2. a config-file-targeted config that enables `stylelint-2/prefer-stylelint-define-config`
+
+## Stylesheets only
+
+If you only want the Stylelint bridge for `.css` files:
 
 ```ts
-import tsParser from "@typescript-eslint/parser";
-import typefest from "eslint-plugin-typefest";
+import stylelint2 from "eslint-plugin-stylelint-2";
+
+export default [
+    stylelint2.configs.stylesheets,
+];
+```
+
+## Stylelint config files only
+
+If you only want the config-authoring rule:
+
+```ts
+import stylelint2 from "eslint-plugin-stylelint-2";
+
+export default [
+    stylelint2.configs.configs,
+];
+```
+
+## Adding Stylelint options
+
+Pass rule options when you need a custom syntax or an explicit config file:
+
+```ts
+import stylelint2 from "eslint-plugin-stylelint-2";
 
 export default [
     {
-        files: ["**/*.{ts,tsx,mts,cts}"],
-        languageOptions: {
-            parser: tsParser,
-            parserOptions: {
-                ecmaVersion: "latest",
-                // Enable only when using a type-aware preset.
-                // projectService: true,
-                sourceType: "module",
-            },
-        },
-        plugins: {
-            typefest,
-        },
+        ...stylelint2.configs.stylesheets,
         rules: {
-            ...typefest.configs.recommended.rules,
+            "stylelint-2/stylelint": [
+                "error",
+                {
+                    configFile: "./stylelint.config.mjs",
+                    customSyntax: "postcss-scss",
+                },
+            ],
         },
     },
 ];
 ```
 
-Use this pattern when you only extend rules and want full control over parser setup per scope.
+## When to use ESLint + Stylelint together
 
-## Recommended rollout
+Use this plugin when you want ESLint to be the single command that reports and fixes both JavaScript/TypeScript issues and stylesheet issues.
 
-1. Start with `recommended` (or `minimal` if you want low initial noise).
-2. Fix violations in small batches.
-3. Move to `recommended-type-checked` when you are ready for typed rules.
-4. Move to `strict` once your baseline is stable.
-5. Use `all` when you want every stable rule.
-6. Use `experimental` only when you want report-only candidate rules under active evaluation.
-
-## Need a subset instead of a full preset?
-
-- 💠 `typefest.configs["type-fest/types"]`
-- ✴️ `typefest.configs["ts-extras/type-guards"]`
-
-See the **Presets** section in this sidebar for details and examples.
+If your team already runs Stylelint separately and is happy with that split, this plugin may be unnecessary overhead.

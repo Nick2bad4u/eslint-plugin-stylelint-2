@@ -1,8 +1,6 @@
-# all
+# configs
 
-`all` currently matches `recommended`.
-
-It exists as the future-proof "everything shipped by this plugin" preset.
+Enable only the Stylelint config authoring rule.
 
 ## Flat config example
 
@@ -10,7 +8,7 @@ It exists as the future-proof "everything shipped by this plugin" preset.
 import stylelint2 from "eslint-plugin-stylelint-2";
 
 export default [
-    ...stylelint2.configs.all,
+    stylelint2.configs.configs,
 ];
 ```
 
@@ -18,5 +16,4 @@ export default [
 
 | Rule                                                                                                                               | Fix |
 | ---------------------------------------------------------------------------------------------------------------------------------- | :-: |
-| [`stylelint`](https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/stylelint)                                           |  🔧 |
 | [`prefer-stylelint-define-config`](https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/prefer-stylelint-define-config) |  🔧 |

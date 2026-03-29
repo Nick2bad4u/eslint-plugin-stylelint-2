@@ -5,7 +5,7 @@
 
 /** Stable docs host/prefix for generated rule docs links. */
 export const RULE_DOCS_URL_BASE =
-    "https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/" as const;
+    "https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/" as const;
 
 /**
  * Build the canonical documentation URL for one rule id.

@@ -1,40 +1,27 @@
-/**
- * @packageDocumentation
- * Type-level contract tests for public plugin exports.
- */
 import type {
-    TypefestConfigName,
-    TypefestPlugin,
-    TypefestRuleId,
-    TypefestRuleName,
-} from "eslint-plugin-typefest";
+    Stylelint2ConfigName,
+    Stylelint2Plugin,
+    Stylelint2RuleId,
+    Stylelint2RuleName,
+} from "../src/plugin";
 
 import { assertType } from "vitest";
 
-const validConfigName = "recommended-type-checked";
+const validConfigName = "recommended";
+assertType<Stylelint2ConfigName>(validConfigName);
+// @ts-expect-error Invalid preset key must not satisfy Stylelint2ConfigName.
+assertType<Stylelint2ConfigName>("recommended-type-checked");
 
-assertType<TypefestConfigName>(validConfigName);
-// @ts-expect-error Invalid preset key must not satisfy TypefestConfigName.
-assertType<TypefestConfigName>("recommendedTypeChecked");
+const validRuleId = "stylelint-2/stylelint";
+assertType<Stylelint2RuleId>(validRuleId);
+// @ts-expect-error Rule ids must include the stylelint-2 namespace.
+assertType<Stylelint2RuleId>("stylelint");
 
-const validRuleId = "typefest/prefer-type-fest-arrayable";
+declare const pluginContract: Stylelint2Plugin;
 
-assertType<TypefestRuleId>(validRuleId);
-// @ts-expect-error Rule ids must include the `typefest/` namespace prefix.
-assertType<TypefestRuleId>("prefer-type-fest-arrayable");
-
-type RuleNameFromRuleId = TypefestRuleId extends `typefest/${infer RuleName}`
-    ? RuleName
-    : never;
-
-declare const pluginContract: TypefestPlugin;
-
-assertType<TypefestRuleName>(
-    "prefer-type-fest-arrayable" satisfies RuleNameFromRuleId
-);
+assertType<Stylelint2RuleName>("stylelint");
 assertType(pluginContract.configs.recommended);
-assertType(pluginContract.configs.all);
-assertType(pluginContract.configs.experimental);
-assertType(pluginContract.configs);
+assertType(pluginContract.configs.stylesheets);
+assertType(pluginContract.configs.configs);
 assertType(pluginContract.meta.name);
 assertType(pluginContract.meta.namespace);
