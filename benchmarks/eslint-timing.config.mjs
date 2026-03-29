@@ -1,14 +1,9 @@
-import {
-    createTypefestFlatConfig,
-    typefestRuleSets,
-} from "./eslint-benchmark-config.mjs";
+import plugin from "../plugin.mjs";
 
-/**
- * Benchmark-oriented ESLint flat config for CLI TIMING/--stats runs.
- */
-/** @type {import("eslint").Linter.Config[]} */
-const benchmarkTimingConfig = createTypefestFlatConfig({
-    rules: typefestRuleSets.recommended,
-});
+/** @typedef {import("eslint").Linter.Config} FlatConfig */
+
+const benchmarkTimingConfig = /** @type {FlatConfig} */ (
+    plugin.configs?.["stylesheets"]
+);
 
 export default benchmarkTimingConfig;

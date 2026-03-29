@@ -1,3 +1,6 @@
+/* eslint-disable unused-imports/no-unused-vars -- This file intentionally keeps negative compile-time assignments for d.ts contract testing. */
+import { assertType } from "vitest";
+
 import type {
     Stylelint2ConfigName,
     Stylelint2Plugin,
@@ -5,17 +8,15 @@ import type {
     Stylelint2RuleName,
 } from "../src/plugin";
 
-import { assertType } from "vitest";
-
 const validConfigName = "recommended";
 assertType<Stylelint2ConfigName>(validConfigName);
 // @ts-expect-error Invalid preset key must not satisfy Stylelint2ConfigName.
-assertType<Stylelint2ConfigName>("recommended-type-checked");
+const _invalidConfigName: Stylelint2ConfigName = "recommended-type-checked";
 
 const validRuleId = "stylelint-2/stylelint";
 assertType<Stylelint2RuleId>(validRuleId);
 // @ts-expect-error Rule ids must include the stylelint-2 namespace.
-assertType<Stylelint2RuleId>("stylelint");
+const _invalidRuleId: Stylelint2RuleId = "stylelint";
 
 declare const pluginContract: Stylelint2Plugin;
 
@@ -25,3 +26,4 @@ assertType(pluginContract.configs.stylesheets);
 assertType(pluginContract.configs.configs);
 assertType(pluginContract.meta.name);
 assertType(pluginContract.meta.namespace);
+/* eslint-enable unused-imports/no-unused-vars -- End of compile-time negative test declarations. */

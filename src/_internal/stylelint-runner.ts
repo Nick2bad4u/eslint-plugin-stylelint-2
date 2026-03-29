@@ -4,8 +4,8 @@
  */
 import {
     MessageChannel,
-    Worker,
     receiveMessageOnPort,
+    Worker,
 } from "node:worker_threads";
 
 import type {
@@ -19,27 +19,41 @@ const WORKER_DONE_STATE = 1 as const;
 
 const lintResultCache = new Map<string, SerializableStylelintResult>();
 
-let stylelintWorker: Worker | undefined;
+let stylelintWorker: null | Worker = null;
+const usesTypeScriptSourceWorker = import.meta.url.endsWith(".ts");
+/* eslint-disable total-functions/no-partial-url-constructor -- Worker module resolution needs a relative URL anchored to this module. */
+const workerModuleUrl = new URL(
+    usesTypeScriptSourceWorker
+        ? "./stylelint-worker.ts"
+        : "./stylelint-worker.js",
+    import.meta.url
+);
+/* eslint-enable total-functions/no-partial-url-constructor -- Re-enable after the worker module URL is resolved. */
 
 const createWorker = (): Worker =>
-    new Worker(new URL("./stylelint-worker.js", import.meta.url), {
+    new Worker(workerModuleUrl, {
         name: "stylelint-eslint-bridge",
+        ...(usesTypeScriptSourceWorker
+            ? { execArgv: ["--experimental-strip-types"] }
+            : {}),
     });
 
 const resetWorker = (): void => {
-    if (stylelintWorker === undefined) {
+    const workerToTerminate = stylelintWorker;
+
+    if (workerToTerminate === null) {
         return;
     }
 
-    void stylelintWorker.terminate();
-    stylelintWorker = undefined;
+    void workerToTerminate.terminate();
+    stylelintWorker = null;
 };
 
 const getWorker = (): Worker => {
-    if (stylelintWorker === undefined) {
+    if (stylelintWorker === null) {
         stylelintWorker = createWorker();
         stylelintWorker.once("exit", () => {
-            stylelintWorker = undefined;
+            stylelintWorker = null;
         });
     }
 
@@ -88,6 +102,7 @@ export const runStylelintSynchronously = (
     const signal = new Int32Array(signalBuffer);
     const { port1, port2 } = new MessageChannel();
 
+    /* eslint-disable sdl/no-postmessage-without-origin-allowlist -- Worker threads use structured-clone messaging, not browser window.postMessage. */
     worker.postMessage(
         {
             options,
@@ -96,6 +111,7 @@ export const runStylelintSynchronously = (
         },
         [port2]
     );
+    /* eslint-enable sdl/no-postmessage-without-origin-allowlist -- Re-enable after the worker-thread message dispatch. */
 
     const waitResult = Atomics.wait(signal, 0, 0, WAIT_TIMEOUT_IN_MILLISECONDS);
 

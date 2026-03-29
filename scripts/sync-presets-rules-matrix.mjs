@@ -45,9 +45,25 @@ export const extractPresetsMatrixSection = (markdown) => {
     return markdown.slice(startOffset, endOffset);
 };
 
-const rules = Object.entries(builtPlugin.rules).toSorted(([left], [right]) =>
-    left.localeCompare(right)
-);
+const preferredRuleOrder = ["stylelint", "prefer-stylelint-define-config"];
+const rules = Object.entries(builtPlugin.rules).toSorted(([left], [right]) => {
+    const leftIndex = preferredRuleOrder.indexOf(left);
+    const rightIndex = preferredRuleOrder.indexOf(right);
+
+    if (leftIndex >= 0 && rightIndex >= 0) {
+        return leftIndex - rightIndex;
+    }
+
+    if (leftIndex >= 0) {
+        return -1;
+    }
+
+    if (rightIndex >= 0) {
+        return 1;
+    }
+
+    return left.localeCompare(right);
+});
 
 /**
  * @param {string} presetName
@@ -59,31 +75,46 @@ const isRuleEnabledInPreset = (presetName, ruleName) => {
 
     return presetEntries.some(
         (entry) =>
-            entry.rules?.[`stylelint-2/${ruleName}`] === "error" ||
-            entry.rules?.[`stylelint-2/${ruleName}`] === "warn"
+            entry !== undefined &&
+            (entry.rules?.[`stylelint-2/${ruleName}`] === "error" ||
+                entry.rules?.[`stylelint-2/${ruleName}`] === "warn")
     );
 };
 
 export const generatePresetsRulesMatrixSectionFromRules = () => {
     const tableRows = rules.map(([ruleName, ruleModule]) => {
-        const fix = ruleModule.meta.fixable === "code" ? "🔧" : "—";
-        const recommended = isRuleEnabledInPreset("recommended", ruleName)
-            ? "✅"
-            : "—";
-        const stylesheets = isRuleEnabledInPreset("stylesheets", ruleName)
-            ? "✅"
-            : "—";
-        const configs = isRuleEnabledInPreset("configs", ruleName) ? "✅" : "—";
-        const all = isRuleEnabledInPreset("all", ruleName) ? "✅" : "—";
+        const fix = ruleModule.meta?.fixable === "code" ? "🔧" : "—";
+        const presetIcons = [
+            isRuleEnabledInPreset("recommended", ruleName) ? "🟡" : null,
+            isRuleEnabledInPreset("stylesheets", ruleName) ? "🎨" : null,
+            isRuleEnabledInPreset("configs", ruleName) ? "🛠️" : null,
+            isRuleEnabledInPreset("all", ruleName) ? "🟣" : null,
+        ]
+            .filter((value) => value !== null)
+            .join(" ");
+        const docsUrl = ruleModule.meta?.docs?.url;
 
-        return `| [\`${ruleName}\`](${ruleModule.meta.docs.url}) | ${fix} | ${recommended} | ${stylesheets} | ${configs} | ${all} |`;
+        if (typeof docsUrl !== "string") {
+            throw new TypeError(`Rule '${ruleName}' is missing meta.docs.url.`);
+        }
+
+        return `| [\`${ruleName}\`](${docsUrl}) | ${fix} | ${presetIcons} |`;
     });
 
     return [
         "## Rule matrix",
         "",
-        "| Rule | Fix | Recommended | Stylesheets | Configs | All |",
-        "| --- | :-: | :-: | :-: | :-: | :-: |",
+        "- `Fix` legend:",
+        "  - `🔧` = autofixable",
+        "  - `—` = report only",
+        "- `Preset key` legend:",
+        "  - `🟡` — `stylelint2.configs.recommended`",
+        "  - `🎨` — `stylelint2.configs.stylesheets`",
+        "  - `🛠️` — `stylelint2.configs.configs`",
+        "  - `🟣` — `stylelint2.configs.all`",
+        "",
+        "| Rule | Fix | Preset key |",
+        "| --- | :-: | :-- |",
         ...tableRows,
         "",
     ].join("\n");
@@ -112,7 +143,12 @@ export const syncPresetsRulesMatrix = async ({ writeChanges = false } = {}) => {
     return { changed: true };
 };
 
-if (import.meta.url === new URL(process.argv[1], "file:").href) {
+const currentEntryPath = process.argv[1];
+
+if (
+    typeof currentEntryPath === "string" &&
+    import.meta.url === new URL(currentEntryPath, "file:").href
+) {
     await syncPresetsRulesMatrix({
         writeChanges: process.argv.includes("--write"),
     });

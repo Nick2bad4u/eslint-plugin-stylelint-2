@@ -4,27 +4,28 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { runStylelintSynchronously } from "../_internal/stylelint-runner.js";
 import {
     createTypedRule,
     replaceTextRange,
     type RuleModuleWithDocs,
     toRuleListener,
 } from "../_internal/typed-rule.js";
-import { runStylelintSynchronously } from "../_internal/stylelint-runner.js";
 
+type MessageIds =
+    | "stylelintConfigWarning"
+    | "stylelintParseError"
+    | "stylelintProblem";
+
+type Options = readonly [StylelintRuleOption?];
 type StylelintRuleOption = Readonly<{
     allowEmptyInput?: boolean;
     configBasedir?: string;
     configFile?: string;
     customSyntax?: string;
+    ignoreDisables?: boolean;
     quiet?: boolean;
 }>;
-
-type Options = readonly [StylelintRuleOption?];
-type MessageIds =
-    | "stylelintConfigWarning"
-    | "stylelintParseError"
-    | "stylelintProblem";
 
 const defaultOptions = [{}] as const satisfies Options;
 type ReportLocation = Readonly<{
@@ -50,6 +51,7 @@ const toEslintLoc = (
     },
 });
 
+/** Rule module that bridges Stylelint diagnostics into ESLint. */
 const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
     MessageIds,
     Options
@@ -75,6 +77,9 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
                     ...(rawOptions.customSyntax === undefined
                         ? {}
                         : { customSyntax: rawOptions.customSyntax }),
+                    ...(rawOptions.ignoreDisables === undefined
+                        ? {}
+                        : { ignoreDisables: rawOptions.ignoreDisables }),
                     ...(rawOptions.quiet === undefined
                         ? {}
                         : { quiet: rawOptions.quiet }),
@@ -83,12 +88,12 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
 
                 for (const parseError of lintResult.parseErrors) {
                     context.report({
-                        loc: toEslintLoc(parseError),
-                        messageId: "stylelintParseError",
-                        node: reportNode,
                         data: {
                             message: parseError.message,
                         },
+                        loc: toEslintLoc(parseError),
+                        messageId: "stylelintParseError",
+                        node: reportNode,
                     });
                 }
 
@@ -96,13 +101,13 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
                     const fixData = warning.fix;
 
                     context.report({
-                        loc: toEslintLoc(warning),
-                        messageId: "stylelintProblem",
-                        node: reportNode,
                         data: {
                             rule: warning.rule,
                             text: warning.text,
                         },
+                        loc: toEslintLoc(warning),
+                        messageId: "stylelintProblem",
+                        node: reportNode,
                         ...(fixData === undefined
                             ? {}
                             : {
@@ -118,35 +123,36 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
 
                 for (const invalidOptionWarning of lintResult.invalidOptionWarnings) {
                     context.report({
+                        data: {
+                            message: invalidOptionWarning,
+                        },
                         loc: {
                             end: { column: 0, line: 1 },
                             start: { column: 0, line: 1 },
                         },
                         messageId: "stylelintConfigWarning",
                         node: reportNode,
-                        data: {
-                            message: invalidOptionWarning,
-                        },
                     });
                 }
 
                 for (const deprecation of lintResult.deprecations) {
                     context.report({
+                        data: {
+                            message: deprecation,
+                        },
                         loc: {
                             end: { column: 0, line: 1 },
                             start: { column: 0, line: 1 },
                         },
                         messageId: "stylelintConfigWarning",
                         node: reportNode,
-                        data: {
-                            message: deprecation,
-                        },
                     });
                 }
             },
         });
     },
     defaultOptions,
+    // eslint-disable-next-line eslint-plugin/require-meta-default-options -- createTypedRule preserves the rule-level defaultOptions contract for this plugin.
     meta: {
         docs: {
             configs: [
@@ -155,7 +161,7 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
                 "stylelint2.configs.all",
             ],
             description:
-                "Run Stylelint against CSS files from ESLint and surface Stylelint autofixes through ESLint's fixer pipeline.",
+                "enforce running Stylelint against CSS files from ESLint and surface Stylelint autofixes through ESLint's fixer pipeline.",
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/stylelint",
@@ -170,12 +176,39 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
         schema: [
             {
                 additionalProperties: false,
+                description:
+                    "Optional Stylelint bridge settings forwarded to the Stylelint Node API.",
                 properties: {
-                    allowEmptyInput: { type: "boolean" },
-                    configBasedir: { type: "string" },
-                    configFile: { type: "string" },
-                    customSyntax: { type: "string" },
-                    quiet: { type: "boolean" },
+                    allowEmptyInput: {
+                        description:
+                            "Allow empty input when forwarding the file to Stylelint.",
+                        type: "boolean",
+                    },
+                    configBasedir: {
+                        description:
+                            "Base directory used when resolving relative paths from the chosen Stylelint config.",
+                        type: "string",
+                    },
+                    configFile: {
+                        description:
+                            "Explicit Stylelint config file path to use instead of normal config discovery.",
+                        type: "string",
+                    },
+                    customSyntax: {
+                        description:
+                            "Optional Stylelint custom syntax package name.",
+                        type: "string",
+                    },
+                    ignoreDisables: {
+                        description:
+                            "Ignore Stylelint disable comments while linting the file.",
+                        type: "boolean",
+                    },
+                    quiet: {
+                        description:
+                            "Suppress warning-level Stylelint messages.",
+                        type: "boolean",
+                    },
                 },
                 type: "object",
             },

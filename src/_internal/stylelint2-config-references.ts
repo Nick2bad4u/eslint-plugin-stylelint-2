@@ -11,15 +11,15 @@ export const stylelint2ConfigNames = [
     "stylesheets",
 ] as const;
 
-/** Canonical flat-config preset key type exposed through `plugin.configs`. */
-export type Stylelint2ConfigName = (typeof stylelint2ConfigNames)[number];
-
 /** Shared metadata used by docs, README rendering, and config tests. */
 export type Stylelint2ConfigMetadata = Readonly<{
     icon: string;
     presetName: `stylelint2:${Stylelint2ConfigName}`;
     readmeOrder: number;
 }>;
+
+/** Canonical flat-config preset key type exposed through `plugin.configs`. */
+export type Stylelint2ConfigName = (typeof stylelint2ConfigNames)[number];
 
 /** Canonical metadata for each exported preset. */
 export const stylelint2ConfigMetadataByName: Readonly<

@@ -48,6 +48,7 @@ If the active Stylelint config prefers short hex colors, this stylesheet is repo
 - The rule is only as strict as the Stylelint config it resolves for the current file.
 - If your Stylelint config provides computed edit info, `eslint --fix` can apply the corresponding change.
 - Non-fixable Stylelint warnings are still reported.
+- You can set `ignoreDisables: true` when you want Stylelint disable comments to be ignored for a specific ESLint run.
 
 ## Additional examples
 
@@ -64,6 +65,7 @@ export default [
                 "error",
                 {
                     configFile: "./stylelint.config.mjs",
+                    ignoreDisables: true,
                 },
             ],
         },

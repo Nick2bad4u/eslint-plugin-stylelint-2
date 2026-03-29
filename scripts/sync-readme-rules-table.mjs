@@ -111,33 +111,60 @@ const getPresetIndicator = (ruleModule) => {
     return icons.join(" ");
 };
 
-/** @param {[
-    string,
-    {
-        meta: {
-            docs: { url: string; configs?: readonly string[] | string };
-            fixable?: string;
-        };
-    },
-]} entry */
-const toRuleTableRow = ([ruleName, ruleModule]) =>
-    `| [\`${ruleName}\`](${ruleModule.meta.docs.url}) | ${getRuleFixIndicator(ruleModule)} | ${getPresetIndicator(ruleModule)} |`;
+/**
+ * @param {[
+ *     string,
+ *     {
+ *         meta?: {
+ *             docs?: { url: string; configs?: readonly string[] | string };
+ *             fixable?: string;
+ *         };
+ *     },
+ * ]} entry
+ */
+const toRuleTableRow = ([ruleName, ruleModule]) => {
+    const docsUrl = ruleModule.meta?.docs?.url;
 
-/** @param {Readonly<
-    Record<
-        string,
-        {
-            meta: {
-                docs: { url: string; configs?: readonly string[] | string };
-                fixable?: string;
-            };
-        }
-    >
->} rules */
+    if (typeof docsUrl !== "string") {
+        throw new TypeError(`Rule '${ruleName}' is missing meta.docs.url.`);
+    }
+
+    return `| [\`${ruleName}\`](${docsUrl}) | ${getRuleFixIndicator(ruleModule)} | ${getPresetIndicator(ruleModule)} |`;
+};
+
+/**
+ * @param {Readonly<
+ *     Record<
+ *         string,
+ *         {
+ *             meta?: {
+ *                 docs?: { url: string; configs?: readonly string[] | string };
+ *                 fixable?: string;
+ *             };
+ *         }
+ *     >
+ * >} rules
+ */
 export const generateReadmeRulesSectionFromRules = (rules) => {
-    const ruleEntries = Object.entries(rules).toSorted(([left], [right]) =>
-        left.localeCompare(right)
-    );
+    const preferredRuleOrder = ["stylelint", "prefer-stylelint-define-config"];
+    const ruleEntries = Object.entries(rules).toSorted(([left], [right]) => {
+        const leftIndex = preferredRuleOrder.indexOf(left);
+        const rightIndex = preferredRuleOrder.indexOf(right);
+
+        if (leftIndex >= 0 && rightIndex >= 0) {
+            return leftIndex - rightIndex;
+        }
+
+        if (leftIndex >= 0) {
+            return -1;
+        }
+
+        if (rightIndex >= 0) {
+            return 1;
+        }
+
+        return left.localeCompare(right);
+    });
 
     return [
         "## Rules",
@@ -163,7 +190,20 @@ export const syncReadmeRulesTable = async ({ writeChanges = false } = {}) => {
     const readmeMarkdown = await readFile(readmePath, "utf8");
     const lineEnding = detectLineEnding(readmeMarkdown);
     const expectedSection = generateReadmeRulesSectionFromRules(
-        builtPlugin.rules
+        /** @type {Readonly<
+    Record<
+        string,
+        {
+            meta?: {
+                docs?: {
+                    url: string;
+                    configs?: readonly string[] | string;
+                };
+                fixable?: string;
+            };
+        }
+    >
+>} */ (builtPlugin.rules)
     )
         .replace(/\n/gv, lineEnding)
         .trimEnd();
@@ -188,7 +228,12 @@ export const syncReadmeRulesTable = async ({ writeChanges = false } = {}) => {
     return { changed: true };
 };
 
-if (import.meta.url === new URL(process.argv[1], "file:").href) {
+const currentEntryPath = process.argv[1];
+
+if (
+    typeof currentEntryPath === "string" &&
+    import.meta.url === new URL(currentEntryPath, "file:").href
+) {
     await syncReadmeRulesTable({
         writeChanges: process.argv.includes("--write"),
     });

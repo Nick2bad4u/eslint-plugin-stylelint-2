@@ -70,6 +70,7 @@ export default [
                 {
                     configFile: "./stylelint.config.mjs",
                     customSyntax: "postcss-scss",
+                    ignoreDisables: true,
                 },
             ],
         },

@@ -1,7 +1,8 @@
 import type { ESLint } from "eslint";
 
-import stylelint2Plugin from "../src/plugin";
 import { assertType } from "vitest";
+
+import stylelint2Plugin from "../src/plugin";
 
 assertType<ESLint.Plugin>(stylelint2Plugin);
 assertType<ESLint.Plugin["configs"] | undefined>(stylelint2Plugin.configs);

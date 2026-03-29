@@ -14,6 +14,7 @@ const packageJson = requireFromTestModule("../package.json") as {
 };
 
 const expectedPluginVersion = packageJson.version;
+const packageName = packageJson.name;
 
 describe("plugin entry module", () => {
     it("exports the default plugin object with rule and config registries", () => {
@@ -36,14 +37,15 @@ describe("plugin entry module", () => {
     });
 
     it("exports the rebuilt rule names", () => {
-        expect(Object.keys(stylelint2Plugin.rules).toSorted()).toStrictEqual([
-            "prefer-stylelint-define-config",
-            "stylelint",
-        ]);
+        expect(
+            Object.keys(stylelint2Plugin.rules).toSorted((left, right) =>
+                left.localeCompare(right)
+            )
+        ).toStrictEqual(["prefer-stylelint-define-config", "stylelint"]);
     });
 
     it("resolves the package through self-reference ESM import", async () => {
-        const packageName = packageJson.name ?? "eslint-plugin-stylelint-2";
+        // eslint-disable-next-line no-unsanitized/method -- packageName comes from the local package.json fixture for this repository.
         const runtimeModule = (await import(packageName)) as {
             default: unknown;
         };

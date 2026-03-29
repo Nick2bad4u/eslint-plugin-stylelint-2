@@ -2,27 +2,30 @@
  * @packageDocumentation
  * Integration coverage for the Stylelint bridge rule.
  */
-import { ESLint } from "eslint";
+import { ESLint, type Linter } from "eslint";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 import stylelint2Plugin from "../src/plugin";
 
-const stylelintConfigPath = new URL(
-    "./fixtures/stylelint/short-hex.config.mjs",
-    import.meta.url
+/* eslint-disable total-functions/no-partial-url-constructor -- Test fixture URL resolution is local, deterministic, and acceptable here. */
+const stylelintConfigFilePath = fileURLToPath(
+    new URL("fixtures/stylelint/short-hex.config.mjs", import.meta.url)
 );
+/* eslint-enable total-functions/no-partial-url-constructor -- Re-enable after the local fixture path is resolved. */
+const stylesheetsConfig = stylelint2Plugin.configs.stylesheets as Linter.Config;
 
 const createCssLintEngine = (fix: boolean): ESLint =>
     new ESLint({
         fix,
         overrideConfig: [
             {
-                ...stylelint2Plugin.configs.stylesheets,
+                ...stylesheetsConfig,
                 rules: {
                     "stylelint-2/stylelint": [
                         "error",
                         {
-                            configFile: stylelintConfigPath.pathname,
+                            configFile: stylelintConfigFilePath,
                         },
                     ],
                 },
@@ -39,6 +42,7 @@ describe("stylelint bridge rule", () => {
         });
 
         expect(result).toBeDefined();
+
         const lintResult = result!;
 
         expect(lintResult.messages).toHaveLength(1);
@@ -53,6 +57,7 @@ describe("stylelint bridge rule", () => {
         });
 
         expect(result).toBeDefined();
+
         const lintResult = result!;
 
         expect(lintResult.output).toContain("#fff");

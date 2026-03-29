@@ -1,11 +1,11 @@
+import type { RuleModuleWithDocs } from "./typed-rule.js";
+
 /**
  * @packageDocumentation
  * Canonical runtime registry of all rule modules shipped by eslint-plugin-stylelint-2.
  */
 import preferStylelintDefineConfigRule from "../rules/prefer-stylelint-define-config.js";
 import stylelintRule from "../rules/stylelint.js";
-
-import type { RuleModuleWithDocs } from "./typed-rule.js";
 
 /** Runtime map of all rule modules keyed by unqualified rule name. */
 export const stylelint2Rules: Readonly<{

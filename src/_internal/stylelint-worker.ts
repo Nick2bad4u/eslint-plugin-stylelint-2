@@ -3,7 +3,6 @@
  * Dedicated worker that runs Stylelint's async Node API for sync ESLint rule consumers.
  */
 import { isMainThread, parentPort } from "node:worker_threads";
-
 import stylelint from "stylelint";
 
 import type {
@@ -17,7 +16,7 @@ import type {
 const DONE_STATE = 1 as const;
 
 const toSerializableWarning = (
-    warning: stylelint.Warning
+    warning: Readonly<stylelint.Warning>
 ): SerializableStylelintWarning => ({
     column: warning.column,
     ...(warning.endColumn === undefined
@@ -33,7 +32,7 @@ const toSerializableWarning = (
 });
 
 const toSerializableParseError = (
-    parseError: stylelint.LintResult["parseErrors"][number]
+    parseError: Readonly<stylelint.LintResult["parseErrors"][number]>
 ): SerializableStylelintParseError => ({
     column: parseError.column,
     ...(parseError.endColumn === undefined
@@ -48,7 +47,7 @@ const toSerializableParseError = (
 });
 
 const toSerializableResult = (
-    result: stylelint.LinterResult
+    result: Readonly<stylelint.LinterResult>
 ): SerializableStylelintResult => {
     const firstResult = result.results[0];
 
@@ -58,9 +57,14 @@ const toSerializableResult = (
         invalidOptionWarnings:
             firstResult?.invalidOptionWarnings.map((entry) => entry.text) ?? [],
         parseErrors:
-            firstResult?.parseErrors.map(toSerializableParseError) ?? [],
+            firstResult?.parseErrors.map((parseError) =>
+                toSerializableParseError(parseError)
+            ) ?? [],
         report: result.report,
-        warnings: firstResult?.warnings.map(toSerializableWarning) ?? [],
+        warnings:
+            firstResult?.warnings.map((warning) =>
+                toSerializableWarning(warning)
+            ) ?? [],
     };
 };
 
@@ -68,6 +72,7 @@ const notifyCompletion = (
     request: StylelintWorkerRequest,
     response: StylelintWorkerResponse
 ): void => {
+    // eslint-disable-next-line unicorn/require-post-message-target-origin -- Worker MessagePort.postMessage does not support browser target origins.
     request.port.postMessage(response);
     request.port.close();
 
@@ -99,6 +104,9 @@ const handleRequest = async (
             ...(request.options.customSyntax === undefined
                 ? {}
                 : { customSyntax: request.options.customSyntax }),
+            ...(request.options.ignoreDisables === undefined
+                ? {}
+                : { ignoreDisables: request.options.ignoreDisables }),
             ...(request.options.quiet === undefined
                 ? {}
                 : { quiet: request.options.quiet }),
@@ -131,7 +139,14 @@ const handleRequest = async (
 };
 
 if (!isMainThread) {
-    parentPort?.on("message", (request: StylelintWorkerRequest) => {
+    const onMessage = (request: StylelintWorkerRequest): void => {
         void handleRequest(request);
-    });
+    };
+
+    const removeOnExit = (): void => {
+        parentPort?.off("message", onMessage);
+    };
+
+    parentPort?.on("message", onMessage);
+    process.once("exit", removeOnExit);
 }

@@ -64,7 +64,7 @@
         "prebench:eslint:stats": "npm run build",
         "bench:eslint:stats": "node benchmarks/run-eslint-stats.mjs",
         "prebench:eslint:timing": "npm run build",
-        "bench:eslint:timing": "cross-env TIMING=all eslint --config benchmarks/eslint-timing.config.mjs --stats \"test/fixtures/typed/*.invalid.ts\"",
+        "bench:eslint:timing": "cross-env TIMING=all eslint --config benchmarks/eslint-timing.config.mjs --stats \"benchmarks/fixtures/*.css\"",
         "prebench:rule-benchmark": "npm run build",
         "bench:rule-benchmark": "eslint-rule-benchmark run",
         "prebench:ui": "npm run build",

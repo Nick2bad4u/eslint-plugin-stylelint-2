@@ -10,11 +10,12 @@ import tsParser from "@typescript-eslint/parser";
 import packageJson from "../package.json" with { type: "json" };
 import { stylelint2Rules } from "./_internal/rules-registry.js";
 import {
+    type Stylelint2ConfigName as InternalStylelint2ConfigName,
     stylelint2ConfigMetadataByName,
-    type Stylelint2ConfigName,
 } from "./_internal/stylelint2-config-references.js";
 
-export type { Stylelint2ConfigName } from "./_internal/stylelint2-config-references.js";
+/** Public preset key names supported by eslint-plugin-stylelint-2. */
+export type Stylelint2ConfigName = InternalStylelint2ConfigName;
 
 /** Package name exported in runtime plugin metadata. */
 const pluginName = "eslint-plugin-stylelint-2" as const;
@@ -28,15 +29,15 @@ const configFiles = [
     "**/.stylelintrc.{js,mjs,cjs,ts,mts,cts}",
 ] as const;
 
-/** Unqualified rule name supported by eslint-plugin-stylelint-2. */
-export type Stylelint2RuleName = keyof typeof stylelint2Rules;
-/** Qualified rule ID supported by eslint-plugin-stylelint-2. */
-export type Stylelint2RuleId =
-    `${typeof pluginNamespace}/${Stylelint2RuleName}`;
 /** Public preset config value shape. */
 export type Stylelint2Config = Linter.Config | readonly Linter.Config[];
 /** Public preset registry shape. */
 export type Stylelint2Configs = Record<Stylelint2ConfigName, Stylelint2Config>;
+/** Qualified rule ID supported by eslint-plugin-stylelint-2. */
+export type Stylelint2RuleId =
+    `${typeof pluginNamespace}/${Stylelint2RuleName}`;
+/** Unqualified rule name supported by eslint-plugin-stylelint-2. */
+export type Stylelint2RuleName = keyof typeof stylelint2Rules;
 /** ESLint-compatible rule map view of the strongly typed internal rule record. */
 const eslintPluginRules = stylelint2Rules as NonNullable<
     ESLint.Plugin["rules"]
@@ -46,6 +47,8 @@ const eslintPluginRules = stylelint2Rules as NonNullable<
 const version =
     typeof packageJson.version === "string" ? packageJson.version : "0.0.0";
 
+/** Fully assembled runtime plugin object exported by this package. */
+/** Fully assembled runtime plugin object exported by this package. */
 const stylelint2Plugin: ESLint.Plugin & {
     configs: Stylelint2Configs;
     meta: {

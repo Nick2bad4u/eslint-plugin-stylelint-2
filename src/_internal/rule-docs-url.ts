@@ -10,7 +10,7 @@ export const RULE_DOCS_URL_BASE =
 /**
  * Build the canonical documentation URL for one rule id.
  *
- * @param ruleName - Rule id (for example `prefer-ts-extras-array-at`).
+ * @param ruleName - Rule id (for example `stylelint`).
  *
  * @returns Canonical docs URL for the rule page.
  */

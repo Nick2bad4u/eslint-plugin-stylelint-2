@@ -3,7 +3,6 @@
  * Shared rule creation helpers for eslint-plugin-stylelint-2.
  */
 import type { TSESLint } from "@typescript-eslint/utils";
-import { ESLintUtils } from "@typescript-eslint/utils";
 
 import type { Stylelint2ConfigReference } from "./stylelint2-config-references.js";
 
@@ -13,15 +12,6 @@ import { createRuleDocsUrl } from "./rule-docs-url.js";
 export type GenericRuleListener = Readonly<
     Record<string, (node: unknown) => void>
 >;
-
-/** Plugin-specific metadata extensions for `meta.docs`. */
-export type Stylelint2RuleDocs = Readonly<{
-    configs: readonly Stylelint2ConfigReference[] | Stylelint2ConfigReference;
-    description: string;
-    recommended: boolean;
-    requiresTypeChecking: boolean;
-    url: string;
-}>;
 
 /** Rule module contract used by registry and plugin wiring. */
 export type RuleModuleWithDocs<
@@ -35,12 +25,21 @@ export type RuleModuleWithDocs<
     name: string;
 };
 
+/** Plugin-specific metadata extensions for `meta.docs`. */
+export type Stylelint2RuleDocs = Readonly<{
+    configs: readonly Stylelint2ConfigReference[] | Stylelint2ConfigReference;
+    description: string;
+    recommended: boolean;
+    requiresTypeChecking: boolean;
+    url: string;
+}>;
+
 /** Identity-preserving rule creator with canonical docs URL enforcement. */
 export const createTypedRule = <
     MessageIds extends string,
     Options extends readonly unknown[],
 >(
-    ruleDefinition: RuleModuleWithDocs<MessageIds, Options>
+    ruleDefinition: Readonly<RuleModuleWithDocs<MessageIds, Options>>
 ): RuleModuleWithDocs<MessageIds, Options> => {
     const canonicalDocsUrl = createRuleDocsUrl(ruleDefinition.name);
 
@@ -50,16 +49,13 @@ export const createTypedRule = <
         );
     }
 
-    return ESLintUtils.RuleCreator<Stylelint2RuleDocs>((ruleName) =>
-        createRuleDocsUrl(ruleName)
-    )({
+    return {
         ...ruleDefinition,
         meta: {
             ...ruleDefinition.meta,
-            defaultOptions: ruleDefinition.defaultOptions,
             docs: ruleDefinition.meta.docs,
         },
-    }) as RuleModuleWithDocs<MessageIds, Options>;
+    };
 };
 
 /** Convert a generic string-keyed listener map into an ESLint rule listener. */

@@ -2,8 +2,6 @@
  * @packageDocumentation
  * Shared testing utilities for eslint-plugin-stylelint-2 RuleTester and Vitest suites.
  */
-import type { UnknownArray, UnknownRecord } from "type-fest";
-
 import tsParser from "@typescript-eslint/parser";
 import { RuleTester } from "@typescript-eslint/rule-tester";
 import * as path from "node:path";
@@ -11,6 +9,9 @@ import pc from "picocolors";
 import { afterAll, describe, it } from "vitest";
 
 import stylelint2Plugin from "../../src/plugin";
+
+type UnknownArray = readonly unknown[];
+type UnknownRecord = Record<string, unknown>;
 
 const assertRuleTesterHook = (candidate: unknown, hookName: string): void => {
     if (typeof candidate !== "function") {

@@ -15,6 +15,7 @@ describe("rule docs integrity", () => {
 
         for (const ruleName of Object.keys(stylelint2Plugin.rules)) {
             const expectedPath = path.join(docsDir, `${ruleName}.md`);
+
             expect(fs.existsSync(expectedPath)).toBeTruthy();
         }
     });

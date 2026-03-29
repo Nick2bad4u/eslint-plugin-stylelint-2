@@ -10,6 +10,7 @@ import {
     extractPresetsMatrixSection,
     generatePresetsRulesMatrixSectionFromRules,
 } from "../scripts/sync-presets-rules-matrix.mjs";
+import { normalizeMarkdownTableSpacing } from "./_internal/markdownTables";
 
 describe("presets rules matrix synchronization", () => {
     it("matches the canonical matrix generated from plugin metadata", async () => {
@@ -22,8 +23,14 @@ describe("presets rules matrix synchronization", () => {
         );
         const presetsMarkdown = await fs.readFile(presetsIndexPath, "utf8");
 
-        expect(extractPresetsMatrixSection(presetsMarkdown).trim()).toBe(
-            generatePresetsRulesMatrixSectionFromRules().trim()
+        expect(
+            normalizeMarkdownTableSpacing(
+                extractPresetsMatrixSection(presetsMarkdown)
+            )
+        ).toBe(
+            normalizeMarkdownTableSpacing(
+                generatePresetsRulesMatrixSectionFromRules()
+            )
         );
     });
 });

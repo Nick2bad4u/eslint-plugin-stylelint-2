@@ -1,10 +1,10 @@
+import type { TSESTree } from "@typescript-eslint/utils";
+
 /**
  * @packageDocumentation
  * Encourage `defineConfig()` for authored Stylelint config modules.
  */
 import { basename } from "node:path";
-
-import type { TSESTree } from "@typescript-eslint/utils";
 
 import {
     createTypedRule,
@@ -12,11 +12,11 @@ import {
     toRuleListener,
 } from "../_internal/typed-rule.js";
 
-type Options = readonly [];
 type MessageIds = "preferDefineConfig";
+type Options = readonly [];
 
 const importSource = "stylelint-define-config" as const;
-const defineConfigImport = `import { defineConfig } from \"${importSource}\";\n`;
+const defineConfigImport = `import { defineConfig } from "${importSource}";\n`;
 const configBaseNamePattern =
     /^(?:stylelint\.config|\.stylelintrc)\.(?:[cm]?js|[cm]?ts)$/v;
 
@@ -25,7 +25,7 @@ const isConfigFile = (filename: string): boolean =>
 
 const hasDefineConfigImport = (body: readonly TSESTree.Node[]): boolean =>
     body.some(
-        (statement): statement is TSESTree.ImportDeclaration =>
+        (statement) =>
             statement.type === "ImportDeclaration" &&
             statement.source.value === importSource &&
             statement.specifiers.some(
@@ -37,18 +37,20 @@ const hasDefineConfigImport = (body: readonly TSESTree.Node[]): boolean =>
     );
 
 const getImportInsertionOffset = (body: readonly TSESTree.Node[]): number => {
-    const lastImport = [...body]
-        .reverse()
-        .find(
-            (statement): statement is TSESTree.ImportDeclaration =>
-                statement.type === "ImportDeclaration"
-        );
+    for (let index = body.length - 1; index >= 0; index -= 1) {
+        const statement = body[index];
 
-    return lastImport?.range[1] ?? 0;
+        if (statement?.type === "ImportDeclaration") {
+            return statement.range[1];
+        }
+    }
+
+    return 0;
 };
 
+/** Rule module that requires `defineConfig()` usage in Stylelint config files. */
 const preferStylelintDefineConfigRule: RuleModuleWithDocs<MessageIds, Options> =
-    createTypedRule<MessageIds, Options>({
+    createTypedRule({
         create(context) {
             const sourceCode = context.sourceCode;
             const isCurrentFileAConfig = isConfigFile(context.physicalFilename);
@@ -70,8 +72,6 @@ const preferStylelintDefineConfigRule: RuleModuleWithDocs<MessageIds, Options> =
                     }
 
                     context.report({
-                        node: exportDefaultNode.declaration,
-                        messageId: "preferDefineConfig",
                         fix(fixer) {
                             const fixes = [
                                 fixer.replaceText(
@@ -83,15 +83,14 @@ const preferStylelintDefineConfigRule: RuleModuleWithDocs<MessageIds, Options> =
                             if (!hasDefineConfigImport(sourceCode.ast.body)) {
                                 const insertionOffset =
                                     getImportInsertionOffset(
-                                        sourceCode.ast
-                                            .body as readonly TSESTree.Node[]
+                                        sourceCode.ast.body
                                     );
 
                                 fixes.unshift(
                                     fixer.insertTextBeforeRange(
                                         [insertionOffset, insertionOffset],
                                         insertionOffset === 0
-                                            ? defineConfigImport
+                                            ? `${defineConfigImport}\n`
                                             : `\n${defineConfigImport}`
                                     )
                                 );
@@ -99,6 +98,8 @@ const preferStylelintDefineConfigRule: RuleModuleWithDocs<MessageIds, Options> =
 
                             return fixes;
                         },
+                        messageId: "preferDefineConfig",
+                        node: exportDefaultNode.declaration,
                     });
                 },
             });
@@ -112,7 +113,7 @@ const preferStylelintDefineConfigRule: RuleModuleWithDocs<MessageIds, Options> =
                     "stylelint2.configs.all",
                 ],
                 description:
-                    "Prefer wrapping exported Stylelint config objects in `defineConfig()` from `stylelint-define-config`.",
+                    "require wrapping exported Stylelint config objects in `defineConfig()` from `stylelint-define-config`.",
                 recommended: true,
                 requiresTypeChecking: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/prefer-stylelint-define-config",
@@ -126,6 +127,6 @@ const preferStylelintDefineConfigRule: RuleModuleWithDocs<MessageIds, Options> =
             type: "suggestion",
         },
         name: "prefer-stylelint-define-config",
-    });
+    }) satisfies RuleModuleWithDocs<MessageIds, Options>;
 
 export default preferStylelintDefineConfigRule;

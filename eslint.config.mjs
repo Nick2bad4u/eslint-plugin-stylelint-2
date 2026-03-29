@@ -90,11 +90,11 @@ import * as yamlEslintParser from "yaml-eslint-parser";
  * @remarks
  * When bootstrapping a new ESLint plugin, do the following:
  *
- * 1. Import `typefest` from the npm package and add it above
- * 2. Change the `typefest` local import below to be the new plugin's name and path
+ * 1. Import the published plugin package and add it above
+ * 2. Change the local plugin import below to be the new plugin's name and path
  * 3. Setup the `🚢 Local Plugin Import` section below for new plugin
  */
-import typefest from "./plugin.mjs";
+import stylelint2 from "./plugin.mjs";
 
 // NOTE: eslint-plugin-json-schema-validator may attempt to fetch remote schemas
 // at lint time. That makes linting flaky/offline-hostile.
@@ -717,22 +717,17 @@ export default defineConfig([
     //     },
     // },
     // #endregion
-    // #region ⌨️ Typefest
+    // #region ⌨️ Local Plugin
     // ═══════════════════════════════════════════════════════════════════════════════
-    // SECTION: ⌨️ Typefest (typefest/*)
+    // SECTION: ⌨️ Local Plugin (stylelint-2/*)
     // ═══════════════════════════════════════════════════════════════════════════════
     {
-        files: [
-            "src/**/*.{ts,tsx,mts,cts}",
-            //    "test/**/*.{ts,tsx,mts,cts}"
-        ],
-        name: "Typefest Rules for Source",
+        files: ["src/**/*.{ts,tsx,mts,cts}"],
+        name: "Local Plugin Rules for Source",
         plugins: {
-            typefest: typefest,
+            "stylelint-2": stylelint2,
         },
-        rules: {
-            ...typefest.configs.experimental.rules,
-        },
+        rules: {},
     },
     // #endregion
     // #region ⌨ Etc-Misc
