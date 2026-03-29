@@ -4,8 +4,29 @@
     color: #ffffff;
 }
 
+.heroShell {
+    display: grid;
+    align-items: center;
+    gap: 2rem;
+    grid-template-columns: repeat(
+        auto-fit,
+        [hero-column-start] minmax(18rem, 1fr) [hero-column-end]
+    );
+}
+
 .heroContent {
     max-inline-size: 46rem;
+}
+
+.heroVisual {
+    display: flex;
+    justify-content: center;
+}
+
+.heroImage {
+    block-size: auto;
+    filter: drop-shadow(0 1rem 2rem rgb(15 23 42 / 0.35));
+    max-inline-size: min(100%, 22rem);
 }
 
 .tagline {

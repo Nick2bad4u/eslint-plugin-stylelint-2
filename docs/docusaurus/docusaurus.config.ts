@@ -4,9 +4,9 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 const organizationName = "Nick2bad4u";
-const projectName = "eslint-plugin-stylelint";
+const projectName = "eslint-plugin-stylelint-2";
 const baseUrl =
-    process.env["DOCUSAURUS_BASE_URL"] ?? "/eslint-plugin-stylelint/";
+    process.env["DOCUSAURUS_BASE_URL"] ?? "/eslint-plugin-stylelint-2/";
 const siteUrl = "https://nick2bad4u.github.io";
 const title = "eslint-plugin-stylelint-2";
 const tagline =
@@ -14,7 +14,7 @@ const tagline =
 
 const config: Config = {
     baseUrl,
-    favicon: "img/logo.svg",
+    favicon: "img/logo_192x192.png",
     i18n: {
         defaultLocale: "en",
         locales: ["en"],
@@ -72,7 +72,7 @@ const config: Config = {
                 {
                     items: [
                         {
-                            href: "https://github.com/Nick2bad4u/eslint-plugin-stylelint",
+                            href: "https://github.com/Nick2bad4u/eslint-plugin-stylelint-2",
                             label: "GitHub",
                         },
                         {
@@ -105,7 +105,7 @@ const config: Config = {
                     to: "/docs/benchmarks",
                 },
                 {
-                    href: "https://github.com/Nick2bad4u/eslint-plugin-stylelint",
+                    href: "https://github.com/Nick2bad4u/eslint-plugin-stylelint-2",
                     label: "GitHub",
                     position: "right",
                 },

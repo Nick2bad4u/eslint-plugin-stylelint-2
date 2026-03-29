@@ -116,7 +116,7 @@ const preferStylelintDefineConfigRule: RuleModuleWithDocs<MessageIds, Options> =
                     "require wrapping exported Stylelint config objects in `defineConfig()` from `stylelint-define-config`.",
                 recommended: true,
                 requiresTypeChecking: false,
-                url: "https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/prefer-stylelint-define-config",
+                url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-define-config",
             },
             fixable: "code",
             messages: {

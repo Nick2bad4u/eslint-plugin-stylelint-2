@@ -14,6 +14,6 @@ export default [
 
 ## Rules in this preset
 
-| Rule                                                                                     | Fix |
-| ---------------------------------------------------------------------------------------- | :-: |
-| [`stylelint`](https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/stylelint) |  🔧 |
+| Rule                                                                                       | Fix |
+| ------------------------------------------------------------------------------------------ | :-: |
+| [`stylelint`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/stylelint) |  🔧 |

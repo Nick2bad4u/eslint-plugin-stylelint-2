@@ -164,7 +164,7 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
                 "enforce running Stylelint against CSS files from ESLint and surface Stylelint autofixes through ESLint's fixer pipeline.",
             recommended: true,
             requiresTypeChecking: false,
-            url: "https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/stylelint",
+            url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/stylelint",
         },
         fixable: "code",
         messages: {

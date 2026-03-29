@@ -173,7 +173,7 @@ export const createStylelintConfigBooleanOptionRule = (
                 description,
                 recommended: true,
                 requiresTypeChecking: false,
-                url: `https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/${ruleName}`,
+                url: `https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/${ruleName}`,
             },
             fixable: "code",
             messages: {

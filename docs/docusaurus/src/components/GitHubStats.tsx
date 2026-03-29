@@ -16,7 +16,7 @@ type GitHubStatsProperties = Readonly<{
 const stats: readonly GitHubStat[] = [
     {
         alt: "npm license",
-        href: "https://github.com/Nick2bad4u/eslint-plugin-stylelint/blob/main/LICENSE",
+        href: "https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/blob/main/LICENSE",
         src: "https://flat.badgen.net/npm/license/eslint-plugin-stylelint-2?color=7c3aed",
     },
     {
@@ -26,13 +26,13 @@ const stats: readonly GitHubStat[] = [
     },
     {
         alt: "GitHub stars",
-        href: "https://github.com/Nick2bad4u/eslint-plugin-stylelint/stargazers",
-        src: "https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-stylelint?color=eab308",
+        href: "https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/stargazers",
+        src: "https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-stylelint-2?color=eab308",
     },
     {
         alt: "GitHub issues",
-        href: "https://github.com/Nick2bad4u/eslint-plugin-stylelint/issues",
-        src: "https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-stylelint?color=ef4444",
+        href: "https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/issues",
+        src: "https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-stylelint-2?color=ef4444",
     },
 ];
 
