@@ -76,6 +76,16 @@ const sidebars: SidebarsConfig = {
                     type: "doc",
                 },
                 {
+                    id: "disallow-stylelint-formatter",
+                    label: "disallow-stylelint-formatter",
+                    type: "doc",
+                },
+                {
+                    id: "disallow-stylelint-ignore-disables",
+                    label: "disallow-stylelint-ignore-disables",
+                    type: "doc",
+                },
+                {
                     id: "prefer-stylelint-define-config",
                     label: "prefer-stylelint-define-config",
                     type: "doc",

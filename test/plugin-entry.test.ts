@@ -42,6 +42,8 @@ describe("plugin entry module", () => {
                 left.localeCompare(right)
             )
         ).toStrictEqual([
+            "disallow-stylelint-formatter",
+            "disallow-stylelint-ignore-disables",
             "prefer-stylelint-define-config",
             "prefer-stylelint-report-descriptionless-disables",
             "prefer-stylelint-report-invalid-scope-disables",

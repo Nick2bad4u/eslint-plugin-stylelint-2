@@ -56,6 +56,8 @@ export default [
 
 That preset currently enables:
 
+- `stylelint-2/disallow-stylelint-formatter`
+- `stylelint-2/disallow-stylelint-ignore-disables`
 - `stylelint-2/prefer-stylelint-define-config`
 - `stylelint-2/prefer-stylelint-report-descriptionless-disables`
 - `stylelint-2/prefer-stylelint-report-invalid-scope-disables`

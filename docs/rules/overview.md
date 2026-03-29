@@ -7,9 +7,10 @@ description: Overview of eslint-plugin-stylelint-2 and its Stylelint-to-ESLint w
 
 `eslint-plugin-stylelint-2` lets you run Stylelint inside ESLint for CSS files and author Stylelint config files with a more predictable typed setup.
 
-The initial rule set focuses on two high-value workflows:
+The current rule set focuses on three high-value workflows:
 
 - surface Stylelint diagnostics through ESLint with autofix support
+- disallow execution-only Stylelint config options that belong in the runner, not the shared config object
 - standardize modern `stylelint-define-config` usage in Stylelint config modules
 - require Stylelint config files to report disable comments that lack a reason
 - require the full family of Stylelint disable-comment reporting safeguards in config files
@@ -47,6 +48,8 @@ export default [
 ## Included rules
 
 - [`stylelint`](./stylelint.md)
+- [`disallow-stylelint-formatter`](./disallow-stylelint-formatter.md)
+- [`disallow-stylelint-ignore-disables`](./disallow-stylelint-ignore-disables.md)
 - [`prefer-stylelint-define-config`](./prefer-stylelint-define-config.md)
 - [`prefer-stylelint-report-descriptionless-disables`](./prefer-stylelint-report-descriptionless-disables.md)
 - [`prefer-stylelint-report-invalid-scope-disables`](./prefer-stylelint-report-invalid-scope-disables.md)

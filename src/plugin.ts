@@ -98,6 +98,8 @@ const configsPreset: Linter.Config = {
         [pluginNamespace]: stylelint2Plugin,
     },
     rules: {
+        [`${pluginNamespace}/disallow-stylelint-formatter`]: "warn",
+        [`${pluginNamespace}/disallow-stylelint-ignore-disables`]: "warn",
         [`${pluginNamespace}/prefer-stylelint-define-config`]: "warn",
         [`${pluginNamespace}/prefer-stylelint-report-descriptionless-disables`]:
             "warn",

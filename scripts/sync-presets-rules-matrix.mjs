@@ -47,6 +47,8 @@ export const extractPresetsMatrixSection = (markdown) => {
 
 const preferredRuleOrder = [
     "stylelint",
+    "disallow-stylelint-formatter",
+    "disallow-stylelint-ignore-disables",
     "prefer-stylelint-define-config",
     "prefer-stylelint-report-descriptionless-disables",
     "prefer-stylelint-report-invalid-scope-disables",

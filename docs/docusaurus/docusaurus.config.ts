@@ -19,8 +19,12 @@ const config: Config = {
         defaultLocale: "en",
         locales: ["en"],
     },
+    markdown: {
+        hooks: {
+            onBrokenMarkdownLinks: "warn",
+        },
+    },
     onBrokenLinks: "warn",
-    onBrokenMarkdownLinks: "warn",
     organizationName,
     plugins: [
         [

@@ -148,6 +148,8 @@ const toRuleTableRow = ([ruleName, ruleModule]) => {
 export const generateReadmeRulesSectionFromRules = (rules) => {
     const preferredRuleOrder = [
         "stylelint",
+        "disallow-stylelint-formatter",
+        "disallow-stylelint-ignore-disables",
         "prefer-stylelint-define-config",
         "prefer-stylelint-report-descriptionless-disables",
         "prefer-stylelint-report-invalid-scope-disables",
@@ -197,20 +199,22 @@ export const syncReadmeRulesTable = async ({ writeChanges = false } = {}) => {
     const readmeMarkdown = await readFile(readmePath, "utf8");
     const lineEnding = detectLineEnding(readmeMarkdown);
     const expectedSection = generateReadmeRulesSectionFromRules(
-        /** @type {Readonly<
-    Record<
-        string,
-        {
-            meta?: {
-                docs?: {
-                    url: string;
-                    configs?: readonly string[] | string;
-                };
-                fixable?: string;
-            };
-        }
-    >
->} */ (builtPlugin.rules)
+        /**
+         * @type {Readonly<
+         *     Record<
+         *         string,
+         *         {
+         *             meta?: {
+         *                 docs?: {
+         *                     url: string;
+         *                     configs?: readonly string[] | string;
+         *                 };
+         *                 fixable?: string;
+         *             };
+         *         }
+         *     >
+         * >}
+         */ (builtPlugin.rules)
     )
         .replace(/\n/gv, lineEnding)
         .trimEnd();

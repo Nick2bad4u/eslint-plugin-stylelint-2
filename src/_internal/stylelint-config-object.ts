@@ -2,7 +2,7 @@
  * @packageDocumentation
  * Shared helpers for reading and rewriting Stylelint config objects.
  */
-import type { TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
 import { basename } from "node:path";
 
@@ -95,4 +95,69 @@ export const getObjectPropertyByName = (
     }
 
     return undefined;
+};
+
+/**
+ * Collect top-level object properties, excluding spread elements.
+ *
+ * @param objectExpression - Object expression to inspect.
+ *
+ * @returns Top-level object properties in source order.
+ */
+export const getObjectProperties = (
+    objectExpression: Readonly<TSESTree.ObjectExpression>
+): readonly TSESTree.Property[] => {
+    const properties: TSESTree.Property[] = [];
+
+    for (const property of objectExpression.properties) {
+        if (property.type !== "Property") {
+            continue;
+        }
+
+        properties.push(property);
+    }
+
+    return properties;
+};
+
+/**
+ * Build a safe fixer for removing one top-level object property.
+ *
+ * @param options - Removal options containing the fixer, parent object
+ *   expression, and property to remove.
+ *
+ * @returns Fix removing the property while preserving object syntax.
+ */
+export const createFixToRemoveObjectProperty = (
+    options: Readonly<{
+        fixer: TSESLint.RuleFixer;
+        objectExpression: Readonly<TSESTree.ObjectExpression>;
+        property: Readonly<TSESTree.Property>;
+    }>
+): TSESLint.RuleFix => {
+    const { fixer, objectExpression, property } = options;
+    const properties = getObjectProperties(objectExpression);
+    const propertyIndex = properties.indexOf(property);
+
+    if (propertyIndex === -1) {
+        return fixer.remove(property);
+    }
+
+    if (properties.length === 1) {
+        return fixer.replaceText(objectExpression, "{}");
+    }
+
+    const nextProperty = properties[propertyIndex + 1];
+
+    if (nextProperty !== undefined) {
+        return fixer.removeRange([property.range[0], nextProperty.range[0]]);
+    }
+
+    const previousProperty = properties[propertyIndex - 1];
+
+    if (previousProperty === undefined) {
+        return fixer.remove(property);
+    }
+
+    return fixer.removeRange([previousProperty.range[1], property.range[1]]);
 };

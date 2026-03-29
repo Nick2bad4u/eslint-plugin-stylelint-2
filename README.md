@@ -1,5 +1,7 @@
 # eslint-plugin-stylelint-2
 
+[![npm license.](https://flat.badgen.net/npm/license/eslint-plugin-stylelint-2?color=purple)](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/blob/main/LICENSE) [![npm total downloads.](https://flat.badgen.net/npm/dt/eslint-plugin-stylelint-2?color=pink)](https://www.npmjs.com/package/eslint-plugin-stylelint-2) [![latest GitHub release.](https://flat.badgen.net/github/release/Nick2bad4u/eslint-plugin-stylelint-2?color=cyan)](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/releases) [![GitHub stars.](https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-stylelint-2?color=yellow)](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/stargazers) [![GitHub forks.](https://flat.badgen.net/github/forks/Nick2bad4u/eslint-plugin-stylelint-2?color=green)](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/forks) [![GitHub open issues.](https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-stylelint-2?color=red)](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/issues) [![codecov.](https://flat.badgen.net/codecov/github/Nick2bad4u/eslint-plugin-stylelint-2?color=blue)](https://codecov.io/gh/Nick2bad4u/eslint-plugin-stylelint-2)
+
 `eslint-plugin-stylelint-2` brings Stylelint reporting and autofix support into ESLint while also adding Stylelint-specific authoring rules for Stylelint config files.
 
 This package exists as `eslint-plugin-stylelint-2` on npm because `eslint-plugin-stylelint` is already taken.
@@ -69,6 +71,8 @@ export default [
 
 That preset currently enables:
 
+- `stylelint-2/disallow-stylelint-formatter`
+- `stylelint-2/disallow-stylelint-ignore-disables`
 - `stylelint-2/prefer-stylelint-define-config`
 - `stylelint-2/prefer-stylelint-report-descriptionless-disables`
 - `stylelint-2/prefer-stylelint-report-invalid-scope-disables`
@@ -110,6 +114,8 @@ export default [
 | Rule                                                                                                                                                                   | Fix | Preset key |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-: | :--------- |
 | [`stylelint`](https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/stylelint)                                                                               |  🔧 | 🟡 🎨 🟣   |
+| [`disallow-stylelint-formatter`](https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/disallow-stylelint-formatter)                                         |  🔧 | 🟡 🛠️ 🟣  |
+| [`disallow-stylelint-ignore-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/disallow-stylelint-ignore-disables)                             |  🔧 | 🟡 🛠️ 🟣  |
 | [`prefer-stylelint-define-config`](https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/prefer-stylelint-define-config)                                     |  🔧 | 🟡 🛠️ 🟣  |
 | [`prefer-stylelint-report-descriptionless-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/prefer-stylelint-report-descriptionless-disables) |  🔧 | 🟡 🛠️ 🟣  |
 | [`prefer-stylelint-report-invalid-scope-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint/docs/rules/prefer-stylelint-report-invalid-scope-disables)     |  🔧 | 🟡 🛠️ 🟣  |
@@ -134,6 +140,8 @@ If your team prefers running Stylelint separately, this package may be unnecessa
 - [Getting started](./docs/rules/getting-started.md)
 - [Presets](./docs/rules/presets/index.md)
 - [stylelint rule docs](./docs/rules/stylelint.md)
+- [disallow-stylelint-formatter](./docs/rules/disallow-stylelint-formatter.md)
+- [disallow-stylelint-ignore-disables](./docs/rules/disallow-stylelint-ignore-disables.md)
 - [prefer-stylelint-define-config](./docs/rules/prefer-stylelint-define-config.md)
 - [prefer-stylelint-report-descriptionless-disables](./docs/rules/prefer-stylelint-report-descriptionless-disables.md)
 - [prefer-stylelint-report-invalid-scope-disables](./docs/rules/prefer-stylelint-report-invalid-scope-disables.md)

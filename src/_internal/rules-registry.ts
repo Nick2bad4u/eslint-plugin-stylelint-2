@@ -4,6 +4,8 @@ import type { RuleModuleWithDocs } from "./typed-rule.js";
  * @packageDocumentation
  * Canonical runtime registry of all rule modules shipped by eslint-plugin-stylelint-2.
  */
+import disallowStylelintFormatterRule from "../rules/disallow-stylelint-formatter.js";
+import disallowStylelintIgnoreDisablesRule from "../rules/disallow-stylelint-ignore-disables.js";
 import preferStylelintDefineConfigRule from "../rules/prefer-stylelint-define-config.js";
 import preferStylelintReportDescriptionlessDisablesRule from "../rules/prefer-stylelint-report-descriptionless-disables.js";
 import preferStylelintReportInvalidScopeDisablesRule from "../rules/prefer-stylelint-report-invalid-scope-disables.js";
@@ -13,6 +15,14 @@ import stylelintRule from "../rules/stylelint.js";
 
 /** Runtime map of all rule modules keyed by unqualified rule name. */
 export const stylelint2Rules: Readonly<{
+    "disallow-stylelint-formatter": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
+    "disallow-stylelint-ignore-disables": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
     "prefer-stylelint-define-config": RuleModuleWithDocs<
         string,
         readonly unknown[]
@@ -35,6 +45,8 @@ export const stylelint2Rules: Readonly<{
     >;
     stylelint: RuleModuleWithDocs<string, readonly unknown[]>;
 }> = {
+    "disallow-stylelint-formatter": disallowStylelintFormatterRule,
+    "disallow-stylelint-ignore-disables": disallowStylelintIgnoreDisablesRule,
     "prefer-stylelint-define-config": preferStylelintDefineConfigRule,
     "prefer-stylelint-report-descriptionless-disables":
         preferStylelintReportDescriptionlessDisablesRule,
