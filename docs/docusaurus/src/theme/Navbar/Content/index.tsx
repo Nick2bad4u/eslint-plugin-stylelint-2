@@ -24,7 +24,9 @@ import styles from "./styles.module.css";
 const useNavbarItems = (): NavbarItemConfig[] =>
     useThemeConfig().navbar.items as NavbarItemConfig[];
 
-function NavbarItems({ items }: Readonly<{ items: readonly NavbarItemConfig[] }>): ReactNode {
+function NavbarItems({
+    items,
+}: Readonly<{ items: readonly NavbarItemConfig[] }>): ReactNode {
     return items.map((item, index) => (
         <ErrorCauseBoundary
             key={`${item.type ?? "default"}-${String(index)}`}
@@ -74,7 +76,9 @@ export default function NavbarContent(): ReactNode {
     const items = useNavbarItems();
     const [leftItems, rightItems] = splitNavbarItems(items);
 
-    const rightSearchItems = rightItems.filter((item) => item.type === "search");
+    const rightSearchItems = rightItems.filter(
+        (item) => item.type === "search"
+    );
     const rightItemsWithoutSearch = rightItems.filter(
         (item) => item.type !== "search"
     );
@@ -91,7 +95,11 @@ export default function NavbarContent(): ReactNode {
             right={
                 <>
                     <NavbarItems items={rightItemsWithoutSearch} />
-                    <NavbarColorModeToggle className={styles["colorModeToggle"]} />
+                    <NavbarColorModeToggle
+                        className={
+                            styles["colorModeToggle"] ?? "colorModeToggle"
+                        }
+                    />
                     {rightSearchItems.length > 0 ? (
                         <NavbarItems items={rightSearchItems} />
                     ) : (

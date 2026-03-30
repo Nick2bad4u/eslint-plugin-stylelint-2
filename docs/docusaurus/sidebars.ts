@@ -1,6 +1,6 @@
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { createRequire } from "node:module";
-import { dirname, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
@@ -12,13 +12,20 @@ type SidebarDocItem = {
     type: "doc";
 };
 
+type SidebarLinkItem = {
+    className?: string;
+    href: string;
+    label: string;
+    type: "link";
+};
+
 type SidebarGeneratedIndexLink = {
     description?: string;
     title?: string;
     type: "generated-index";
 };
 
-type SidebarCategoryLink = {
+type SidebarDocCategoryLink = {
     id: string;
     type: "doc";
 };
@@ -27,13 +34,14 @@ type SidebarCategoryItem = {
     className?: string;
     collapsed?: boolean;
     collapsible?: boolean;
+    customProps?: Record<string, string>;
     items: SidebarItem[];
     label: string;
-    link?: SidebarCategoryLink | SidebarGeneratedIndexLink;
+    link?: SidebarDocCategoryLink | SidebarGeneratedIndexLink;
     type: "category";
 };
 
-type SidebarItem = SidebarCategoryItem | SidebarDocItem;
+type SidebarItem = SidebarCategoryItem | SidebarDocItem | SidebarLinkItem;
 
 const requireFromSidebar = createRequire(import.meta.url);
 const sidebarDirectoryPath = dirname(fileURLToPath(import.meta.url));
@@ -51,10 +59,17 @@ const typedocIndexPath = resolve(
     "api",
     "index.md"
 );
+const rulesDirectoryPath = join(sidebarDirectoryPath, "..", "rules");
+const nonRuleDocIds = new Set(["getting-started", "overview"]);
+const pinnedRuleDocIds = ["stylelint"];
+const pinnedRuleDocIdSet = new Set(pinnedRuleDocIds);
 
 const isSidebarCategoryItem = (
     item: SidebarItem
 ): item is SidebarCategoryItem => item.type === "category";
+
+const isSidebarDocItem = (item: SidebarItem): item is SidebarDocItem =>
+    item.type === "doc";
 
 const getTypedocClassName = (
     label: string,
@@ -97,6 +112,10 @@ const decorateTypedocSidebarItems = (
 ): SidebarItem[] =>
     items.map((item) => {
         if (!isSidebarCategoryItem(item)) {
+            if (!isSidebarDocItem(item)) {
+                return item;
+            }
+
             return {
                 ...item,
                 id: normalizeTypedocDocId(item.id),
@@ -135,6 +154,36 @@ const loadTypedocSidebarItems = (): SidebarItem[] => {
 
     return decorateTypedocSidebarItems(loadedItems as SidebarItem[]);
 };
+
+const isMarkdownFile = (fileName: string): boolean => fileName.endsWith(".md");
+const toRuleDocId = (fileName: string): string => fileName.slice(0, -3);
+
+const discoveredRuleDocIds = readdirSync(rulesDirectoryPath, {
+    withFileTypes: true,
+})
+    .filter((entry) => entry.isFile() && isMarkdownFile(entry.name))
+    .map((entry) => toRuleDocId(entry.name))
+    .filter((ruleDocId) => !nonRuleDocIds.has(ruleDocId));
+
+const ruleDocIds = [
+    ...pinnedRuleDocIds.filter((ruleDocId) =>
+        discoveredRuleDocIds.includes(ruleDocId)
+    ),
+    ...discoveredRuleDocIds
+        .filter((ruleDocId) => !pinnedRuleDocIdSet.has(ruleDocId))
+        .sort((left, right) => left.localeCompare(right)),
+];
+
+const toNumberedRuleLabel = (ruleNumber: number, ruleDocId: string): string =>
+    `${String(ruleNumber).padStart(2, "0")} ${ruleDocId}`;
+
+const stylelintRuleLinkItems: SidebarLinkItem[] = ruleDocIds.map(
+    (ruleDocId, index) => ({
+        href: `/docs/rules/${ruleDocId}`,
+        label: toNumberedRuleLabel(index + 1, ruleDocId),
+        type: "link",
+    })
+);
 
 const typedocSidebarItems = loadTypedocSidebarItems();
 const developerSidebarItems: SidebarItem[] = [];
@@ -204,27 +253,78 @@ const docsSidebarItems: SidebarItem[] = [
         label: "🧭 Guides",
         type: "category",
     },
-];
-
-if (developerSidebarItems.length > 0) {
-    docsSidebarItems.push({
-        className: "sb-cat-developer",
+    {
+        className: "sb-cat-presets",
         collapsed: true,
         collapsible: true,
-        items: developerSidebarItems,
-        label: "🧩 Developer",
-        link: {
-            description:
-                "Generated developer-facing API docs and plugin internals reference.",
-            title: "Developer",
-            type: "generated-index",
-        },
+        items: [
+            {
+                href: "/docs/rules/presets",
+                label: "🎛️ Preset Reference",
+                type: "link",
+            },
+            {
+                className: "sb-preset-recommended",
+                href: "/docs/rules/presets/recommended",
+                label: "🟡 Recommended",
+                type: "link",
+            },
+            {
+                className: "sb-preset-stylelint-only",
+                href: "/docs/rules/presets/stylelint-only",
+                label: "🎨 Stylelint bridge only",
+                type: "link",
+            },
+            {
+                className: "sb-preset-configuration",
+                href: "/docs/rules/presets/configuration",
+                label: "🔧 Configuration only",
+                type: "link",
+            },
+            {
+                className: "sb-preset-all",
+                href: "/docs/rules/presets/all",
+                label: "🟣 All",
+                type: "link",
+            },
+        ],
+        label: "🎛️ Presets",
         type: "category",
-    });
-}
+    },
+    {
+        className: "sb-cat-rules",
+        collapsed: false,
+        collapsible: true,
+        items: [
+            {
+                href: "/docs/rules/overview",
+                label: "🏁 Rules Overview",
+                type: "link",
+            },
+            {
+                className: "sb-cat-rules-stylelint",
+                collapsed: false,
+                collapsible: true,
+                items: [
+                    {
+                        href: "/docs/rules/category/stylelint",
+                        label: "📚 stylelint Rule Catalog",
+                        type: "link",
+                    },
+                    ...stylelintRuleLinkItems,
+                ],
+                label: "stylelint",
+                type: "category",
+            },
+        ],
+        label: "📏 Rules",
+        type: "category",
+    },
+];
 
 const sidebars = {
+    developer: developerSidebarItems,
     docs: docsSidebarItems,
-} satisfies SidebarsConfig;
+} as unknown as SidebarsConfig;
 
 export default sidebars;

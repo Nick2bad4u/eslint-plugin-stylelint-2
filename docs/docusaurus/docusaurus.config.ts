@@ -416,11 +416,11 @@ const config: Config = {
                     items: [
                         {
                             label: "🏁 Overview",
-                            to: "/docs/rules/overview",
+                            to: "/docs/intro",
                         },
                         {
                             label: "🚀 Getting Started",
-                            to: "/docs/rules/getting-started",
+                            to: "/docs/getting-started",
                         },
                         {
                             label: "🎛️ Presets",
@@ -491,8 +491,7 @@ const config: Config = {
             hideOnScroll: true,
             items: [
                 {
-                    activeBaseRegex:
-                        "^/docs(?:/(?!rules(?:/|$)|developer(?:/|$)).*)?$",
+                    activeBaseRegex: "^/docs(?:/(?!developer(?:/|$)).*)?$",
                     label: "📚 Docs",
                     position: "left",
                     to: "/docs/intro",
@@ -514,15 +513,6 @@ const config: Config = {
                             label: "🛠️ Config Authoring",
                             to: "/docs/config-authoring",
                         },
-                    ],
-                },
-                {
-                    activeBaseRegex: "^/docs/rules(?:/(?!presets(?:/|$)).*)?$",
-                    label: "📜 Rules",
-                    position: "left",
-                    to: "/docs/rules/overview",
-                    type: "dropdown",
-                    items: [
                         {
                             label: "🏁 Rules Overview",
                             to: "/docs/rules/overview",
@@ -535,15 +525,6 @@ const config: Config = {
                             label: "📚 stylelint Rule Catalog",
                             to: "/docs/rules/category/stylelint",
                         },
-                    ],
-                },
-                {
-                    activeBaseRegex: "^/docs/rules/presets(?:/.*)?$",
-                    label: "🛠️ Presets",
-                    position: "left",
-                    to: "/docs/rules/presets",
-                    type: "dropdown",
-                    items: [
                         {
                             label: "🎛️ Preset Reference",
                             to: "/docs/rules/presets",

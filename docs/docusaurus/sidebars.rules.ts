@@ -5,10 +5,43 @@ import { fileURLToPath } from "node:url";
 import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
 type SidebarDocItem = {
-    readonly id: string;
-    readonly label: string;
-    readonly type: "doc";
+    className?: string;
+    customProps?: Record<string, string>;
+    id: string;
+    label: string;
+    type: "doc";
 };
+
+type SidebarLinkItem = {
+    className?: string;
+    customProps?: Record<string, string>;
+    href: string;
+    label: string;
+    type: "link";
+};
+
+type SidebarCategoryItem = {
+    className?: string;
+    collapsed?: boolean;
+    collapsible?: boolean;
+    customProps?: Record<string, string>;
+    items: SidebarItem[];
+    label: string;
+    link?:
+        | {
+              id: string;
+              type: "doc";
+          }
+        | {
+              description?: string;
+              slug?: string;
+              title?: string;
+              type: "generated-index";
+          };
+    type: "category";
+};
+
+type SidebarItem = SidebarCategoryItem | SidebarDocItem | SidebarLinkItem;
 
 const sidebarDirectoryPath = dirname(fileURLToPath(import.meta.url));
 const rulesDirectoryPath = join(sidebarDirectoryPath, "..", "rules");
@@ -46,19 +79,52 @@ const stylelintRuleItems: SidebarDocItem[] = ruleDocIds.map(
     })
 );
 
-/** Complete sidebar structure for docs site navigation. */
 const sidebars: SidebarsConfig = {
     rules: [
         {
+            className: "sb-cat-guides",
+            collapsed: true,
+            collapsible: true,
+            type: "category",
+            label: "🧭 Guides",
+            items: [
+                {
+                    href: "/docs/intro",
+                    label: "🏁 Overview",
+                    type: "link",
+                },
+                {
+                    href: "/docs/getting-started",
+                    label: "🚀 Getting Started",
+                    type: "link",
+                },
+                {
+                    href: "/docs/stylelint-bridge",
+                    label: "🎨 Stylelint bridge",
+                    type: "link",
+                },
+                {
+                    href: "/docs/config-authoring",
+                    label: "🛠️ Config authoring",
+                    type: "link",
+                },
+                {
+                    href: "/docs/faq",
+                    label: "❓ FAQ",
+                    type: "link",
+                },
+            ],
+        },
+        {
             className: "sb-doc-overview",
             id: "overview",
-            label: "🏁 Overview",
+            label: "🏁 Rules Overview",
             type: "doc",
         },
         {
             className: "sb-doc-getting-started",
             id: "getting-started",
-            label: "🚀 Getting Started",
+            label: "🚀 Rules Getting Started",
             type: "doc",
         },
         {
