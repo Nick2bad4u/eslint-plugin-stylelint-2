@@ -118,8 +118,8 @@ const configurationPreset: Linter.Config = {
 
 stylelint2Plugin.configs = {
     all: [stylelintOnlyPreset, configurationPreset],
-    configuration: configurationPreset,
     configs: configurationPreset,
+    configuration: configurationPreset,
     recommended: [stylelintOnlyPreset, configurationPreset],
     stylelintOnly: stylelintOnlyPreset,
     stylesheets: stylelintOnlyPreset,

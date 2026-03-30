@@ -1,12 +1,14 @@
 import plugin from "../plugin.mjs";
 
 /** @typedef {import("eslint").Linter.Config} FlatConfig */
-/** @typedef {Readonly<{
-    name: string;
-    files: readonly string[];
-    fix: boolean;
-    overrideConfig: readonly FlatConfig[];
-}>} BenchmarkScenario */
+/**
+ * @typedef {Readonly<{
+ *     name: string;
+ *     files: readonly string[];
+ *     fix: boolean;
+ *     overrideConfig: readonly FlatConfig[];
+ * }>} BenchmarkScenario
+ */
 
 /** @type {Record<string, FlatConfig | readonly FlatConfig[]>} */
 const pluginConfigs =

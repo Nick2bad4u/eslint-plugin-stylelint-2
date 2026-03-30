@@ -60,9 +60,9 @@ export const stylelint2Rules: Readonly<{
     stylelint: RuleModuleWithDocs<string, readonly unknown[]>;
 }> = {
     "disallow-stylelint-cache": disallowStylelintCacheRule,
-    "disallow-stylelint-formatter": disallowStylelintFormatterRule,
     "disallow-stylelint-default-severity": disallowStylelintDefaultSeverityRule,
     "disallow-stylelint-fix": disallowStylelintFixRule,
+    "disallow-stylelint-formatter": disallowStylelintFormatterRule,
     "disallow-stylelint-ignore-disables": disallowStylelintIgnoreDisablesRule,
     "disallow-stylelint-ignore-files": disallowStylelintIgnoreFilesRule,
     "prefer-stylelint-define-config": preferStylelintDefineConfigRule,

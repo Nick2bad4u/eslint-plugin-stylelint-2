@@ -32,15 +32,15 @@ export const stylelint2ConfigMetadataByName: Readonly<
         presetName: "stylelint2:all",
         readmeOrder: 4,
     },
-    configuration: {
-        icon: "🔧",
-        presetName: "stylelint2:configuration",
-        readmeOrder: 3,
-    },
     configs: {
         icon: "🔧",
         presetName: "stylelint2:configs",
         readmeOrder: 6,
+    },
+    configuration: {
+        icon: "🔧",
+        presetName: "stylelint2:configuration",
+        readmeOrder: 3,
     },
     recommended: {
         icon: "🟡",
@@ -71,15 +71,15 @@ export const stylelint2ConfigNamesByReadmeOrder: readonly Stylelint2ConfigName[]
 /** Fully-qualified preset references used in rule metadata. */
 export const stylelint2ConfigReferenceToName: Readonly<{
     "stylelint2.configs.all": "all";
-    "stylelint2.configs.configuration": "configuration";
     "stylelint2.configs.configs": "configuration";
+    "stylelint2.configs.configuration": "configuration";
     "stylelint2.configs.recommended": "recommended";
     "stylelint2.configs.stylelintOnly": "stylelintOnly";
     "stylelint2.configs.stylesheets": "stylelintOnly";
 }> = {
     "stylelint2.configs.all": "all",
-    "stylelint2.configs.configuration": "configuration",
     "stylelint2.configs.configs": "configuration",
+    "stylelint2.configs.configuration": "configuration",
     "stylelint2.configs.recommended": "recommended",
     "stylelint2.configs.stylelintOnly": "stylelintOnly",
     "stylelint2.configs.stylesheets": "stylelintOnly",

@@ -6,8 +6,10 @@ import type { RuleModuleWithDocs } from "../_internal/typed-rule.js";
 
 import { createStylelintConfigBooleanOptionRule } from "../_internal/stylelint-config-boolean-option-rule.js";
 
-/** Rule module that requires `reportInvalidScopeDisables` in Stylelint config
-files. */
+/**
+ * Rule module that requires `reportInvalidScopeDisables` in Stylelint config
+ * files.
+ */
 const preferStylelintReportInvalidScopeDisablesRule: RuleModuleWithDocs<
     string,
     readonly unknown[]
