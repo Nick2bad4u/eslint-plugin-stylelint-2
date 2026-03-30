@@ -1,16 +1,14 @@
 declare const styles: {
-    readonly badge: string;
-    readonly body: string;
     readonly card: string;
-    readonly cardDeveloper: string;
-    readonly cardDocs: string;
-    readonly cardInspectors: string;
+    readonly cardPresets: string;
+    readonly cardRules: string;
+    readonly cardStarted: string;
+    readonly description: string;
     readonly footer: string;
     readonly features: string;
     readonly grid: string;
-    readonly list: string;
+    readonly icon: string;
     readonly link: string;
-    readonly meta: string;
 };
 
 export default styles;

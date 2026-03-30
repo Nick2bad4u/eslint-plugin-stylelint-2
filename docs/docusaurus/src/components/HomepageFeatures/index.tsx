@@ -7,22 +7,18 @@ import Heading from "@theme/Heading";
 import styles from "./styles.module.css";
 
 type ExternalFeature = Readonly<{
-    badge: string;
     description: string;
-    highlights: readonly string[];
     href: string;
+    icon: string;
     linkLabel: string;
-    meta: string;
     toneClassName: string;
     title: string;
 }>;
 
 type InternalFeature = Readonly<{
-    badge: string;
     description: string;
-    highlights: readonly string[];
+    icon: string;
     linkLabel: string;
-    meta: string;
     toneClassName: string;
     title: string;
     to: string;
@@ -32,49 +28,31 @@ type Feature = ExternalFeature | InternalFeature;
 
 const features: readonly Feature[] = [
     {
-        badge: "Docs surface",
         description:
-            "Start with the rule catalog and preset guides when you need to answer what ships in each rollout path, fast.",
-        highlights: [
-            "Preset key legend linked to each preset guide",
-            "Numbered rule catalog with quick scanning",
-            "Overview and getting-started paths for rollout planning",
-        ],
-        linkLabel: "Browse preset and rule docs ↗",
-        meta: "Reference-driven adoption path",
-        title: "📚 Rule reference hub",
-        toneClassName: styles["cardDocs"] ?? "",
+            "Install the plugin, enable a preset, and start enforcing modern Stylelint config and rule-authoring patterns.",
+        icon: "",
+        linkLabel: "Open section →",
+        title: "Get Started",
+        toneClassName: styles["cardStarted"] ?? "",
+        to: "/docs/rules/getting-started",
+    },
+    {
+        description:
+            "Choose the right preset for your team, from minimal baseline policy to full strict config-authoring coverage.",
+        icon: "",
+        linkLabel: "Open section →",
+        title: "Presets",
+        toneClassName: styles["cardPresets"] ?? "",
+        to: "/docs/rules/presets",
+    },
+    {
+        description:
+            "Browse every rule with concrete incorrect/correct examples, actionable diagnostics, and migration guidance.",
+        icon: "󰘥",
+        linkLabel: "Open section →",
+        title: "Rule Reference",
+        toneClassName: styles["cardRules"] ?? "",
         to: "/docs/rules/overview",
-    },
-    {
-        badge: "Developer surface",
-        description:
-            "Open the public API and internal helpers when you need to trace how presets, rule metadata, and docs wiring fit together.",
-        highlights: [
-            "Generated TypeDoc with public and internal groupings",
-            "Developer docs that stay collapsed until you need them",
-            "Source-oriented navigation for rule and preset architecture",
-        ],
-        linkLabel: "Open developer docs ↗",
-        meta: "API and implementation details",
-        title: "🧩 Developer & API surface",
-        toneClassName: styles["cardDeveloper"] ?? "",
-        to: "/docs/developer/api",
-    },
-    {
-        badge: "Validation tools",
-        description:
-            "Validate the docs against real resolved configs with the inspector tooling instead of trusting prose alone.",
-        highlights: [
-            "ESLint config inspector for flat-config output",
-            "Stylelint inspector for config-level behavior",
-            "Useful when checking rollout diffs before enabling presets",
-        ],
-        linkLabel: "Launch the inspector tools ↗",
-        meta: "Generated tooling for reality checks",
-        title: "🔎 Inspectors & rollout tooling",
-        href: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/stylelint-inspector/",
-        toneClassName: styles["cardInspectors"] ?? "",
     },
 ];
 
@@ -83,11 +61,9 @@ export default function HomepageFeatures(): JSX.Element {
     const featuresClassName = styles["features"] ?? "";
     const gridClassName = styles["grid"] ?? "";
     const linkClassName = styles["link"] ?? "";
-    const badgeClassName = styles["badge"] ?? "";
-    const bodyClassName = styles["body"] ?? "";
+    const descriptionClassName = styles["description"] ?? "";
     const footerClassName = styles["footer"] ?? "";
-    const listClassName = styles["list"] ?? "";
-    const metaClassName = styles["meta"] ?? "";
+    const iconClassName = styles["icon"] ?? "";
 
     return (
         <section className={featuresClassName}>
@@ -103,17 +79,10 @@ export default function HomepageFeatures(): JSX.Element {
                             )}
                             data-sb-hover="lift"
                         >
-                            <p className={badgeClassName}>{feature.badge}</p>
                             <Heading as="h2">{feature.title}</Heading>
-                            <p className={metaClassName}>{feature.meta}</p>
-                            <div className={bodyClassName}>
-                                <p>{feature.description}</p>
-                                <ul className={listClassName}>
-                                    {feature.highlights.map((highlight) => (
-                                        <li key={highlight}>{highlight}</li>
-                                    ))}
-                                </ul>
-                            </div>
+                            <p className={descriptionClassName}>
+                                {feature.description}
+                            </p>
                             <div className={footerClassName}>
                                 {"href" in feature ? (
                                     <Link
@@ -130,6 +99,12 @@ export default function HomepageFeatures(): JSX.Element {
                                         {feature.linkLabel}
                                     </Link>
                                 )}
+                                <span
+                                    className={iconClassName}
+                                    aria-hidden="true"
+                                >
+                                    {feature.icon}
+                                </span>
                             </div>
                         </article>
                     ))}

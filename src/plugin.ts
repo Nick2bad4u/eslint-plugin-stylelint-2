@@ -128,9 +128,9 @@ const configurationPreset: Linter.Config = {
             "warn",
         [`${pluginNamespace}/prefer-stylelint-report-unscoped-disables`]:
             "warn",
-        [`${pluginNamespace}/require-stylelint-custom-syntax-in-overrides`]:
-            "warn",
         [`${pluginNamespace}/require-stylelint-config-file-naming-convention`]:
+            "warn",
+        [`${pluginNamespace}/require-stylelint-custom-syntax-in-overrides`]:
             "warn",
         [`${pluginNamespace}/require-stylelint-extends-packages-installed`]:
             "warn",

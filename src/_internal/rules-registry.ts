@@ -28,8 +28,8 @@ import preferStylelintReportDescriptionlessDisablesRule from "../rules/prefer-st
 import preferStylelintReportInvalidScopeDisablesRule from "../rules/prefer-stylelint-report-invalid-scope-disables.js";
 import preferStylelintReportNeedlessDisablesRule from "../rules/prefer-stylelint-report-needless-disables.js";
 import preferStylelintReportUnscopedDisablesRule from "../rules/prefer-stylelint-report-unscoped-disables.js";
-import requireStylelintCustomSyntaxInOverridesRule from "../rules/require-stylelint-custom-syntax-in-overrides.js";
 import requireStylelintConfigFileNamingConventionRule from "../rules/require-stylelint-config-file-naming-convention.js";
+import requireStylelintCustomSyntaxInOverridesRule from "../rules/require-stylelint-custom-syntax-in-overrides.js";
 import requireStylelintExtendsPackagesInstalledRule from "../rules/require-stylelint-extends-packages-installed.js";
 import requireStylelintOverridesFilesRule from "../rules/require-stylelint-overrides-files.js";
 import requireStylelintPluginsPackagesInstalledRule from "../rules/require-stylelint-plugins-packages-installed.js";
@@ -132,11 +132,11 @@ export const stylelint2Rules: Readonly<{
         string,
         readonly unknown[]
     >;
-    "require-stylelint-custom-syntax-in-overrides": RuleModuleWithDocs<
+    "require-stylelint-config-file-naming-convention": RuleModuleWithDocs<
         string,
         readonly unknown[]
     >;
-    "require-stylelint-config-file-naming-convention": RuleModuleWithDocs<
+    "require-stylelint-custom-syntax-in-overrides": RuleModuleWithDocs<
         string,
         readonly unknown[]
     >;
@@ -201,10 +201,10 @@ export const stylelint2Rules: Readonly<{
         preferStylelintReportNeedlessDisablesRule,
     "prefer-stylelint-report-unscoped-disables":
         preferStylelintReportUnscopedDisablesRule,
-    "require-stylelint-custom-syntax-in-overrides":
-        requireStylelintCustomSyntaxInOverridesRule,
     "require-stylelint-config-file-naming-convention":
         requireStylelintConfigFileNamingConventionRule,
+    "require-stylelint-custom-syntax-in-overrides":
+        requireStylelintCustomSyntaxInOverridesRule,
     "require-stylelint-extends-packages-installed":
         requireStylelintExtendsPackagesInstalledRule,
     "require-stylelint-overrides-files": requireStylelintOverridesFilesRule,

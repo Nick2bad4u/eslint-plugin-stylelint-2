@@ -72,6 +72,8 @@ describe("stylelint-2 plugin configs", () => {
                 "stylelint-2/disallow-stylelint-configuration-comment": "warn",
                 "stylelint-2/disallow-stylelint-custom-syntax": "warn",
                 "stylelint-2/disallow-stylelint-default-severity": "warn",
+                "stylelint-2/disallow-stylelint-duplicate-extends": "warn",
+                "stylelint-2/disallow-stylelint-duplicate-plugins": "warn",
                 "stylelint-2/disallow-stylelint-duplicate-rule-option-values":
                     "warn",
                 "stylelint-2/disallow-stylelint-empty-rules-object": "warn",
@@ -81,8 +83,6 @@ describe("stylelint-2 plugin configs", () => {
                 "stylelint-2/disallow-stylelint-ignore-files": "warn",
                 "stylelint-2/disallow-stylelint-null-rule-config": "warn",
                 "stylelint-2/disallow-stylelint-processors": "warn",
-                "stylelint-2/disallow-stylelint-duplicate-extends": "warn",
-                "stylelint-2/disallow-stylelint-duplicate-plugins": "warn",
                 "stylelint-2/disallow-stylelint-relative-extends-paths": "warn",
                 "stylelint-2/disallow-stylelint-relative-plugin-paths": "warn",
                 "stylelint-2/prefer-stylelint-define-config": "warn",
@@ -94,9 +94,9 @@ describe("stylelint-2 plugin configs", () => {
                     "warn",
                 "stylelint-2/prefer-stylelint-report-needless-disables": "warn",
                 "stylelint-2/prefer-stylelint-report-unscoped-disables": "warn",
-                "stylelint-2/require-stylelint-custom-syntax-in-overrides":
-                    "warn",
                 "stylelint-2/require-stylelint-config-file-naming-convention":
+                    "warn",
+                "stylelint-2/require-stylelint-custom-syntax-in-overrides":
                     "warn",
                 "stylelint-2/require-stylelint-extends-packages-installed":
                     "warn",
