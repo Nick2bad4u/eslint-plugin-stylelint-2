@@ -67,12 +67,17 @@ describe("stylelint-2 plugin configs", () => {
     it("keeps the config preset focused on the config-hygiene rules", () => {
         expect(stylelint2Plugin.configs.configuration).toMatchObject({
             rules: {
+                "stylelint-2/disallow-stylelint-allow-empty-input": "warn",
                 "stylelint-2/disallow-stylelint-cache": "warn",
+                "stylelint-2/disallow-stylelint-configuration-comment": "warn",
+                "stylelint-2/disallow-stylelint-custom-syntax": "warn",
                 "stylelint-2/disallow-stylelint-default-severity": "warn",
+                "stylelint-2/disallow-stylelint-empty-rules-object": "warn",
                 "stylelint-2/disallow-stylelint-fix": "warn",
                 "stylelint-2/disallow-stylelint-formatter": "warn",
                 "stylelint-2/disallow-stylelint-ignore-disables": "warn",
                 "stylelint-2/disallow-stylelint-ignore-files": "warn",
+                "stylelint-2/disallow-stylelint-processors": "warn",
                 "stylelint-2/prefer-stylelint-define-config": "warn",
                 "stylelint-2/prefer-stylelint-report-descriptionless-disables":
                     "warn",
@@ -80,6 +85,10 @@ describe("stylelint-2 plugin configs", () => {
                     "warn",
                 "stylelint-2/prefer-stylelint-report-needless-disables": "warn",
                 "stylelint-2/prefer-stylelint-report-unscoped-disables": "warn",
+                "stylelint-2/require-stylelint-custom-syntax-in-overrides":
+                    "warn",
+                "stylelint-2/require-stylelint-overrides-files": "warn",
+                "stylelint-2/require-stylelint-rules-object": "warn",
             },
         });
     });

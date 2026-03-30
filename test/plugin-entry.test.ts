@@ -42,17 +42,25 @@ describe("plugin entry module", () => {
                 left.localeCompare(right)
             )
         ).toStrictEqual([
+            "disallow-stylelint-allow-empty-input",
             "disallow-stylelint-cache",
+            "disallow-stylelint-configuration-comment",
+            "disallow-stylelint-custom-syntax",
             "disallow-stylelint-default-severity",
+            "disallow-stylelint-empty-rules-object",
             "disallow-stylelint-fix",
             "disallow-stylelint-formatter",
             "disallow-stylelint-ignore-disables",
             "disallow-stylelint-ignore-files",
+            "disallow-stylelint-processors",
             "prefer-stylelint-define-config",
             "prefer-stylelint-report-descriptionless-disables",
             "prefer-stylelint-report-invalid-scope-disables",
             "prefer-stylelint-report-needless-disables",
             "prefer-stylelint-report-unscoped-disables",
+            "require-stylelint-custom-syntax-in-overrides",
+            "require-stylelint-overrides-files",
+            "require-stylelint-rules-object",
             "stylelint",
         ]);
     });

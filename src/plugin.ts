@@ -98,12 +98,17 @@ const configurationPreset: Linter.Config = {
         [pluginNamespace]: stylelint2Plugin,
     },
     rules: {
+        [`${pluginNamespace}/disallow-stylelint-allow-empty-input`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-cache`]: "warn",
+        [`${pluginNamespace}/disallow-stylelint-configuration-comment`]: "warn",
+        [`${pluginNamespace}/disallow-stylelint-custom-syntax`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-default-severity`]: "warn",
+        [`${pluginNamespace}/disallow-stylelint-empty-rules-object`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-fix`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-formatter`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-ignore-disables`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-ignore-files`]: "warn",
+        [`${pluginNamespace}/disallow-stylelint-processors`]: "warn",
         [`${pluginNamespace}/prefer-stylelint-define-config`]: "warn",
         [`${pluginNamespace}/prefer-stylelint-report-descriptionless-disables`]:
             "warn",
@@ -113,6 +118,10 @@ const configurationPreset: Linter.Config = {
             "warn",
         [`${pluginNamespace}/prefer-stylelint-report-unscoped-disables`]:
             "warn",
+        [`${pluginNamespace}/require-stylelint-custom-syntax-in-overrides`]:
+            "warn",
+        [`${pluginNamespace}/require-stylelint-overrides-files`]: "warn",
+        [`${pluginNamespace}/require-stylelint-rules-object`]: "warn",
     },
 };
 

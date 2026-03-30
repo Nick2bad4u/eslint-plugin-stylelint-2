@@ -61,17 +61,25 @@ Legacy aliases remain supported:
 
 That preset currently enables:
 
+- `stylelint-2/disallow-stylelint-allow-empty-input`
 - `stylelint-2/disallow-stylelint-cache`
+- `stylelint-2/disallow-stylelint-configuration-comment`
+- `stylelint-2/disallow-stylelint-custom-syntax`
 - `stylelint-2/disallow-stylelint-default-severity`
+- `stylelint-2/disallow-stylelint-empty-rules-object`
 - `stylelint-2/disallow-stylelint-fix`
 - `stylelint-2/disallow-stylelint-formatter`
 - `stylelint-2/disallow-stylelint-ignore-disables`
 - `stylelint-2/disallow-stylelint-ignore-files`
+- `stylelint-2/disallow-stylelint-processors`
 - `stylelint-2/prefer-stylelint-define-config`
 - `stylelint-2/prefer-stylelint-report-descriptionless-disables`
 - `stylelint-2/prefer-stylelint-report-invalid-scope-disables`
 - `stylelint-2/prefer-stylelint-report-needless-disables`
 - `stylelint-2/prefer-stylelint-report-unscoped-disables`
+- `stylelint-2/require-stylelint-custom-syntax-in-overrides`
+- `stylelint-2/require-stylelint-overrides-files`
+- `stylelint-2/require-stylelint-rules-object`
 
 ## Adding Stylelint options
 

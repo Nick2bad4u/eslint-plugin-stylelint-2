@@ -54,17 +54,25 @@ Legacy aliases remain supported:
 ## Included rules
 
 - [`stylelint`](./stylelint.md)
+- [`disallow-stylelint-allow-empty-input`](./disallow-stylelint-allow-empty-input.md)
 - [`disallow-stylelint-cache`](./disallow-stylelint-cache.md)
+- [`disallow-stylelint-configuration-comment`](./disallow-stylelint-configuration-comment.md)
+- [`disallow-stylelint-custom-syntax`](./disallow-stylelint-custom-syntax.md)
 - [`disallow-stylelint-formatter`](./disallow-stylelint-formatter.md)
 - [`disallow-stylelint-default-severity`](./disallow-stylelint-default-severity.md)
+- [`disallow-stylelint-empty-rules-object`](./disallow-stylelint-empty-rules-object.md)
 - [`disallow-stylelint-fix`](./disallow-stylelint-fix.md)
 - [`disallow-stylelint-ignore-disables`](./disallow-stylelint-ignore-disables.md)
 - [`disallow-stylelint-ignore-files`](./disallow-stylelint-ignore-files.md)
+- [`disallow-stylelint-processors`](./disallow-stylelint-processors.md)
 - [`prefer-stylelint-define-config`](./prefer-stylelint-define-config.md)
 - [`prefer-stylelint-report-descriptionless-disables`](./prefer-stylelint-report-descriptionless-disables.md)
 - [`prefer-stylelint-report-invalid-scope-disables`](./prefer-stylelint-report-invalid-scope-disables.md)
 - [`prefer-stylelint-report-needless-disables`](./prefer-stylelint-report-needless-disables.md)
 - [`prefer-stylelint-report-unscoped-disables`](./prefer-stylelint-report-unscoped-disables.md)
+- [`require-stylelint-custom-syntax-in-overrides`](./require-stylelint-custom-syntax-in-overrides.md)
+- [`require-stylelint-overrides-files`](./require-stylelint-overrides-files.md)
+- [`require-stylelint-rules-object`](./require-stylelint-rules-object.md)
 
 ## Next steps
 

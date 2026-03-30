@@ -28,7 +28,7 @@ This plugin reduces that split by exposing Stylelint diagnostics through ESLint 
 ## Current rule families
 
 - **Bridge rule** — `stylelint`
-- **Config authoring rules** — `disallow-stylelint-cache`, `disallow-stylelint-default-severity`, `disallow-stylelint-fix`, `disallow-stylelint-formatter`, `disallow-stylelint-ignore-disables`, `disallow-stylelint-ignore-files`, `prefer-stylelint-define-config`, `prefer-stylelint-report-descriptionless-disables`, `prefer-stylelint-report-invalid-scope-disables`, `prefer-stylelint-report-needless-disables`, `prefer-stylelint-report-unscoped-disables`
+- **Config authoring rules** — `disallow-stylelint-allow-empty-input`, `disallow-stylelint-cache`, `disallow-stylelint-configuration-comment`, `disallow-stylelint-custom-syntax`, `disallow-stylelint-default-severity`, `disallow-stylelint-empty-rules-object`, `disallow-stylelint-fix`, `disallow-stylelint-formatter`, `disallow-stylelint-ignore-disables`, `disallow-stylelint-ignore-files`, `disallow-stylelint-processors`, `prefer-stylelint-define-config`, `prefer-stylelint-report-descriptionless-disables`, `prefer-stylelint-report-invalid-scope-disables`, `prefer-stylelint-report-needless-disables`, `prefer-stylelint-report-unscoped-disables`, `require-stylelint-custom-syntax-in-overrides`, `require-stylelint-overrides-files`, `require-stylelint-rules-object`
 
 ## Recommended adoption order
 

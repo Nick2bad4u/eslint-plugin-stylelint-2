@@ -43,14 +43,22 @@ Preset key legend:
 | Rule | Fix | Preset key |
 | --- | :-: | :-- |
 | [`stylelint`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/stylelint) | 🔧 | [🟡](./recommended.md) [🎨](./stylelint-only.md) [🟣](./all.md) |
+| [`disallow-stylelint-allow-empty-input`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-allow-empty-input) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-cache`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-cache) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`disallow-stylelint-configuration-comment`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-configuration-comment) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`disallow-stylelint-custom-syntax`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-custom-syntax) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-default-severity`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-default-severity) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`disallow-stylelint-empty-rules-object`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-empty-rules-object) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-fix`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-fix) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-formatter`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-formatter) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-ignore-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-disables) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-ignore-files`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-files) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`disallow-stylelint-processors`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-processors) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`prefer-stylelint-define-config`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-define-config) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`prefer-stylelint-report-descriptionless-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-descriptionless-disables) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`prefer-stylelint-report-invalid-scope-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-invalid-scope-disables) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`prefer-stylelint-report-needless-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-needless-disables) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`prefer-stylelint-report-unscoped-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-unscoped-disables) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`require-stylelint-custom-syntax-in-overrides`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-custom-syntax-in-overrides) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`require-stylelint-overrides-files`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-overrides-files) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`require-stylelint-rules-object`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-rules-object) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |

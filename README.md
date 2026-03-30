@@ -122,17 +122,25 @@ Preset key legend:
 | Rule                                                                                                                                                                     | Fix | Preset key                                                                                                               |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-: | :----------------------------------------------------------------------------------------------------------------------- |
 | [`stylelint`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/stylelint)                                                                               |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🎨](./docs/rules/presets/stylelint-only.md) [🟣](./docs/rules/presets/all.md) |
+| [`disallow-stylelint-allow-empty-input`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-allow-empty-input)                         |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 | [`disallow-stylelint-cache`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-cache)                                                 |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
+| [`disallow-stylelint-configuration-comment`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-configuration-comment)                 |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
+| [`disallow-stylelint-custom-syntax`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-custom-syntax)                                 |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 | [`disallow-stylelint-default-severity`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-default-severity)                           |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
+| [`disallow-stylelint-empty-rules-object`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-empty-rules-object)                       |  —  | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 | [`disallow-stylelint-fix`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-fix)                                                     |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 | [`disallow-stylelint-formatter`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-formatter)                                         |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 | [`disallow-stylelint-ignore-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-disables)                             |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 | [`disallow-stylelint-ignore-files`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-files)                                   |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
+| [`disallow-stylelint-processors`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-processors)                                       |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 | [`prefer-stylelint-define-config`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-define-config)                                     |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 | [`prefer-stylelint-report-descriptionless-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-descriptionless-disables) |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 | [`prefer-stylelint-report-invalid-scope-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-invalid-scope-disables)     |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 | [`prefer-stylelint-report-needless-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-needless-disables)               |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 | [`prefer-stylelint-report-unscoped-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-unscoped-disables)               |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
+| [`require-stylelint-custom-syntax-in-overrides`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-custom-syntax-in-overrides)         |  —  | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
+| [`require-stylelint-overrides-files`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-overrides-files)                               |  —  | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
+| [`require-stylelint-rules-object`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-rules-object)                                     |  🔧 | [🟡](./docs/rules/presets/recommended.md) [🔧](./docs/rules/presets/configuration.md) [🟣](./docs/rules/presets/all.md)  |
 
 ## Why use this plugin?
 
@@ -152,17 +160,25 @@ If your team prefers running Stylelint separately, this package may be unnecessa
 - [Getting started](./docs/rules/getting-started.md)
 - [Presets](./docs/rules/presets/index.md)
 - [stylelint rule docs](./docs/rules/stylelint.md)
+- [disallow-stylelint-allow-empty-input](./docs/rules/disallow-stylelint-allow-empty-input.md)
 - [disallow-stylelint-cache](./docs/rules/disallow-stylelint-cache.md)
+- [disallow-stylelint-configuration-comment](./docs/rules/disallow-stylelint-configuration-comment.md)
+- [disallow-stylelint-custom-syntax](./docs/rules/disallow-stylelint-custom-syntax.md)
 - [disallow-stylelint-default-severity](./docs/rules/disallow-stylelint-default-severity.md)
+- [disallow-stylelint-empty-rules-object](./docs/rules/disallow-stylelint-empty-rules-object.md)
 - [disallow-stylelint-fix](./docs/rules/disallow-stylelint-fix.md)
 - [disallow-stylelint-formatter](./docs/rules/disallow-stylelint-formatter.md)
 - [disallow-stylelint-ignore-disables](./docs/rules/disallow-stylelint-ignore-disables.md)
 - [disallow-stylelint-ignore-files](./docs/rules/disallow-stylelint-ignore-files.md)
+- [disallow-stylelint-processors](./docs/rules/disallow-stylelint-processors.md)
 - [prefer-stylelint-define-config](./docs/rules/prefer-stylelint-define-config.md)
 - [prefer-stylelint-report-descriptionless-disables](./docs/rules/prefer-stylelint-report-descriptionless-disables.md)
 - [prefer-stylelint-report-invalid-scope-disables](./docs/rules/prefer-stylelint-report-invalid-scope-disables.md)
 - [prefer-stylelint-report-needless-disables](./docs/rules/prefer-stylelint-report-needless-disables.md)
 - [prefer-stylelint-report-unscoped-disables](./docs/rules/prefer-stylelint-report-unscoped-disables.md)
+- [require-stylelint-custom-syntax-in-overrides](./docs/rules/require-stylelint-custom-syntax-in-overrides.md)
+- [require-stylelint-overrides-files](./docs/rules/require-stylelint-overrides-files.md)
+- [require-stylelint-rules-object](./docs/rules/require-stylelint-rules-object.md)
 
 ## Contributors ✨
 
