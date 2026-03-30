@@ -63,6 +63,43 @@ const getArrayLiteralElements = (
     return elements;
 };
 
+const getObjectExpressionElements = (
+    arrayExpression: Readonly<TSESTree.ArrayExpression>
+): readonly Readonly<TSESTree.ObjectExpression>[] => {
+    const objectElements: Readonly<TSESTree.ObjectExpression>[] = [];
+
+    for (const element of arrayExpression.elements) {
+        if (element?.type === "ObjectExpression") {
+            objectElements.push(element);
+        }
+    }
+
+    return objectElements;
+};
+
+const getArrayValuedOptionProperties = (
+    optionObject: Readonly<TSESTree.ObjectExpression>
+): readonly Readonly<TSESTree.ArrayExpression>[] => {
+    const optionArrays: Readonly<TSESTree.ArrayExpression>[] = [];
+
+    for (const optionProperty of optionObject.properties) {
+        if (optionProperty.type !== "Property") {
+            continue;
+        }
+
+        const optionPropertyValue = optionProperty.value;
+
+        if (
+            isPropertyExpressionValue(optionPropertyValue) &&
+            optionPropertyValue.type === "ArrayExpression"
+        ) {
+            optionArrays.push(optionPropertyValue);
+        }
+    }
+
+    return optionArrays;
+};
+
 const hasDuplicateComparableLiterals = (
     elements: readonly Readonly<TSESTree.Expression>[]
 ): boolean => {
@@ -119,6 +156,58 @@ const getArrayReplacement = (
 ): string =>
     `[${elements.map((element) => sourceCode.getText(element)).join(", ")}]`;
 
+const reportDuplicateOptionArray = (
+    context: Readonly<TSESLint.RuleContext<MessageIds, Options>>,
+    sourceCode: Readonly<TSESLint.SourceCode>,
+    optionArray: Readonly<TSESTree.ArrayExpression>
+): void => {
+    const arrayLiteralElements = getArrayLiteralElements(optionArray);
+
+    if (
+        arrayLiteralElements === undefined ||
+        !hasDuplicateComparableLiterals(arrayLiteralElements)
+    ) {
+        return;
+    }
+
+    context.report({
+        fix(fixer) {
+            const dedupedElements = getDedupedElements(arrayLiteralElements);
+
+            return fixer.replaceText(
+                optionArray,
+                getArrayReplacement(sourceCode, dedupedElements)
+            );
+        },
+        messageId: "disallowDuplicateRuleOptionValues",
+        node: optionArray,
+    });
+};
+
+const reportDuplicateRuleOptionValues = (
+    context: Readonly<TSESLint.RuleContext<MessageIds, Options>>,
+    sourceCode: Readonly<TSESLint.SourceCode>,
+    ruleEntryValue: Readonly<TSESTree.Property["value"]>
+): void => {
+    if (!isPropertyExpressionValue(ruleEntryValue)) {
+        return;
+    }
+
+    if (ruleEntryValue.type !== "ArrayExpression") {
+        return;
+    }
+
+    const optionObjects = getObjectExpressionElements(ruleEntryValue);
+
+    for (const optionObject of optionObjects) {
+        const optionArrays = getArrayValuedOptionProperties(optionObject);
+
+        for (const optionArray of optionArrays) {
+            reportDuplicateOptionArray(context, sourceCode, optionArray);
+        }
+    }
+};
+
 /**
  * Rule module that removes duplicate scalar literals from array-valued
  * Stylelint secondary option properties.
@@ -159,71 +248,11 @@ const disallowStylelintDuplicateRuleOptionValuesRule: RuleModuleWithDocs<
                 const ruleEntries = getTopLevelRuleEntries(rulesObject);
 
                 for (const ruleEntry of ruleEntries) {
-                    const ruleEntryValue = ruleEntry.value;
-
-                    if (
-                        !isPropertyExpressionValue(ruleEntryValue) ||
-                        ruleEntryValue.type !== "ArrayExpression"
-                    ) {
-                        continue;
-                    }
-
-                    for (const optionElement of ruleEntryValue.elements) {
-                        if (optionElement?.type !== "ObjectExpression") {
-                            continue;
-                        }
-
-                        for (const optionProperty of optionElement.properties) {
-                            if (optionProperty.type !== "Property") {
-                                continue;
-                            }
-
-                            const optionPropertyValue = optionProperty.value;
-
-                            if (
-                                !isPropertyExpressionValue(
-                                    optionPropertyValue
-                                ) ||
-                                optionPropertyValue.type !== "ArrayExpression"
-                            ) {
-                                continue;
-                            }
-
-                            const arrayLiteralElements =
-                                getArrayLiteralElements(optionPropertyValue);
-
-                            if (arrayLiteralElements === undefined) {
-                                continue;
-                            }
-
-                            if (
-                                !hasDuplicateComparableLiterals(
-                                    arrayLiteralElements
-                                )
-                            ) {
-                                continue;
-                            }
-
-                            context.report({
-                                fix(fixer) {
-                                    const dedupedElements =
-                                        getDedupedElements(
-                                            arrayLiteralElements
-                                        );
-
-                                    return fixer.replaceText(
-                                        optionPropertyValue,
-                                        getArrayReplacement(
-                                            sourceCode,
-                                            dedupedElements
-                                        )
-                                    );
-                                },
-                                messageId: "disallowDuplicateRuleOptionValues",
-                                node: optionPropertyValue,
-                            });
-                        }
-                    }
+                    reportDuplicateRuleOptionValues(
+                        context,
+                        sourceCode,
+                        ruleEntry.value
+                    );
                 }
             },
         });

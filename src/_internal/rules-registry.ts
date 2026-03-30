@@ -215,10 +215,7 @@ export const stylelint2Rules: Readonly<{
     "sort-stylelint-extends": sortStylelintExtendsRule,
     "sort-stylelint-plugins": sortStylelintPluginsRule,
     "sort-stylelint-rule-keys": sortStylelintRuleKeysRule,
-    stylelint: stylelintRule satisfies RuleModuleWithDocs<
-        string,
-        readonly unknown[]
-    > as RuleModuleWithDocs<string, readonly unknown[]>,
+    stylelint: stylelintRule,
 } as const;
 
 /** Unqualified rule name supported by this plugin. */
