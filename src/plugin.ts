@@ -103,13 +103,23 @@ const configurationPreset: Linter.Config = {
         [`${pluginNamespace}/disallow-stylelint-configuration-comment`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-custom-syntax`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-default-severity`]: "warn",
+        [`${pluginNamespace}/disallow-stylelint-duplicate-extends`]: "warn",
+        [`${pluginNamespace}/disallow-stylelint-duplicate-plugins`]: "warn",
+        [`${pluginNamespace}/disallow-stylelint-duplicate-rule-option-values`]:
+            "warn",
         [`${pluginNamespace}/disallow-stylelint-empty-rules-object`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-fix`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-formatter`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-ignore-disables`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-ignore-files`]: "warn",
+        [`${pluginNamespace}/disallow-stylelint-null-rule-config`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-processors`]: "warn",
+        [`${pluginNamespace}/disallow-stylelint-relative-extends-paths`]:
+            "warn",
+        [`${pluginNamespace}/disallow-stylelint-relative-plugin-paths`]: "warn",
         [`${pluginNamespace}/prefer-stylelint-define-config`]: "warn",
+        [`${pluginNamespace}/prefer-stylelint-extends-array`]: "warn",
+        [`${pluginNamespace}/prefer-stylelint-plugins-array`]: "warn",
         [`${pluginNamespace}/prefer-stylelint-report-descriptionless-disables`]:
             "warn",
         [`${pluginNamespace}/prefer-stylelint-report-invalid-scope-disables`]:
@@ -120,8 +130,18 @@ const configurationPreset: Linter.Config = {
             "warn",
         [`${pluginNamespace}/require-stylelint-custom-syntax-in-overrides`]:
             "warn",
+        [`${pluginNamespace}/require-stylelint-config-file-naming-convention`]:
+            "warn",
+        [`${pluginNamespace}/require-stylelint-extends-packages-installed`]:
+            "warn",
         [`${pluginNamespace}/require-stylelint-overrides-files`]: "warn",
+        [`${pluginNamespace}/require-stylelint-plugins-packages-installed`]:
+            "warn",
+        [`${pluginNamespace}/require-stylelint-report-disables`]: "warn",
         [`${pluginNamespace}/require-stylelint-rules-object`]: "warn",
+        [`${pluginNamespace}/sort-stylelint-extends`]: "warn",
+        [`${pluginNamespace}/sort-stylelint-plugins`]: "warn",
+        [`${pluginNamespace}/sort-stylelint-rule-keys`]: "warn",
     },
 };
 

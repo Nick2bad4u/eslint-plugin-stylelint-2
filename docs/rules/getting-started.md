@@ -66,20 +66,35 @@ That preset currently enables:
 - `stylelint-2/disallow-stylelint-configuration-comment`
 - `stylelint-2/disallow-stylelint-custom-syntax`
 - `stylelint-2/disallow-stylelint-default-severity`
+- `stylelint-2/disallow-stylelint-duplicate-extends`
+- `stylelint-2/disallow-stylelint-duplicate-plugins`
+- `stylelint-2/disallow-stylelint-duplicate-rule-option-values`
 - `stylelint-2/disallow-stylelint-empty-rules-object`
 - `stylelint-2/disallow-stylelint-fix`
 - `stylelint-2/disallow-stylelint-formatter`
 - `stylelint-2/disallow-stylelint-ignore-disables`
 - `stylelint-2/disallow-stylelint-ignore-files`
+- `stylelint-2/disallow-stylelint-null-rule-config`
 - `stylelint-2/disallow-stylelint-processors`
+- `stylelint-2/disallow-stylelint-relative-extends-paths`
+- `stylelint-2/disallow-stylelint-relative-plugin-paths`
 - `stylelint-2/prefer-stylelint-define-config`
+- `stylelint-2/prefer-stylelint-extends-array`
+- `stylelint-2/prefer-stylelint-plugins-array`
 - `stylelint-2/prefer-stylelint-report-descriptionless-disables`
 - `stylelint-2/prefer-stylelint-report-invalid-scope-disables`
 - `stylelint-2/prefer-stylelint-report-needless-disables`
 - `stylelint-2/prefer-stylelint-report-unscoped-disables`
 - `stylelint-2/require-stylelint-custom-syntax-in-overrides`
+- `stylelint-2/require-stylelint-config-file-naming-convention`
+- `stylelint-2/require-stylelint-extends-packages-installed`
 - `stylelint-2/require-stylelint-overrides-files`
+- `stylelint-2/require-stylelint-plugins-packages-installed`
+- `stylelint-2/require-stylelint-report-disables`
 - `stylelint-2/require-stylelint-rules-object`
+- `stylelint-2/sort-stylelint-extends`
+- `stylelint-2/sort-stylelint-plugins`
+- `stylelint-2/sort-stylelint-rule-keys`
 
 ## Adding Stylelint options
 

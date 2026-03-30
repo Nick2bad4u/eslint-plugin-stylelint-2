@@ -9,20 +9,35 @@ import disallowStylelintCacheRule from "../rules/disallow-stylelint-cache.js";
 import disallowStylelintConfigurationCommentRule from "../rules/disallow-stylelint-configuration-comment.js";
 import disallowStylelintCustomSyntaxRule from "../rules/disallow-stylelint-custom-syntax.js";
 import disallowStylelintDefaultSeverityRule from "../rules/disallow-stylelint-default-severity.js";
+import disallowStylelintDuplicateExtendsRule from "../rules/disallow-stylelint-duplicate-extends.js";
+import disallowStylelintDuplicatePluginsRule from "../rules/disallow-stylelint-duplicate-plugins.js";
+import disallowStylelintDuplicateRuleOptionValuesRule from "../rules/disallow-stylelint-duplicate-rule-option-values.js";
 import disallowStylelintEmptyRulesObjectRule from "../rules/disallow-stylelint-empty-rules-object.js";
 import disallowStylelintFixRule from "../rules/disallow-stylelint-fix.js";
 import disallowStylelintFormatterRule from "../rules/disallow-stylelint-formatter.js";
 import disallowStylelintIgnoreDisablesRule from "../rules/disallow-stylelint-ignore-disables.js";
 import disallowStylelintIgnoreFilesRule from "../rules/disallow-stylelint-ignore-files.js";
+import disallowStylelintNullRuleConfigRule from "../rules/disallow-stylelint-null-rule-config.js";
 import disallowStylelintProcessorsRule from "../rules/disallow-stylelint-processors.js";
+import disallowStylelintRelativeExtendsPathsRule from "../rules/disallow-stylelint-relative-extends-paths.js";
+import disallowStylelintRelativePluginPathsRule from "../rules/disallow-stylelint-relative-plugin-paths.js";
 import preferStylelintDefineConfigRule from "../rules/prefer-stylelint-define-config.js";
+import preferStylelintExtendsArrayRule from "../rules/prefer-stylelint-extends-array.js";
+import preferStylelintPluginsArrayRule from "../rules/prefer-stylelint-plugins-array.js";
 import preferStylelintReportDescriptionlessDisablesRule from "../rules/prefer-stylelint-report-descriptionless-disables.js";
 import preferStylelintReportInvalidScopeDisablesRule from "../rules/prefer-stylelint-report-invalid-scope-disables.js";
 import preferStylelintReportNeedlessDisablesRule from "../rules/prefer-stylelint-report-needless-disables.js";
 import preferStylelintReportUnscopedDisablesRule from "../rules/prefer-stylelint-report-unscoped-disables.js";
 import requireStylelintCustomSyntaxInOverridesRule from "../rules/require-stylelint-custom-syntax-in-overrides.js";
+import requireStylelintConfigFileNamingConventionRule from "../rules/require-stylelint-config-file-naming-convention.js";
+import requireStylelintExtendsPackagesInstalledRule from "../rules/require-stylelint-extends-packages-installed.js";
 import requireStylelintOverridesFilesRule from "../rules/require-stylelint-overrides-files.js";
+import requireStylelintPluginsPackagesInstalledRule from "../rules/require-stylelint-plugins-packages-installed.js";
+import requireStylelintReportDisablesRule from "../rules/require-stylelint-report-disables.js";
 import requireStylelintRulesObjectRule from "../rules/require-stylelint-rules-object.js";
+import sortStylelintExtendsRule from "../rules/sort-stylelint-extends.js";
+import sortStylelintPluginsRule from "../rules/sort-stylelint-plugins.js";
+import sortStylelintRuleKeysRule from "../rules/sort-stylelint-rule-keys.js";
 import stylelintRule from "../rules/stylelint.js";
 
 /** Runtime map of all rule modules keyed by unqualified rule name. */
@@ -44,6 +59,18 @@ export const stylelint2Rules: Readonly<{
         string,
         readonly unknown[]
     >;
+    "disallow-stylelint-duplicate-extends": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
+    "disallow-stylelint-duplicate-plugins": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
+    "disallow-stylelint-duplicate-rule-option-values": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
     "disallow-stylelint-empty-rules-object": RuleModuleWithDocs<
         string,
         readonly unknown[]
@@ -61,11 +88,31 @@ export const stylelint2Rules: Readonly<{
         string,
         readonly unknown[]
     >;
+    "disallow-stylelint-null-rule-config": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
     "disallow-stylelint-processors": RuleModuleWithDocs<
         string,
         readonly unknown[]
     >;
+    "disallow-stylelint-relative-extends-paths": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
+    "disallow-stylelint-relative-plugin-paths": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
     "prefer-stylelint-define-config": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
+    "prefer-stylelint-extends-array": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
+    "prefer-stylelint-plugins-array": RuleModuleWithDocs<
         string,
         readonly unknown[]
     >;
@@ -89,7 +136,23 @@ export const stylelint2Rules: Readonly<{
         string,
         readonly unknown[]
     >;
+    "require-stylelint-config-file-naming-convention": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
+    "require-stylelint-extends-packages-installed": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
     "require-stylelint-overrides-files": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
+    "require-stylelint-plugins-packages-installed": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
+    "require-stylelint-report-disables": RuleModuleWithDocs<
         string,
         readonly unknown[]
     >;
@@ -97,6 +160,9 @@ export const stylelint2Rules: Readonly<{
         string,
         readonly unknown[]
     >;
+    "sort-stylelint-extends": RuleModuleWithDocs<string, readonly unknown[]>;
+    "sort-stylelint-plugins": RuleModuleWithDocs<string, readonly unknown[]>;
+    "sort-stylelint-rule-keys": RuleModuleWithDocs<string, readonly unknown[]>;
     stylelint: RuleModuleWithDocs<string, readonly unknown[]>;
 }> = {
     "disallow-stylelint-allow-empty-input":
@@ -106,14 +172,27 @@ export const stylelint2Rules: Readonly<{
         disallowStylelintConfigurationCommentRule,
     "disallow-stylelint-custom-syntax": disallowStylelintCustomSyntaxRule,
     "disallow-stylelint-default-severity": disallowStylelintDefaultSeverityRule,
+    "disallow-stylelint-duplicate-extends":
+        disallowStylelintDuplicateExtendsRule,
+    "disallow-stylelint-duplicate-plugins":
+        disallowStylelintDuplicatePluginsRule,
+    "disallow-stylelint-duplicate-rule-option-values":
+        disallowStylelintDuplicateRuleOptionValuesRule,
     "disallow-stylelint-empty-rules-object":
         disallowStylelintEmptyRulesObjectRule,
     "disallow-stylelint-fix": disallowStylelintFixRule,
     "disallow-stylelint-formatter": disallowStylelintFormatterRule,
     "disallow-stylelint-ignore-disables": disallowStylelintIgnoreDisablesRule,
     "disallow-stylelint-ignore-files": disallowStylelintIgnoreFilesRule,
+    "disallow-stylelint-null-rule-config": disallowStylelintNullRuleConfigRule,
     "disallow-stylelint-processors": disallowStylelintProcessorsRule,
+    "disallow-stylelint-relative-extends-paths":
+        disallowStylelintRelativeExtendsPathsRule,
+    "disallow-stylelint-relative-plugin-paths":
+        disallowStylelintRelativePluginPathsRule,
     "prefer-stylelint-define-config": preferStylelintDefineConfigRule,
+    "prefer-stylelint-extends-array": preferStylelintExtendsArrayRule,
+    "prefer-stylelint-plugins-array": preferStylelintPluginsArrayRule,
     "prefer-stylelint-report-descriptionless-disables":
         preferStylelintReportDescriptionlessDisablesRule,
     "prefer-stylelint-report-invalid-scope-disables":
@@ -124,8 +203,18 @@ export const stylelint2Rules: Readonly<{
         preferStylelintReportUnscopedDisablesRule,
     "require-stylelint-custom-syntax-in-overrides":
         requireStylelintCustomSyntaxInOverridesRule,
+    "require-stylelint-config-file-naming-convention":
+        requireStylelintConfigFileNamingConventionRule,
+    "require-stylelint-extends-packages-installed":
+        requireStylelintExtendsPackagesInstalledRule,
     "require-stylelint-overrides-files": requireStylelintOverridesFilesRule,
+    "require-stylelint-plugins-packages-installed":
+        requireStylelintPluginsPackagesInstalledRule,
+    "require-stylelint-report-disables": requireStylelintReportDisablesRule,
     "require-stylelint-rules-object": requireStylelintRulesObjectRule,
+    "sort-stylelint-extends": sortStylelintExtendsRule,
+    "sort-stylelint-plugins": sortStylelintPluginsRule,
+    "sort-stylelint-rule-keys": sortStylelintRuleKeysRule,
     stylelint: stylelintRule satisfies RuleModuleWithDocs<
         string,
         readonly unknown[]

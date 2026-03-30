@@ -6,7 +6,8 @@ import type { RuleModuleWithDocs } from "../_internal/typed-rule.js";
 
 import { createStylelintConfigDisallowedOptionRule } from "../_internal/stylelint-config-disallowed-option-rule.js";
 
-/** Rule module that disallows top-level `customSyntax` in Stylelint config files. */
+/** Rule module that disallows top-level `customSyntax` in Stylelint config
+files. */
 const disallowStylelintCustomSyntaxRule: RuleModuleWithDocs<
     string,
     readonly unknown[]
