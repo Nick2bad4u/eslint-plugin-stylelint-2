@@ -67,8 +67,12 @@ describe("stylelint-2 plugin configs", () => {
     it("keeps the config preset focused on the config-hygiene rules", () => {
         expect(stylelint2Plugin.configs.configuration).toMatchObject({
             rules: {
+                "stylelint-2/disallow-stylelint-cache": "warn",
+                "stylelint-2/disallow-stylelint-default-severity": "warn",
+                "stylelint-2/disallow-stylelint-fix": "warn",
                 "stylelint-2/disallow-stylelint-formatter": "warn",
                 "stylelint-2/disallow-stylelint-ignore-disables": "warn",
+                "stylelint-2/disallow-stylelint-ignore-files": "warn",
                 "stylelint-2/prefer-stylelint-define-config": "warn",
                 "stylelint-2/prefer-stylelint-report-descriptionless-disables":
                     "warn",

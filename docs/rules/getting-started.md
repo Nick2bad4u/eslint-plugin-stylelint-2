@@ -61,8 +61,12 @@ Legacy aliases remain supported:
 
 That preset currently enables:
 
+- `stylelint-2/disallow-stylelint-cache`
+- `stylelint-2/disallow-stylelint-default-severity`
+- `stylelint-2/disallow-stylelint-fix`
 - `stylelint-2/disallow-stylelint-formatter`
 - `stylelint-2/disallow-stylelint-ignore-disables`
+- `stylelint-2/disallow-stylelint-ignore-files`
 - `stylelint-2/prefer-stylelint-define-config`
 - `stylelint-2/prefer-stylelint-report-descriptionless-disables`
 - `stylelint-2/prefer-stylelint-report-invalid-scope-disables`

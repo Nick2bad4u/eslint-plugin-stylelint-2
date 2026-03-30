@@ -18,8 +18,12 @@ export default [
 
 ## What this preset includes
 
+- `stylelint-2/disallow-stylelint-cache`
+- `stylelint-2/disallow-stylelint-default-severity`
+- `stylelint-2/disallow-stylelint-fix`
 - `stylelint-2/disallow-stylelint-formatter`
 - `stylelint-2/disallow-stylelint-ignore-disables`
+- `stylelint-2/disallow-stylelint-ignore-files`
 - `stylelint-2/prefer-stylelint-define-config`
 - `stylelint-2/prefer-stylelint-report-descriptionless-disables`
 - `stylelint-2/prefer-stylelint-report-invalid-scope-disables`
@@ -43,8 +47,12 @@ export default [
 
 | Rule                                                                                                                                                                     | Fix |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-: |
+| [`disallow-stylelint-cache`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-cache)                                                 |  🔧 |
+| [`disallow-stylelint-default-severity`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-default-severity)                           |  🔧 |
+| [`disallow-stylelint-fix`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-fix)                                                     |  🔧 |
 | [`disallow-stylelint-formatter`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-formatter)                                         |  🔧 |
 | [`disallow-stylelint-ignore-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-disables)                             |  🔧 |
+| [`disallow-stylelint-ignore-files`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-files)                                   |  🔧 |
 | [`prefer-stylelint-define-config`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-define-config)                                     |  🔧 |
 | [`prefer-stylelint-report-descriptionless-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-descriptionless-disables) |  🔧 |
 | [`prefer-stylelint-report-invalid-scope-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-invalid-scope-disables)     |  🔧 |

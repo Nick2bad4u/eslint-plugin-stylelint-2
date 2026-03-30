@@ -28,7 +28,7 @@ This plugin reduces that split by exposing Stylelint diagnostics through ESLint 
 ## Current rule families
 
 - **Bridge rule** — `stylelint`
-- **Config authoring rules** — `disallow-stylelint-formatter`, `disallow-stylelint-ignore-disables`, `prefer-stylelint-define-config`, `prefer-stylelint-report-descriptionless-disables`, `prefer-stylelint-report-invalid-scope-disables`, `prefer-stylelint-report-needless-disables`, `prefer-stylelint-report-unscoped-disables`
+- **Config authoring rules** — `disallow-stylelint-cache`, `disallow-stylelint-default-severity`, `disallow-stylelint-fix`, `disallow-stylelint-formatter`, `disallow-stylelint-ignore-disables`, `disallow-stylelint-ignore-files`, `prefer-stylelint-define-config`, `prefer-stylelint-report-descriptionless-disables`, `prefer-stylelint-report-invalid-scope-disables`, `prefer-stylelint-report-needless-disables`, `prefer-stylelint-report-unscoped-disables`
 
 ## Recommended adoption order
 

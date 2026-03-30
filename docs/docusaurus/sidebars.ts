@@ -71,6 +71,100 @@ const isSidebarCategoryItem = (
 const isSidebarDocItem = (item: SidebarItem): item is SidebarDocItem =>
     item.type === "doc";
 
+const isObjectRecord = (value: unknown): value is Record<string, unknown> =>
+    typeof value === "object" && value !== null;
+
+const isSidebarGeneratedIndexLink = (
+    value: unknown
+): value is SidebarGeneratedIndexLink => {
+    if (!isObjectRecord(value) || value["type"] !== "generated-index") {
+        return false;
+    }
+
+    return (
+        value["description"] === undefined ||
+        typeof value["description"] === "string"
+    );
+};
+
+const isSidebarDocCategoryLink = (
+    value: unknown
+): value is SidebarDocCategoryLink =>
+    isObjectRecord(value) &&
+    value["type"] === "doc" &&
+    typeof value["id"] === "string";
+
+const isSidebarLinkItem = (value: unknown): value is SidebarLinkItem =>
+    isObjectRecord(value) &&
+    value["type"] === "link" &&
+    typeof value["href"] === "string" &&
+    typeof value["label"] === "string" &&
+    (value["className"] === undefined ||
+        typeof value["className"] === "string");
+
+const isSidebarDocEntryItem = (value: unknown): value is SidebarDocItem =>
+    isObjectRecord(value) &&
+    value["type"] === "doc" &&
+    typeof value["id"] === "string" &&
+    typeof value["label"] === "string" &&
+    (value["className"] === undefined ||
+        typeof value["className"] === "string");
+
+const isSidebarItem = (value: unknown): value is SidebarItem => {
+    if (isSidebarLinkItem(value) || isSidebarDocEntryItem(value)) {
+        return true;
+    }
+
+    if (!isObjectRecord(value) || value["type"] !== "category") {
+        return false;
+    }
+
+    if (
+        typeof value["label"] !== "string" ||
+        !Array.isArray(value["items"]) ||
+        !value["items"].every(isSidebarItem)
+    ) {
+        return false;
+    }
+
+    if (
+        value["className"] !== undefined &&
+        typeof value["className"] !== "string"
+    ) {
+        return false;
+    }
+
+    if (
+        value["collapsed"] !== undefined &&
+        typeof value["collapsed"] !== "boolean"
+    ) {
+        return false;
+    }
+
+    if (
+        value["collapsible"] !== undefined &&
+        typeof value["collapsible"] !== "boolean"
+    ) {
+        return false;
+    }
+
+    if (
+        value["customProps"] !== undefined &&
+        !isObjectRecord(value["customProps"])
+    ) {
+        return false;
+    }
+
+    if (value["link"] === undefined) {
+        return true;
+    }
+
+    return (
+        isSidebarDocCategoryLink(value["link"]) ||
+        isSidebarGeneratedIndexLink(value["link"])
+    );
+};
+
 const getTypedocClassName = (
     label: string,
     depth: number
@@ -152,7 +246,11 @@ const loadTypedocSidebarItems = (): SidebarItem[] => {
         return [];
     }
 
-    return decorateTypedocSidebarItems(loadedItems as SidebarItem[]);
+    if (!loadedItems.every(isSidebarItem)) {
+        return [];
+    }
+
+    return decorateTypedocSidebarItems(loadedItems);
 };
 
 const isMarkdownFile = (fileName: string): boolean => fileName.endsWith(".md");
@@ -325,6 +423,6 @@ const docsSidebarItems: SidebarItem[] = [
 const sidebars = {
     developer: developerSidebarItems,
     docs: docsSidebarItems,
-} as unknown as SidebarsConfig;
+} satisfies SidebarsConfig;
 
 export default sidebars;

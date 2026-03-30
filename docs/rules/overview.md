@@ -11,6 +11,7 @@ The current rule set focuses on three high-value workflows:
 
 - surface Stylelint diagnostics through ESLint with autofix support
 - disallow execution-only Stylelint config options that belong in the runner, not the shared config object
+- disallow shared-config severity and file-ignore options that hide lint-policy changes globally
 - standardize modern `stylelint-define-config` usage in Stylelint config modules
 - require Stylelint config files to report disable comments that lack a reason
 - require the full family of Stylelint disable-comment reporting safeguards in config files
@@ -53,8 +54,12 @@ Legacy aliases remain supported:
 ## Included rules
 
 - [`stylelint`](./stylelint.md)
+- [`disallow-stylelint-cache`](./disallow-stylelint-cache.md)
 - [`disallow-stylelint-formatter`](./disallow-stylelint-formatter.md)
+- [`disallow-stylelint-default-severity`](./disallow-stylelint-default-severity.md)
+- [`disallow-stylelint-fix`](./disallow-stylelint-fix.md)
 - [`disallow-stylelint-ignore-disables`](./disallow-stylelint-ignore-disables.md)
+- [`disallow-stylelint-ignore-files`](./disallow-stylelint-ignore-files.md)
 - [`prefer-stylelint-define-config`](./prefer-stylelint-define-config.md)
 - [`prefer-stylelint-report-descriptionless-disables`](./prefer-stylelint-report-descriptionless-disables.md)
 - [`prefer-stylelint-report-invalid-scope-disables`](./prefer-stylelint-report-invalid-scope-disables.md)
