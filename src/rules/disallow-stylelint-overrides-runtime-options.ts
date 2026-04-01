@@ -75,13 +75,16 @@ const getRuntimeOptionName = (
     }
 
     const propertyKey = propertyNode.key;
-    const propertyName =
-        propertyKey.type === "Identifier"
-            ? propertyKey.name
-            : propertyKey.type === "Literal" &&
-                typeof propertyKey.value === "string"
-              ? propertyKey.value
-              : undefined;
+    let propertyName: string | undefined = undefined;
+
+    if (propertyKey.type === "Identifier") {
+        propertyName = propertyKey.name;
+    } else if (
+        propertyKey.type === "Literal" &&
+        typeof propertyKey.value === "string"
+    ) {
+        propertyName = propertyKey.value;
+    }
 
     if (propertyName === undefined) {
         return undefined;
