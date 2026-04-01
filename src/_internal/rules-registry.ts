@@ -5,7 +5,6 @@ import type { RuleModuleWithDocs } from "./typed-rule.js";
  * Canonical runtime registry of all rule modules shipped by eslint-plugin-stylelint-2.
  */
 import disallowStylelintAllowEmptyInputRule from "../rules/disallow-stylelint-allow-empty-input.js";
-import disallowStylelintCacheRule from "../rules/disallow-stylelint-cache.js";
 import disallowStylelintConfigurationCommentRule from "../rules/disallow-stylelint-configuration-comment.js";
 import disallowStylelintCustomSyntaxRule from "../rules/disallow-stylelint-custom-syntax.js";
 import disallowStylelintDefaultSeverityRule from "../rules/disallow-stylelint-default-severity.js";
@@ -13,8 +12,6 @@ import disallowStylelintDuplicateExtendsRule from "../rules/disallow-stylelint-d
 import disallowStylelintDuplicatePluginsRule from "../rules/disallow-stylelint-duplicate-plugins.js";
 import disallowStylelintDuplicateRuleOptionValuesRule from "../rules/disallow-stylelint-duplicate-rule-option-values.js";
 import disallowStylelintEmptyRulesObjectRule from "../rules/disallow-stylelint-empty-rules-object.js";
-import disallowStylelintFixRule from "../rules/disallow-stylelint-fix.js";
-import disallowStylelintFormatterRule from "../rules/disallow-stylelint-formatter.js";
 import disallowStylelintIgnoreDisablesRule from "../rules/disallow-stylelint-ignore-disables.js";
 import disallowStylelintIgnoreFilesRule from "../rules/disallow-stylelint-ignore-files.js";
 import disallowStylelintNullRuleConfigRule from "../rules/disallow-stylelint-null-rule-config.js";
@@ -22,8 +19,11 @@ import disallowStylelintOverridesRuntimeOptionsRule from "../rules/disallow-styl
 import disallowStylelintProcessorsRule from "../rules/disallow-stylelint-processors.js";
 import disallowStylelintRelativeExtendsPathsRule from "../rules/disallow-stylelint-relative-extends-paths.js";
 import disallowStylelintRelativePluginPathsRule from "../rules/disallow-stylelint-relative-plugin-paths.js";
+import preferStylelintCacheRule from "../rules/prefer-stylelint-cache.js";
 import preferStylelintDefineConfigRule from "../rules/prefer-stylelint-define-config.js";
 import preferStylelintExtendsArrayRule from "../rules/prefer-stylelint-extends-array.js";
+import preferStylelintFixRule from "../rules/prefer-stylelint-fix.js";
+import preferStylelintFormatterRule from "../rules/prefer-stylelint-formatter.js";
 import preferStylelintPluginsArrayRule from "../rules/prefer-stylelint-plugins-array.js";
 import preferStylelintReportDescriptionlessDisablesRule from "../rules/prefer-stylelint-report-descriptionless-disables.js";
 import preferStylelintReportInvalidScopeDisablesRule from "../rules/prefer-stylelint-report-invalid-scope-disables.js";
@@ -49,7 +49,6 @@ export const stylelint2Rules: Readonly<{
         string,
         readonly unknown[]
     >;
-    "disallow-stylelint-cache": RuleModuleWithDocs<string, readonly unknown[]>;
     "disallow-stylelint-configuration-comment": RuleModuleWithDocs<
         string,
         readonly unknown[]
@@ -75,11 +74,6 @@ export const stylelint2Rules: Readonly<{
         readonly unknown[]
     >;
     "disallow-stylelint-empty-rules-object": RuleModuleWithDocs<
-        string,
-        readonly unknown[]
-    >;
-    "disallow-stylelint-fix": RuleModuleWithDocs<string, readonly unknown[]>;
-    "disallow-stylelint-formatter": RuleModuleWithDocs<
         string,
         readonly unknown[]
     >;
@@ -111,11 +105,17 @@ export const stylelint2Rules: Readonly<{
         string,
         readonly unknown[]
     >;
+    "prefer-stylelint-cache": RuleModuleWithDocs<string, readonly unknown[]>;
     "prefer-stylelint-define-config": RuleModuleWithDocs<
         string,
         readonly unknown[]
     >;
     "prefer-stylelint-extends-array": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
+    "prefer-stylelint-fix": RuleModuleWithDocs<string, readonly unknown[]>;
+    "prefer-stylelint-formatter": RuleModuleWithDocs<
         string,
         readonly unknown[]
     >;
@@ -182,7 +182,6 @@ export const stylelint2Rules: Readonly<{
 }> = {
     "disallow-stylelint-allow-empty-input":
         disallowStylelintAllowEmptyInputRule,
-    "disallow-stylelint-cache": disallowStylelintCacheRule,
     "disallow-stylelint-configuration-comment":
         disallowStylelintConfigurationCommentRule,
     "disallow-stylelint-custom-syntax": disallowStylelintCustomSyntaxRule,
@@ -195,8 +194,6 @@ export const stylelint2Rules: Readonly<{
         disallowStylelintDuplicateRuleOptionValuesRule,
     "disallow-stylelint-empty-rules-object":
         disallowStylelintEmptyRulesObjectRule,
-    "disallow-stylelint-fix": disallowStylelintFixRule,
-    "disallow-stylelint-formatter": disallowStylelintFormatterRule,
     "disallow-stylelint-ignore-disables": disallowStylelintIgnoreDisablesRule,
     "disallow-stylelint-ignore-files": disallowStylelintIgnoreFilesRule,
     "disallow-stylelint-null-rule-config": disallowStylelintNullRuleConfigRule,
@@ -207,8 +204,11 @@ export const stylelint2Rules: Readonly<{
         disallowStylelintRelativeExtendsPathsRule,
     "disallow-stylelint-relative-plugin-paths":
         disallowStylelintRelativePluginPathsRule,
+    "prefer-stylelint-cache": preferStylelintCacheRule,
     "prefer-stylelint-define-config": preferStylelintDefineConfigRule,
     "prefer-stylelint-extends-array": preferStylelintExtendsArrayRule,
+    "prefer-stylelint-fix": preferStylelintFixRule,
+    "prefer-stylelint-formatter": preferStylelintFormatterRule,
     "prefer-stylelint-plugins-array": preferStylelintPluginsArrayRule,
     "prefer-stylelint-report-descriptionless-disables":
         preferStylelintReportDescriptionlessDisablesRule,

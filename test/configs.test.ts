@@ -2,10 +2,13 @@
  * @packageDocumentation
  * Vitest coverage for public preset wiring.
  */
+
 import { describe, expect, it } from "vitest";
 
 import { stylelint2ConfigNames } from "../src/_internal/stylelint2-config-references";
 import stylelint2Plugin from "../src/plugin";
+
+type UnknownRecord = Record<string, unknown>;
 
 const sortStrings = (values: readonly string[]): string[] => {
     const sortedValues: string[] = [];
@@ -24,6 +27,37 @@ const sortStrings = (values: readonly string[]): string[] => {
     }
 
     return sortedValues;
+};
+
+const isRecord = (value: unknown): value is UnknownRecord =>
+    typeof value === "object" && value !== null;
+
+const getRecommendedPresetEntries = (): readonly UnknownRecord[] => {
+    const recommendedPreset = stylelint2Plugin.configs.recommended;
+
+    if (!Array.isArray(recommendedPreset)) {
+        throw new TypeError("Expected recommended preset to be an array.");
+    }
+
+    const presetEntries: UnknownRecord[] = [];
+
+    for (const presetEntry of recommendedPreset) {
+        if (isRecord(presetEntry)) {
+            presetEntries.push(presetEntry);
+        }
+    }
+
+    return presetEntries;
+};
+
+const getRulesRecord = (value: unknown): UnknownRecord => {
+    if (!isRecord(value)) {
+        return {};
+    }
+
+    const rules = value["rules"];
+
+    return isRecord(rules) ? rules : {};
 };
 
 describe("stylelint-2 plugin configs", () => {
@@ -68,7 +102,6 @@ describe("stylelint-2 plugin configs", () => {
         expect(stylelint2Plugin.configs.configuration).toMatchObject({
             rules: {
                 "stylelint-2/disallow-stylelint-allow-empty-input": "warn",
-                "stylelint-2/disallow-stylelint-cache": "warn",
                 "stylelint-2/disallow-stylelint-configuration-comment": "warn",
                 "stylelint-2/disallow-stylelint-custom-syntax": "warn",
                 "stylelint-2/disallow-stylelint-default-severity": "warn",
@@ -77,8 +110,6 @@ describe("stylelint-2 plugin configs", () => {
                 "stylelint-2/disallow-stylelint-duplicate-rule-option-values":
                     "warn",
                 "stylelint-2/disallow-stylelint-empty-rules-object": "warn",
-                "stylelint-2/disallow-stylelint-fix": "warn",
-                "stylelint-2/disallow-stylelint-formatter": "warn",
                 "stylelint-2/disallow-stylelint-ignore-disables": "warn",
                 "stylelint-2/disallow-stylelint-ignore-files": "warn",
                 "stylelint-2/disallow-stylelint-null-rule-config": "warn",
@@ -87,8 +118,11 @@ describe("stylelint-2 plugin configs", () => {
                 "stylelint-2/disallow-stylelint-processors": "warn",
                 "stylelint-2/disallow-stylelint-relative-extends-paths": "warn",
                 "stylelint-2/disallow-stylelint-relative-plugin-paths": "warn",
+                "stylelint-2/prefer-stylelint-cache": "warn",
                 "stylelint-2/prefer-stylelint-define-config": "warn",
                 "stylelint-2/prefer-stylelint-extends-array": "warn",
+                "stylelint-2/prefer-stylelint-fix": "warn",
+                "stylelint-2/prefer-stylelint-formatter": "warn",
                 "stylelint-2/prefer-stylelint-plugins-array": "warn",
                 "stylelint-2/prefer-stylelint-report-descriptionless-disables":
                     "warn",
@@ -114,6 +148,48 @@ describe("stylelint-2 plugin configs", () => {
                 "stylelint-2/sort-stylelint-rule-keys": "warn",
             },
         });
+    });
+
+    it("keeps recommended focused on the bridge plus broadly useful config hygiene", () => {
+        const recommendedPreset = getRecommendedPresetEntries();
+        const stylesheetPreset = recommendedPreset[0];
+        const recommendedConfigPreset = recommendedPreset[1];
+
+        expect(recommendedPreset).toHaveLength(2);
+
+        expect(stylesheetPreset).toMatchObject({
+            rules: {
+                "stylelint-2/stylelint": "error",
+            },
+        });
+
+        expect(recommendedConfigPreset).toMatchObject({
+            rules: {
+                "stylelint-2/prefer-stylelint-define-config": "warn",
+                "stylelint-2/require-stylelint-rules-object": "warn",
+            },
+        });
+
+        const recommendedConfigRules = getRulesRecord(recommendedConfigPreset);
+
+        expect(recommendedConfigRules).not.toHaveProperty(
+            "stylelint-2/disallow-stylelint-default-severity"
+        );
+        expect(recommendedConfigRules).not.toHaveProperty(
+            "stylelint-2/disallow-stylelint-ignore-disables"
+        );
+        expect(recommendedConfigRules).not.toHaveProperty(
+            "stylelint-2/disallow-stylelint-ignore-files"
+        );
+        expect(recommendedConfigRules).not.toHaveProperty(
+            "stylelint-2/prefer-stylelint-cache"
+        );
+        expect(recommendedConfigRules).not.toHaveProperty(
+            "stylelint-2/prefer-stylelint-fix"
+        );
+        expect(recommendedConfigRules).not.toHaveProperty(
+            "stylelint-2/prefer-stylelint-formatter"
+        );
     });
 
     it("keeps the legacy alias presets wired to the preferred preset names", () => {

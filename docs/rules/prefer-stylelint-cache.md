@@ -1,6 +1,8 @@
-# disallow-stylelint-cache
+# prefer-stylelint-cache
 
-Disallow configuring Stylelint's top-level `cache` option inside authored Stylelint config files.
+Prefer enabling Stylelint's top-level `cache` option in authored Stylelint config files.
+
+This rule is intentionally excluded from `stylelint2.configs.recommended` because it encodes an opinionated operational default rather than a broadly applicable config-hygiene rule.
 
 ## Targeted pattern scope
 
@@ -10,19 +12,18 @@ It focuses on top-level exported config objects, including configs wrapped in `d
 
 ## What this rule reports
 
-This rule reports Stylelint config objects that include a top-level `cache` property.
+This rule reports Stylelint config objects that omit `cache`, or configure it as a disabled value.
 
 ## Why this rule exists
 
-`cache` is an execution policy decision. In shared configs, it can introduce environment-dependent behavior and stale diagnostics when different runners, editors, or CI jobs resolve cache state differently.
+If your team consistently runs Stylelint with caching enabled, an explicit top-level `cache` setting makes that default visible in the shared config instead of leaving it implicit in scattered scripts.
 
-Cache strategy is typically clearer and safer when configured at invocation level (`--cache`, task runner flags, CI profiles), not embedded in shared lint rule configuration.
+This rule is opinionated. It is useful when you want config files to advertise that fast repeated lint runs are part of the default workflow.
 
 ## ❌ Incorrect
 
 ```ts
 export default {
-    cache: true,
     rules: {},
 };
 ```
@@ -31,15 +32,16 @@ export default {
 
 ```ts
 export default {
+    cache: true,
     rules: {},
 };
 ```
 
 ## Behavior and migration notes
 
-- This rule removes the top-level `cache` property.
+- This rule auto-fixes missing or disabled top-level `cache` configuration to `cache: true`.
 - It preserves the rest of the config object.
-- Configure caching in scripts or CI profiles where cache strategy can vary by environment.
+- Use this rule only when cache-on-by-default is a deliberate repository policy.
 
 ## Additional examples
 
@@ -63,7 +65,7 @@ export default [stylelint2.configs.configuration];
 
 ## When not to use it
 
-Do not use this rule if your team intentionally enforces one shared Stylelint caching policy in committed config and accepts the operational coupling.
+Do not use this rule if your team prefers cache behavior to stay entirely at invocation scope or wants different runners to choose different cache strategies.
 
 ## Package documentation
 

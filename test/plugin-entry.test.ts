@@ -43,7 +43,6 @@ describe("plugin entry module", () => {
             )
         ).toStrictEqual([
             "disallow-stylelint-allow-empty-input",
-            "disallow-stylelint-cache",
             "disallow-stylelint-configuration-comment",
             "disallow-stylelint-custom-syntax",
             "disallow-stylelint-default-severity",
@@ -51,8 +50,6 @@ describe("plugin entry module", () => {
             "disallow-stylelint-duplicate-plugins",
             "disallow-stylelint-duplicate-rule-option-values",
             "disallow-stylelint-empty-rules-object",
-            "disallow-stylelint-fix",
-            "disallow-stylelint-formatter",
             "disallow-stylelint-ignore-disables",
             "disallow-stylelint-ignore-files",
             "disallow-stylelint-null-rule-config",
@@ -60,8 +57,11 @@ describe("plugin entry module", () => {
             "disallow-stylelint-processors",
             "disallow-stylelint-relative-extends-paths",
             "disallow-stylelint-relative-plugin-paths",
+            "prefer-stylelint-cache",
             "prefer-stylelint-define-config",
             "prefer-stylelint-extends-array",
+            "prefer-stylelint-fix",
+            "prefer-stylelint-formatter",
             "prefer-stylelint-plugins-array",
             "prefer-stylelint-report-descriptionless-disables",
             "prefer-stylelint-report-invalid-scope-disables",

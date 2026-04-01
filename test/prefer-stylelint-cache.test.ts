@@ -1,56 +1,50 @@
 /**
  * @packageDocumentation
- * RuleTester coverage for disallow-stylelint-cache.
+ * RuleTester coverage for prefer-stylelint-cache.
  */
 import { createRuleTester, getPluginRule } from "./_internal/ruleTester";
 
 const ruleTester = createRuleTester();
 
 ruleTester.run(
-    "disallow-stylelint-cache",
-    getPluginRule("disallow-stylelint-cache"),
+    "prefer-stylelint-cache",
+    getPluginRule("prefer-stylelint-cache"),
     {
         invalid: [
             {
                 code: `export default {
-    cache: true,
+    rules: {},
 };`,
-                errors: [{ messageId: "disallowConfigOption" }],
+                errors: [{ messageId: "requireConfigOption" }],
                 filename: "stylelint.config.ts",
-                output: `export default {};`,
+                output: `export default {
+    cache: true,
+    rules: {},
+};`,
             },
             {
                 code: `export default {
     cache: false,
     rules: {},
 };`,
-                errors: [{ messageId: "disallowConfigOption" }],
+                errors: [{ messageId: "requireConfigOption" }],
                 filename: "stylelint.config.ts",
                 output: `export default {
+    cache: true,
     rules: {},
-};`,
-            },
-            {
-                code: `export default {
-    rules: {},
-    cache: true
-};`,
-                errors: [{ messageId: "disallowConfigOption" }],
-                filename: "stylelint.config.ts",
-                output: `export default {
-    rules: {}
 };`,
             },
         ],
         valid: [
             {
                 code: `export default {
+    cache: true,
     rules: {},
 };`,
                 filename: "stylelint.config.ts",
             },
             {
-                code: `export default { cache: true };`,
+                code: `export default { cache: false };`,
                 filename: "not-a-stylelint-config.ts",
             },
         ],

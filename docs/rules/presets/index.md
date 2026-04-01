@@ -44,25 +44,25 @@ Preset key legend:
 | --- | :-: | :-- |
 | [`stylelint`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/stylelint) | 🔧 | [🟡](./recommended.md) [🎨](./stylelint-only.md) [🟣](./all.md) |
 | [`disallow-stylelint-allow-empty-input`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-allow-empty-input) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
-| [`disallow-stylelint-cache`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-cache) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-configuration-comment`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-configuration-comment) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-custom-syntax`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-custom-syntax) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
-| [`disallow-stylelint-default-severity`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-default-severity) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`disallow-stylelint-default-severity`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-default-severity) | 🔧 | [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-duplicate-extends`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-duplicate-extends) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-duplicate-plugins`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-duplicate-plugins) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-duplicate-rule-option-values`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-duplicate-rule-option-values) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-empty-rules-object`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-empty-rules-object) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
-| [`disallow-stylelint-fix`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-fix) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
-| [`disallow-stylelint-formatter`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-formatter) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
-| [`disallow-stylelint-ignore-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-disables) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
-| [`disallow-stylelint-ignore-files`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-files) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`disallow-stylelint-ignore-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-disables) | 🔧 | [🔧](./configuration.md) [🟣](./all.md) |
+| [`disallow-stylelint-ignore-files`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-files) | 🔧 | [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-null-rule-config`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-null-rule-config) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-overrides-runtime-options`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-overrides-runtime-options) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-processors`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-processors) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-relative-extends-paths`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-relative-extends-paths) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-relative-plugin-paths`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-relative-plugin-paths) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`prefer-stylelint-cache`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-cache) | 🔧 | [🔧](./configuration.md) [🟣](./all.md) |
 | [`prefer-stylelint-define-config`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-define-config) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`prefer-stylelint-extends-array`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-extends-array) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`prefer-stylelint-fix`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-fix) | 🔧 | [🔧](./configuration.md) [🟣](./all.md) |
+| [`prefer-stylelint-formatter`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-formatter) | — | [🔧](./configuration.md) [🟣](./all.md) |
 | [`prefer-stylelint-plugins-array`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-plugins-array) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`prefer-stylelint-report-descriptionless-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-descriptionless-disables) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`prefer-stylelint-report-invalid-scope-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-invalid-scope-disables) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |

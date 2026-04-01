@@ -3,9 +3,11 @@
 Enable both primary workflows in `eslint-plugin-stylelint-2`:
 
 - run the Stylelint bridge from ESLint for stylesheet files
-- enforce the Stylelint configuration-authoring rules in config modules
+- enforce the broadly useful Stylelint configuration-authoring rules in config modules
 
-Use this preset when you want the default rollout path and do not need to separate stylesheet linting from config hygiene.
+Use this preset when you want the default rollout path without opting into every operational or repository-specific Stylelint config preference.
+
+`recommended` intentionally leaves out the more opinionated policy rules around cache defaults, formatter defaults, autofix defaults, global ignore globs, disable-comment bypasses, and global default severity.
 
 ## Flat config example
 
@@ -24,17 +26,13 @@ export default [
 - [Configuration-only preset](./configuration.md)
 - [All preset](./all.md)
 
-## Rules in this preset
+## Notable rules in this preset
+
+For the exhaustive generated rule matrix, see [Presets overview](./index.md).
 
 | Rule                                                                                                                                                                     | Fix |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-: |
 | [`stylelint`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/stylelint)                                                                               |  🔧 |
-| [`disallow-stylelint-cache`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-cache)                                                 |  🔧 |
-| [`disallow-stylelint-default-severity`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-default-severity)                           |  🔧 |
-| [`disallow-stylelint-fix`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-fix)                                                     |  🔧 |
-| [`disallow-stylelint-formatter`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-formatter)                                         |  🔧 |
-| [`disallow-stylelint-ignore-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-disables)                             |  🔧 |
-| [`disallow-stylelint-ignore-files`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-files)                                   |  🔧 |
 | [`prefer-stylelint-define-config`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-define-config)                                     |  🔧 |
 | [`prefer-stylelint-report-descriptionless-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-descriptionless-disables) |  🔧 |
 | [`prefer-stylelint-report-invalid-scope-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-invalid-scope-disables)     |  🔧 |

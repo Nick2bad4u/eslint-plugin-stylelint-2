@@ -16,13 +16,12 @@ const disallowStylelintDefaultSeverityRule: RuleModuleWithDocs<
         deprecated: false,
         docs: {
             configs: [
-                "stylelint2.configs.recommended",
                 "stylelint2.configs.configuration",
                 "stylelint2.configs.all",
             ],
             description:
                 "disallow configuring Stylelint's top-level `defaultSeverity` option inside authored Stylelint config files.",
-            recommended: true,
+            recommended: false,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-default-severity",
         },
