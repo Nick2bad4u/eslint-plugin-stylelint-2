@@ -82,6 +82,8 @@ describe("stylelint-2 plugin configs", () => {
                 "stylelint-2/disallow-stylelint-ignore-disables": "warn",
                 "stylelint-2/disallow-stylelint-ignore-files": "warn",
                 "stylelint-2/disallow-stylelint-null-rule-config": "warn",
+                "stylelint-2/disallow-stylelint-overrides-runtime-options":
+                    "warn",
                 "stylelint-2/disallow-stylelint-processors": "warn",
                 "stylelint-2/disallow-stylelint-relative-extends-paths": "warn",
                 "stylelint-2/disallow-stylelint-relative-plugin-paths": "warn",
@@ -100,7 +102,9 @@ describe("stylelint-2 plugin configs", () => {
                     "warn",
                 "stylelint-2/require-stylelint-extends-packages-installed":
                     "warn",
+                "stylelint-2/require-stylelint-overrides-configuration": "warn",
                 "stylelint-2/require-stylelint-overrides-files": "warn",
+                "stylelint-2/require-stylelint-overrides-files-array": "warn",
                 "stylelint-2/require-stylelint-plugins-packages-installed":
                     "warn",
                 "stylelint-2/require-stylelint-report-disables": "warn",

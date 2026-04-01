@@ -45,9 +45,13 @@ const resetWorker = (): void => {
         return;
     }
 
-    workerToTerminate.terminate().catch(() => {
-        // Ignore termination failures while resetting worker state.
-    });
+    void (async () => {
+        try {
+            await workerToTerminate.terminate();
+        } catch {
+            // Ignore termination failures while resetting worker state.
+        }
+    })();
     stylelintWorker = null;
 };
 

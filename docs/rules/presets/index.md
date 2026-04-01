@@ -57,6 +57,7 @@ Preset key legend:
 | [`disallow-stylelint-ignore-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-disables) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-ignore-files`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-files) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-null-rule-config`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-null-rule-config) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`disallow-stylelint-overrides-runtime-options`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-overrides-runtime-options) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-processors`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-processors) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-relative-extends-paths`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-relative-extends-paths) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`disallow-stylelint-relative-plugin-paths`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-relative-plugin-paths) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
@@ -70,6 +71,8 @@ Preset key legend:
 | [`require-stylelint-custom-syntax-in-overrides`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-custom-syntax-in-overrides) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`require-stylelint-config-file-naming-convention`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-config-file-naming-convention) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`require-stylelint-extends-packages-installed`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-extends-packages-installed) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`require-stylelint-overrides-configuration`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-overrides-configuration) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
+| [`require-stylelint-overrides-files-array`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-overrides-files-array) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`require-stylelint-overrides-files`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-overrides-files) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`require-stylelint-plugins-packages-installed`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-plugins-packages-installed) | — | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |
 | [`require-stylelint-report-disables`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-report-disables) | 🔧 | [🟡](./recommended.md) [🔧](./configuration.md) [🟣](./all.md) |

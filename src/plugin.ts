@@ -113,6 +113,8 @@ const configurationPreset: Linter.Config = {
         [`${pluginNamespace}/disallow-stylelint-ignore-disables`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-ignore-files`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-null-rule-config`]: "warn",
+        [`${pluginNamespace}/disallow-stylelint-overrides-runtime-options`]:
+            "warn",
         [`${pluginNamespace}/disallow-stylelint-processors`]: "warn",
         [`${pluginNamespace}/disallow-stylelint-relative-extends-paths`]:
             "warn",
@@ -134,6 +136,9 @@ const configurationPreset: Linter.Config = {
             "warn",
         [`${pluginNamespace}/require-stylelint-extends-packages-installed`]:
             "warn",
+        [`${pluginNamespace}/require-stylelint-overrides-configuration`]:
+            "warn",
+        [`${pluginNamespace}/require-stylelint-overrides-files-array`]: "warn",
         [`${pluginNamespace}/require-stylelint-overrides-files`]: "warn",
         [`${pluginNamespace}/require-stylelint-plugins-packages-installed`]:
             "warn",

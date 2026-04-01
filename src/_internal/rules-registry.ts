@@ -18,6 +18,7 @@ import disallowStylelintFormatterRule from "../rules/disallow-stylelint-formatte
 import disallowStylelintIgnoreDisablesRule from "../rules/disallow-stylelint-ignore-disables.js";
 import disallowStylelintIgnoreFilesRule from "../rules/disallow-stylelint-ignore-files.js";
 import disallowStylelintNullRuleConfigRule from "../rules/disallow-stylelint-null-rule-config.js";
+import disallowStylelintOverridesRuntimeOptionsRule from "../rules/disallow-stylelint-overrides-runtime-options.js";
 import disallowStylelintProcessorsRule from "../rules/disallow-stylelint-processors.js";
 import disallowStylelintRelativeExtendsPathsRule from "../rules/disallow-stylelint-relative-extends-paths.js";
 import disallowStylelintRelativePluginPathsRule from "../rules/disallow-stylelint-relative-plugin-paths.js";
@@ -31,6 +32,8 @@ import preferStylelintReportUnscopedDisablesRule from "../rules/prefer-stylelint
 import requireStylelintConfigFileNamingConventionRule from "../rules/require-stylelint-config-file-naming-convention.js";
 import requireStylelintCustomSyntaxInOverridesRule from "../rules/require-stylelint-custom-syntax-in-overrides.js";
 import requireStylelintExtendsPackagesInstalledRule from "../rules/require-stylelint-extends-packages-installed.js";
+import requireStylelintOverridesConfigurationRule from "../rules/require-stylelint-overrides-configuration.js";
+import requireStylelintOverridesFilesArrayRule from "../rules/require-stylelint-overrides-files-array.js";
 import requireStylelintOverridesFilesRule from "../rules/require-stylelint-overrides-files.js";
 import requireStylelintPluginsPackagesInstalledRule from "../rules/require-stylelint-plugins-packages-installed.js";
 import requireStylelintReportDisablesRule from "../rules/require-stylelint-report-disables.js";
@@ -92,6 +95,10 @@ export const stylelint2Rules: Readonly<{
         string,
         readonly unknown[]
     >;
+    "disallow-stylelint-overrides-runtime-options": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
     "disallow-stylelint-processors": RuleModuleWithDocs<
         string,
         readonly unknown[]
@@ -144,7 +151,15 @@ export const stylelint2Rules: Readonly<{
         string,
         readonly unknown[]
     >;
+    "require-stylelint-overrides-configuration": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
     "require-stylelint-overrides-files": RuleModuleWithDocs<
+        string,
+        readonly unknown[]
+    >;
+    "require-stylelint-overrides-files-array": RuleModuleWithDocs<
         string,
         readonly unknown[]
     >;
@@ -185,6 +200,8 @@ export const stylelint2Rules: Readonly<{
     "disallow-stylelint-ignore-disables": disallowStylelintIgnoreDisablesRule,
     "disallow-stylelint-ignore-files": disallowStylelintIgnoreFilesRule,
     "disallow-stylelint-null-rule-config": disallowStylelintNullRuleConfigRule,
+    "disallow-stylelint-overrides-runtime-options":
+        disallowStylelintOverridesRuntimeOptionsRule,
     "disallow-stylelint-processors": disallowStylelintProcessorsRule,
     "disallow-stylelint-relative-extends-paths":
         disallowStylelintRelativeExtendsPathsRule,
@@ -207,7 +224,11 @@ export const stylelint2Rules: Readonly<{
         requireStylelintCustomSyntaxInOverridesRule,
     "require-stylelint-extends-packages-installed":
         requireStylelintExtendsPackagesInstalledRule,
+    "require-stylelint-overrides-configuration":
+        requireStylelintOverridesConfigurationRule,
     "require-stylelint-overrides-files": requireStylelintOverridesFilesRule,
+    "require-stylelint-overrides-files-array":
+        requireStylelintOverridesFilesArrayRule,
     "require-stylelint-plugins-packages-installed":
         requireStylelintPluginsPackagesInstalledRule,
     "require-stylelint-report-disables": requireStylelintReportDisablesRule,
