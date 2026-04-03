@@ -134,7 +134,6 @@ const requireStylelintOverridesConfigurationRule: RuleModuleWithDocs<
             },
         });
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -145,6 +144,7 @@ const requireStylelintOverridesConfigurationRule: RuleModuleWithDocs<
             ],
             description:
                 "require each Stylelint `overrides` entry to include at least one effective configuration property beyond `files` and optional `name`.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-overrides-configuration",

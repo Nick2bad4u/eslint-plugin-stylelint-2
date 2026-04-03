@@ -11,7 +11,6 @@ const disallowStylelintDuplicatePluginsRule: RuleModuleWithDocs<
     "disallowDuplicates",
     readonly []
 > = createStylelintConfigDisallowDuplicateArrayEntriesRule({
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -22,6 +21,7 @@ const disallowStylelintDuplicatePluginsRule: RuleModuleWithDocs<
             ],
             description:
                 "disallow duplicate entries in top-level Stylelint `plugins` declarations.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-duplicate-plugins",

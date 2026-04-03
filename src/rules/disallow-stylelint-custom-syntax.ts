@@ -14,7 +14,6 @@ const disallowStylelintCustomSyntaxRule: RuleModuleWithDocs<
     "disallowConfigOption",
     readonly []
 > = createStylelintConfigDisallowedOptionRule({
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -25,6 +24,7 @@ const disallowStylelintCustomSyntaxRule: RuleModuleWithDocs<
             ],
             description:
                 "disallow configuring Stylelint's top-level `customSyntax` option inside authored Stylelint config files.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-custom-syntax",

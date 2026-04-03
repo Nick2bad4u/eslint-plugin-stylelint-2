@@ -11,7 +11,6 @@ const preferStylelintCacheRule: RuleModuleWithDocs<
     "requireConfigOption",
     readonly []
 > = createStylelintConfigBooleanOptionRule({
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -21,6 +20,7 @@ const preferStylelintCacheRule: RuleModuleWithDocs<
             ],
             description:
                 "enforce enabled top-level Stylelint `cache` configuration in authored Stylelint config files.",
+            frozen: false,
             recommended: false,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-cache",

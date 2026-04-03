@@ -11,7 +11,6 @@ const disallowStylelintAllowEmptyInputRule: RuleModuleWithDocs<
     "disallowConfigOption",
     readonly []
 > = createStylelintConfigDisallowedOptionRule({
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -22,6 +21,7 @@ const disallowStylelintAllowEmptyInputRule: RuleModuleWithDocs<
             ],
             description:
                 "disallow configuring Stylelint's top-level `allowEmptyInput` option inside authored Stylelint config files.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-allow-empty-input",

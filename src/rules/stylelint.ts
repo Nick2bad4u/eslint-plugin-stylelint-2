@@ -18,6 +18,12 @@ type MessageIds =
     | "stylelintProblem";
 
 type Options = readonly [StylelintRuleOption?];
+
+type ReportLocation = Readonly<{
+    end: { column: number; line: number };
+    start: { column: number; line: number };
+}>;
+
 type StylelintRuleOption = Readonly<{
     allowEmptyInput?: boolean;
     configBasedir?: string;
@@ -25,12 +31,6 @@ type StylelintRuleOption = Readonly<{
     customSyntax?: string;
     ignoreDisables?: boolean;
     quiet?: boolean;
-}>;
-
-const defaultOptions = [{}] as const satisfies Options;
-type ReportLocation = Readonly<{
-    end: { column: number; line: number };
-    start: { column: number; line: number };
 }>;
 
 const toEslintLoc = (
@@ -56,10 +56,9 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
     MessageIds,
     Options
 >({
-    create(context) {
+    create(context, [rawOptions = {}]) {
         return toRuleListener({
             StyleSheet() {
-                const [rawOptions = {}] = context.options;
                 const sourceCode = context.sourceCode;
                 const lintResult = runStylelintSynchronously({
                     code: sourceCode.text,
@@ -151,9 +150,8 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
             },
         });
     },
-    defaultOptions,
-    // eslint-disable-next-line eslint-plugin/require-meta-default-options -- createTypedRule preserves the rule-level defaultOptions contract for this plugin.
     meta: {
+        defaultOptions: [{}],
         deprecated: false,
         docs: {
             configs: [

@@ -11,7 +11,6 @@ const preferStylelintExtendsArrayRule: RuleModuleWithDocs<
     "preferArray",
     readonly []
 > = createStylelintConfigPreferArrayOptionRule({
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -22,6 +21,7 @@ const preferStylelintExtendsArrayRule: RuleModuleWithDocs<
             ],
             description:
                 "prefer array form for top-level Stylelint `extends` declarations.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-extends-array",

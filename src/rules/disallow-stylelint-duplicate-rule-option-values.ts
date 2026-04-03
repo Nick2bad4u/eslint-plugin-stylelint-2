@@ -257,7 +257,6 @@ const disallowStylelintDuplicateRuleOptionValuesRule: RuleModuleWithDocs<
             },
         });
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -268,6 +267,7 @@ const disallowStylelintDuplicateRuleOptionValuesRule: RuleModuleWithDocs<
             ],
             description:
                 "disallow duplicate scalar literals in array-valued Stylelint secondary rule options.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-duplicate-rule-option-values",

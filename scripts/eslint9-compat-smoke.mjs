@@ -2,8 +2,31 @@ import { ESLint } from "eslint";
 import pc from "picocolors";
 
 /** @typedef {import("eslint").Linter.Config} FlatConfig */
-const pluginEslintMajorOverrideEnvironmentVariable =
-    "STYLELINT2_ESLINT_MAJOR";
+
+/**
+ * Internal test hook consumed by src/plugin.ts to lock config shape by ESLint
+ * major.
+ */
+const pluginEslintMajorOverrideEnvironmentVariable = "STYLELINT2_ESLINT_MAJOR";
+
+const positiveIntegerPattern = /^(?:[1-9]\d*)$/u;
+
+/**
+ * @param {string} value
+ *
+ * @returns {number | undefined}
+ */
+const parsePositiveInteger = (value) => {
+    if (!positiveIntegerPattern.test(value)) {
+        return undefined;
+    }
+
+    const parsedValue = Number.parseInt(value, 10);
+
+    return Number.isSafeInteger(parsedValue) && parsedValue > 0
+        ? parsedValue
+        : undefined;
+};
 
 /** @typedef {Record<string, FlatConfig | readonly FlatConfig[]>} PluginConfigs */
 
@@ -22,9 +45,9 @@ const getExpectedEslintMajor = (argv) => {
     }
 
     const rawMajor = expectedFlag.slice("--expect-eslint-major=".length);
-    const parsedMajor = Number.parseInt(rawMajor, 10);
+    const parsedMajor = parsePositiveInteger(rawMajor);
 
-    if (!Number.isFinite(parsedMajor) || parsedMajor <= 0) {
+    if (parsedMajor === undefined) {
         throw new TypeError(
             `Invalid --expect-eslint-major value: ${rawMajor}. Expected a positive integer major version.`
         );
@@ -40,9 +63,9 @@ const getExpectedEslintMajor = (argv) => {
  */
 const getEslintMajorVersion = (version) => {
     const [majorText = "0"] = version.split(".");
-    const parsedMajor = Number.parseInt(majorText, 10);
+    const parsedMajor = parsePositiveInteger(majorText);
 
-    if (!Number.isFinite(parsedMajor) || parsedMajor <= 0) {
+    if (parsedMajor === undefined) {
         throw new TypeError(
             `Unable to determine ESLint major version from: ${version}`
         );

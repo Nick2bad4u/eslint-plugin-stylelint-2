@@ -169,7 +169,6 @@ const disallowStylelintOverridesRuntimeOptionsRule: RuleModuleWithDocs<
             },
         });
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -180,6 +179,7 @@ const disallowStylelintOverridesRuntimeOptionsRule: RuleModuleWithDocs<
             ],
             description:
                 "disallow runtime-only Stylelint options (`allowEmptyInput`, `cache`, `fix`) inside `overrides` entries.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-overrides-runtime-options",

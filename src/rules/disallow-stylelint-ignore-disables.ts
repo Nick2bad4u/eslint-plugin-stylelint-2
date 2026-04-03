@@ -11,7 +11,6 @@ const disallowStylelintIgnoreDisablesRule: RuleModuleWithDocs<
     "disallowConfigOption",
     readonly []
 > = createStylelintConfigDisallowedOptionRule({
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -21,6 +20,7 @@ const disallowStylelintIgnoreDisablesRule: RuleModuleWithDocs<
             ],
             description:
                 "disallow configuring Stylelint's top-level `ignoreDisables` option inside authored Stylelint config files.",
+            frozen: false,
             recommended: false,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-ignore-disables",

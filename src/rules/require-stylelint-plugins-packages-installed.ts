@@ -14,7 +14,6 @@ const requireStylelintPluginsPackagesInstalledRule: RuleModuleWithDocs<
     "requireInstalledPackage",
     readonly []
 > = createStylelintConfigRequireInstalledPackageOptionRule({
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -25,6 +24,7 @@ const requireStylelintPluginsPackagesInstalledRule: RuleModuleWithDocs<
             ],
             description:
                 "require top-level Stylelint `plugins` package specifiers to be listed in workspace dependencies.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-plugins-packages-installed",

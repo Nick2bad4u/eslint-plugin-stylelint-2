@@ -79,7 +79,6 @@ const disallowStylelintEmptyRulesObjectRule: RuleModuleWithDocs<
             },
         });
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -90,6 +89,7 @@ const disallowStylelintEmptyRulesObjectRule: RuleModuleWithDocs<
             ],
             description:
                 "disallow an empty top-level `rules` object in authored Stylelint config files.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-empty-rules-object",

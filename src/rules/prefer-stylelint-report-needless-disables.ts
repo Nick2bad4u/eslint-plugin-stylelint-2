@@ -11,7 +11,6 @@ const preferStylelintReportNeedlessDisablesRule: RuleModuleWithDocs<
     "requireConfigOption",
     readonly []
 > = createStylelintConfigBooleanOptionRule({
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -22,6 +21,7 @@ const preferStylelintReportNeedlessDisablesRule: RuleModuleWithDocs<
             ],
             description:
                 "require enabling Stylelint's `reportNeedlessDisables` config option in authored Stylelint config files.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-report-needless-disables",

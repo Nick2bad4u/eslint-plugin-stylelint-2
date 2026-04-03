@@ -49,14 +49,31 @@ const eslintPluginRules = stylelint2Rules as NonNullable<
 const version =
     typeof packageJson.version === "string" ? packageJson.version : "0.0.0";
 
+/**
+ * Internal override used by compatibility smoke checks to force flat-config
+ * shape selection for the target ESLint major. Not a public runtime API.
+ */
 const eslintMajorOverrideEnvironmentVariable =
     "STYLELINT2_ESLINT_MAJOR" as const;
 
+const positiveIntegerPattern = /^[1-9]\d*$/u;
+
+const parsePositiveInteger = (value: string): number | undefined => {
+    if (!positiveIntegerPattern.test(value)) {
+        return undefined;
+    }
+
+    const parsedValue = Number.parseInt(value, 10);
+
+    return Number.isSafeInteger(parsedValue) && parsedValue > 0
+        ? parsedValue
+        : undefined;
+};
+
 const getEslintMajorVersion = (eslintVersion: string): number => {
     const [majorText = "0"] = eslintVersion.split(".");
-    const parsedMajor = Number.parseInt(majorText, 10);
 
-    return Number.isFinite(parsedMajor) && parsedMajor > 0 ? parsedMajor : 0;
+    return parsePositiveInteger(majorText) ?? 0;
 };
 
 const getEslintMajorVersionOverride = (): number | undefined => {
@@ -67,11 +84,7 @@ const getEslintMajorVersionOverride = (): number | undefined => {
         return undefined;
     }
 
-    const parsedOverride = Number.parseInt(overrideValue, 10);
-
-    return Number.isFinite(parsedOverride) && parsedOverride > 0
-        ? parsedOverride
-        : undefined;
+    return parsePositiveInteger(overrideValue);
 };
 
 const resolvedEslintMajorVersion =

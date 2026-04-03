@@ -176,7 +176,6 @@ const sortStylelintRuleKeysRule: RuleModuleWithDocs<MessageIds, Options> =
                 },
             });
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

@@ -11,7 +11,6 @@ const disallowStylelintRelativeExtendsPathsRule: RuleModuleWithDocs<
     "disallowRelative",
     readonly []
 > = createStylelintConfigDisallowRelativeArrayEntriesRule({
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -22,6 +21,7 @@ const disallowStylelintRelativeExtendsPathsRule: RuleModuleWithDocs<
             ],
             description:
                 "disallow relative path entries in top-level Stylelint `extends` declarations.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-relative-extends-paths",

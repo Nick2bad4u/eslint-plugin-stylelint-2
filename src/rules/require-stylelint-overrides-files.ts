@@ -137,7 +137,6 @@ const requireStylelintOverridesFilesRule: RuleModuleWithDocs<
             },
         });
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -148,6 +147,7 @@ const requireStylelintOverridesFilesRule: RuleModuleWithDocs<
             ],
             description:
                 "require every Stylelint override entry to declare non-empty `files` matchers.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-overrides-files",

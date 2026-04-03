@@ -110,7 +110,6 @@ const disallowStylelintNullRuleConfigRule: RuleModuleWithDocs<
             },
         });
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -121,6 +120,7 @@ const disallowStylelintNullRuleConfigRule: RuleModuleWithDocs<
             ],
             description:
                 "disallow `null` values in top-level Stylelint `rules` entries.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-null-rule-config",

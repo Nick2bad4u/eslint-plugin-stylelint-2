@@ -132,7 +132,6 @@ const requireStylelintOverridesFilesArrayRule: RuleModuleWithDocs<
             },
         });
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -143,6 +142,7 @@ const requireStylelintOverridesFilesArrayRule: RuleModuleWithDocs<
             ],
             description:
                 "require Stylelint override `files` declarations to be explicit non-empty arrays of glob strings.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-overrides-files-array",

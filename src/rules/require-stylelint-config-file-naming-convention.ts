@@ -54,7 +54,6 @@ const requireStylelintConfigFileNamingConventionRule: RuleModuleWithDocs<
             },
         });
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -65,6 +64,7 @@ const requireStylelintConfigFileNamingConventionRule: RuleModuleWithDocs<
             ],
             description:
                 "require canonical `stylelint.config.*` naming for shared Stylelint config files.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-config-file-naming-convention",

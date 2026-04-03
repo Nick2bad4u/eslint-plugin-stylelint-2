@@ -9,7 +9,6 @@ import { createStylelintConfigSortArrayEntriesRule } from "../_internal/stylelin
 /** Rule module that enforces sorted top-level Stylelint `extends` entries. */
 const sortStylelintExtendsRule: RuleModuleWithDocs<"sortArray", readonly []> =
     createStylelintConfigSortArrayEntriesRule({
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {

@@ -132,7 +132,6 @@ const requireStylelintCustomSyntaxInOverridesRule: RuleModuleWithDocs<
             },
         });
     },
-    defaultOptions: [],
     meta: {
         deprecated: false,
         docs: {
@@ -143,6 +142,7 @@ const requireStylelintCustomSyntaxInOverridesRule: RuleModuleWithDocs<
             ],
             description:
                 "require top-level `customSyntax` usage to be moved into `overrides` entries with explicit file scope.",
+            frozen: false,
             recommended: true,
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-custom-syntax-in-overrides",

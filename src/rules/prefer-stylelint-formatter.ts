@@ -37,8 +37,10 @@ const hasUsableFormatterValue = (
     return true;
 };
 
-/** Rule module that prefers explicit formatter configuration in Stylelint config
-files. */
+/**
+ * Rule module that prefers explicit formatter configuration in Stylelint config
+ * files.
+ */
 const preferStylelintFormatterRule: RuleModuleWithDocs<MessageIds, Options> =
     createTypedRule({
         create(context) {
@@ -92,7 +94,6 @@ const preferStylelintFormatterRule: RuleModuleWithDocs<MessageIds, Options> =
                 },
             });
         },
-        defaultOptions: [],
         meta: {
             deprecated: false,
             docs: {
@@ -102,6 +103,7 @@ const preferStylelintFormatterRule: RuleModuleWithDocs<MessageIds, Options> =
                 ],
                 description:
                     "require explicit top-level Stylelint `formatter` configuration in authored Stylelint config files.",
+                frozen: false,
                 recommended: false,
                 requiresTypeChecking: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-formatter",
