@@ -60,7 +60,8 @@ const getEslintMajorVersion = (eslintVersion: string): number => {
 };
 
 const getEslintMajorVersionOverride = (): number | undefined => {
-    const overrideValue = process.env[eslintMajorOverrideEnvironmentVariable];
+    const overrideValue =
+        globalThis.process.env[eslintMajorOverrideEnvironmentVariable];
 
     if (typeof overrideValue !== "string" || overrideValue.length === 0) {
         return undefined;
@@ -77,8 +78,7 @@ const resolvedEslintMajorVersion =
     getEslintMajorVersionOverride() ??
     getEslintMajorVersion(ESLintRuntime.version);
 
-const supportsCssLanguageInFlatConfig =
-    resolvedEslintMajorVersion >= 10;
+const supportsCssLanguageInFlatConfig = resolvedEslintMajorVersion >= 10;
 
 const cssLanguagePresetFields: Readonly<Record<string, unknown>> =
     supportsCssLanguageInFlatConfig
