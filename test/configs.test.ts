@@ -3,12 +3,33 @@
  * Vitest coverage for public preset wiring.
  */
 
+import { ESLint } from "eslint";
 import { describe, expect, it } from "vitest";
 
 import { stylelint2ConfigNames } from "../src/_internal/stylelint2-config-references";
 import stylelint2Plugin from "../src/plugin";
 
 type UnknownRecord = Record<string, unknown>;
+
+const getEslintMajorVersion = (eslintVersion: string): number => {
+    const [majorText = "0"] = eslintVersion.split(".");
+    const parsedMajor = Number.parseInt(majorText, 10);
+
+    return Number.isFinite(parsedMajor) && parsedMajor > 0 ? parsedMajor : 0;
+};
+
+const supportsCssLanguageInFlatConfig =
+    getEslintMajorVersion(ESLint.version) >= 10;
+
+const expectedStylelintOnlyPresetShape: UnknownRecord =
+    supportsCssLanguageInFlatConfig
+        ? {
+              files: ["**/*.css"],
+              language: "css/css",
+          }
+        : {
+              files: ["**/*.css"],
+          };
 
 const sortStrings = (values: readonly string[]): string[] => {
     const sortedValues: string[] = [];
@@ -68,10 +89,9 @@ describe("stylelint-2 plugin configs", () => {
     });
 
     it("keeps stylesheet and config presets focused on different file sets", () => {
-        expect(stylelint2Plugin.configs.stylelintOnly).toMatchObject({
-            files: ["**/*.css"],
-            language: "css/css",
-        });
+        expect(stylelint2Plugin.configs.stylelintOnly).toMatchObject(
+            expectedStylelintOnlyPresetShape
+        );
 
         expect(stylelint2Plugin.configs.configuration).toMatchObject({
             files: [

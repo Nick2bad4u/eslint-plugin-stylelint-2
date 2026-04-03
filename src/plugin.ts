@@ -6,6 +6,7 @@ import type { ESLint, Linter } from "eslint";
 
 import css from "@eslint/css";
 import tsParser from "@typescript-eslint/parser";
+import { ESLint as ESLintRuntime } from "eslint";
 
 import packageJson from "../package.json" with { type: "json" };
 import { stylelint2Rules } from "./_internal/rules-registry.js";
@@ -48,6 +49,47 @@ const eslintPluginRules = stylelint2Rules as NonNullable<
 const version =
     typeof packageJson.version === "string" ? packageJson.version : "0.0.0";
 
+const eslintMajorOverrideEnvironmentVariable =
+    "STYLELINT2_ESLINT_MAJOR" as const;
+
+const getEslintMajorVersion = (eslintVersion: string): number => {
+    const [majorText = "0"] = eslintVersion.split(".");
+    const parsedMajor = Number.parseInt(majorText, 10);
+
+    return Number.isFinite(parsedMajor) && parsedMajor > 0 ? parsedMajor : 0;
+};
+
+const getEslintMajorVersionOverride = (): number | undefined => {
+    const overrideValue = process.env[eslintMajorOverrideEnvironmentVariable];
+
+    if (typeof overrideValue !== "string" || overrideValue.length === 0) {
+        return undefined;
+    }
+
+    const parsedOverride = Number.parseInt(overrideValue, 10);
+
+    return Number.isFinite(parsedOverride) && parsedOverride > 0
+        ? parsedOverride
+        : undefined;
+};
+
+const resolvedEslintMajorVersion =
+    getEslintMajorVersionOverride() ??
+    getEslintMajorVersion(ESLintRuntime.version);
+
+const supportsCssLanguageInFlatConfig =
+    resolvedEslintMajorVersion >= 10;
+
+const cssLanguagePresetFields: Readonly<Record<string, unknown>> =
+    supportsCssLanguageInFlatConfig
+        ? {
+              language: "css/css",
+              languageOptions: {
+                  tolerant: true,
+              },
+          }
+        : {};
+
 /** Fully assembled runtime plugin object exported by this package. */
 /** Fully assembled runtime plugin object exported by this package. */
 const stylelint2Plugin: ESLint.Plugin & {
@@ -71,13 +113,10 @@ const stylelint2Plugin: ESLint.Plugin & {
 
 const stylelintOnlyPreset: Linter.Config = {
     files: [...stylesheetFiles],
-    language: "css/css",
-    languageOptions: {
-        tolerant: true,
-    },
+    ...cssLanguagePresetFields,
     name: stylelint2ConfigMetadataByName.stylelintOnly.presetName,
     plugins: {
-        css,
+        ...(supportsCssLanguageInFlatConfig ? { css } : {}),
         [pluginNamespace]: stylelint2Plugin,
     },
     rules: {

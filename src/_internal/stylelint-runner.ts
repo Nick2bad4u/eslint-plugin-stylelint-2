@@ -21,14 +21,12 @@ const lintResultCache = new Map<string, SerializableStylelintResult>();
 
 let stylelintWorker: null | Worker = null;
 const usesTypeScriptSourceWorker = import.meta.url.endsWith(".ts");
-/* eslint-disable total-functions/no-partial-url-constructor -- Worker module resolution needs a relative URL anchored to this module. */
 const workerModuleUrl = new URL(
     usesTypeScriptSourceWorker
         ? "./stylelint-worker.ts"
         : "./stylelint-worker.js",
     import.meta.url
 );
-/* eslint-enable total-functions/no-partial-url-constructor -- Re-enable after the worker module URL is resolved. */
 
 const createWorker = (): Worker =>
     new Worker(workerModuleUrl, {

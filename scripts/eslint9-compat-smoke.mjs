@@ -1,14 +1,11 @@
 import { ESLint } from "eslint";
 import pc from "picocolors";
 
-import plugin from "../plugin.mjs";
-
 /** @typedef {import("eslint").Linter.Config} FlatConfig */
-/** @type {Record<string, FlatConfig | readonly FlatConfig[]>} */
-const pluginConfigs =
-    /** @type {Record<string, FlatConfig | readonly FlatConfig[]>} */ (
-        plugin.configs ?? {}
-    );
+const pluginEslintMajorOverrideEnvironmentVariable =
+    "STYLELINT2_ESLINT_MAJOR";
+
+/** @typedef {Record<string, FlatConfig | readonly FlatConfig[]>} PluginConfigs */
 
 /**
  * @param {readonly string[]} argv
@@ -55,12 +52,17 @@ const getEslintMajorVersion = (version) => {
 };
 
 /**
+ * @param {PluginConfigs} pluginConfigs
  * @param {string} configName
  * @param {readonly string[]} [fallbackConfigNames]
  *
  * @returns {FlatConfig}
  */
-const getSingleFlatConfig = (configName, fallbackConfigNames = []) => {
+const getSingleFlatConfig = (
+    pluginConfigs,
+    configName,
+    fallbackConfigNames = []
+) => {
     const candidateConfigNames = [configName, ...fallbackConfigNames];
 
     for (const candidateName of candidateConfigNames) {
@@ -84,6 +86,16 @@ const getSingleFlatConfig = (configName, fallbackConfigNames = []) => {
     );
 };
 
+/**
+ * @returns {Promise<PluginConfigs>}
+ */
+const loadPluginConfigs = async () => {
+    const pluginModule = await import("../plugin.mjs");
+    const pluginValue = pluginModule.default;
+
+    return /** @type {PluginConfigs} */ (pluginValue.configs ?? {});
+};
+
 const run = async () => {
     const expectedEslintMajor = getExpectedEslintMajor(process.argv.slice(2));
     const installedEslintMajor = getEslintMajorVersion(ESLint.version);
@@ -97,10 +109,16 @@ const run = async () => {
         );
     }
 
+    globalThis.process.env[pluginEslintMajorOverrideEnvironmentVariable] =
+        String(installedEslintMajor);
+    const pluginConfigs = await loadPluginConfigs();
+
     const cssEslint = new ESLint({
         cwd: process.cwd(),
         fix: true,
-        overrideConfig: getSingleFlatConfig("stylelintOnly", ["stylesheets"]),
+        overrideConfig: getSingleFlatConfig(pluginConfigs, "stylelintOnly", [
+            "stylesheets",
+        ]),
         overrideConfigFile: true,
     });
     const [cssResult] = await cssEslint.lintText(`a { color: #ffffff; }`, {
@@ -119,7 +137,9 @@ const run = async () => {
     const configEslint = new ESLint({
         cwd: process.cwd(),
         fix: true,
-        overrideConfig: getSingleFlatConfig("configuration", ["configs"]),
+        overrideConfig: getSingleFlatConfig(pluginConfigs, "configuration", [
+            "configs",
+        ]),
         overrideConfigFile: true,
     });
     const [configResult] = await configEslint.lintText(
