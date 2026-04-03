@@ -76,6 +76,13 @@ jobs:
                     exit 1
                   fi
 
+            - name: Verify IndexNow script path
+              run: |
+                  if [ ! -f "scripts/indexnow.mjs" ]; then
+                    echo "::error title=Missing IndexNow script::Expected scripts/indexnow.mjs in ${GITHUB_WORKSPACE}, but it was not found. Ensure this repository includes scripts/indexnow.mjs or update the workflow path."
+                    exit 1
+                  fi
+
             - name: Build Docusaurus site for route manifest
               if: inputs.submission_mode == 'delta'
               run: npm run docs:build

@@ -64,11 +64,17 @@ jobs:
               run: npm run docs:build
 
             - name: Write IndexNow key file into built site output
+              continue-on-error: true
               env:
                   INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
               run: |
                   if [ -z "${INDEXNOW_KEY}" ]; then
                     echo "::notice title=IndexNow key file skipped::Set the INDEXNOW_KEY repository secret if you want the published site to expose an IndexNow verification file."
+                    exit 0
+                  fi
+
+                  if [ ! -f "scripts/indexnow.mjs" ]; then
+                    echo "::notice title=Missing IndexNow script::Expected scripts/indexnow.mjs in ${GITHUB_WORKSPACE}, but it was not found. Ensure this repository includes scripts/indexnow.mjs or update the workflow to point at the correct script path."
                     exit 0
                   fi
 
