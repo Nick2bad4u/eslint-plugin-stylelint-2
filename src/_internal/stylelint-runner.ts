@@ -62,6 +62,9 @@ const getWorker = (): Worker => {
         // hit-or-miss CI hang depending on whether this worker was ever started
         // in a given run.
         stylelintWorker.unref();
+        stylelintWorker.once("error", () => {
+            stylelintWorker = null;
+        });
         stylelintWorker.once("exit", () => {
             stylelintWorker = null;
         });
