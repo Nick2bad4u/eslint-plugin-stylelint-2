@@ -56,6 +56,12 @@ const resetWorker = (): void => {
 const getWorker = (): Worker => {
     if (stylelintWorker === null) {
         stylelintWorker = createWorker();
+        // Important: this worker is lazily created only when the bridge rule
+        // actually runs for at least one file. Without `unref()`, that can keep
+        // the Node.js process alive after linting completes, which appears as a
+        // hit-or-miss CI hang depending on whether this worker was ever started
+        // in a given run.
+        stylelintWorker.unref();
         stylelintWorker.once("exit", () => {
             stylelintWorker = null;
         });
