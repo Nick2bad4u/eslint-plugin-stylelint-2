@@ -63,6 +63,8 @@ const runBridgeLintInIsolatedNodeProcess = (
 
 describe("stylelint bridge worker lifecycle", () => {
     it("allows isolated node process to exit after bridge lint execution", () => {
+        expect.hasAssertions();
+
         const result = runBridgeLintInIsolatedNodeProcess(10_000);
 
         expect(result.timedOut).toBeFalsy();

@@ -1,12 +1,3 @@
-/* eslint-disable css/use-baseline */
-/* stylelint-disable
-plugin/no-low-performance-animation-properties,
-order/properties-order,
-no-descending-specificity,
-a11y/media-prefers-reduced-motion,
-csstools/use-nesting -- Global Docusaurus theme overrides intentionally trade strict local styling rules for maintainable site-wide customization.
-*/
-
 @font-face {
     font-family: "NerdFontSymbols Nerd Font Symbols";
     font-style: normal;

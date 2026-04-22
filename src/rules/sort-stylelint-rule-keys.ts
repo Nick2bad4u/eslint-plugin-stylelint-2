@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayAt, arrayFirst, arrayJoin, isDefined } from "ts-extras";
+
 import type { RuleModuleWithDocs } from "../_internal/typed-rule.js";
 
 import {
@@ -46,7 +48,7 @@ const isAlreadySorted = (
     for (const property of properties) {
         const ruleName = getRuleName(property);
 
-        if (ruleName === undefined) {
+        if (!isDefined(ruleName)) {
             return true;
         }
 
@@ -69,7 +71,7 @@ const canSafelyFixSorting = (
             return false;
         }
 
-        if (getRuleName(property) === undefined) {
+        if (!isDefined(getRuleName(property))) {
             return false;
         }
 
@@ -98,11 +100,14 @@ const getSortedPropertyText = (
         return leftRuleName.localeCompare(rightRuleName);
     });
 
-    const indentation = " ".repeat(properties[0]?.loc.start.column ?? 0);
+    const indentation = " ".repeat(
+        arrayFirst(properties)?.loc.start.column ?? 0
+    );
 
-    return sortedProperties
-        .map((property) => sourceCode.getText(property))
-        .join(`,\n${indentation}`);
+    return arrayJoin(
+        sortedProperties.map((property) => sourceCode.getText(property)),
+        `,\n${indentation}`
+    );
 };
 
 /** Rule module that enforces lexical ordering of top-level Stylelint rule keys. */
@@ -152,8 +157,8 @@ const sortStylelintRuleKeysRule: RuleModuleWithDocs<MessageIds, Options> =
                                 return null;
                             }
 
-                            const firstRuleEntry = ruleEntries[0];
-                            const lastRuleEntry = ruleEntries.at(-1);
+                            const firstRuleEntry = arrayFirst(ruleEntries);
+                            const lastRuleEntry = arrayAt(ruleEntries, -1);
 
                             if (
                                 firstRuleEntry === undefined ||
@@ -164,7 +169,7 @@ const sortStylelintRuleKeysRule: RuleModuleWithDocs<MessageIds, Options> =
 
                             return fixer.replaceTextRange(
                                 [
-                                    firstRuleEntry.range[0],
+                                    arrayFirst(firstRuleEntry.range),
                                     lastRuleEntry.range[1],
                                 ],
                                 getSortedPropertyText(sourceCode, ruleEntries)

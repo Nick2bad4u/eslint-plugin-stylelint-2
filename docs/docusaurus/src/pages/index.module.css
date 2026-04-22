@@ -1,10 +1,3 @@
-/* eslint-disable css/use-baseline */
-/* stylelint-disable
-defensive-css/require-named-grid-lines,
-scales/font-sizes,
-a11y/media-prefers-reduced-motion -- Docusaurus CSS modules trade strict theme-local rules for practical homepage control, and the homepage hero intentionally uses scoped motion treatments with a reduced-motion fallback.
-*/
-
 .heroBanner {
     position: relative;
     overflow: clip;

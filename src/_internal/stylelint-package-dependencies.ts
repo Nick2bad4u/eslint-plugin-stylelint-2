@@ -4,6 +4,7 @@
  */
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, isAbsolute, resolve } from "node:path";
+import { arrayFirst, isDefined, objectKeys, stringSplit } from "ts-extras";
 
 type DependencyRecord = Readonly<Record<string, string>>;
 
@@ -68,11 +69,11 @@ const toDependencyNameSet = (
     ];
 
     for (const dependencyRecord of dependencyRecords) {
-        if (dependencyRecord === undefined) {
+        if (!isDefined(dependencyRecord)) {
             continue;
         }
 
-        for (const dependencyName of Object.keys(dependencyRecord)) {
+        for (const dependencyName of objectKeys(dependencyRecord)) {
             dependencyNames.add(dependencyName);
         }
     }
@@ -100,9 +101,7 @@ const readDependencyNamesFromPackageJson = (
             return undefined;
         }
 
-        const dependencyNameSet = toDependencyNameSet(
-            parsedPackageJson as PackageJsonLike
-        );
+        const dependencyNameSet = toDependencyNameSet(parsedPackageJson);
 
         dependencyNameSetCache.set(packageJsonPath, dependencyNameSet);
 
@@ -133,7 +132,7 @@ export const getDependencyNamesForFile = (
         getNearestPackageJsonPath(startDirectory) ??
         getNearestPackageJsonPath(resolve(cwd));
 
-    if (packageJsonPath === undefined) {
+    if (!isDefined(packageJsonPath)) {
         return undefined;
     }
 
@@ -155,14 +154,14 @@ export const getPackageNameFromSpecifier = (
     }
 
     if (specifier.startsWith("@")) {
-        const [scope, packageName] = specifier.split("/");
+        const [scope, packageName] = stringSplit(specifier, "/");
 
-        if (scope === undefined || packageName === undefined) {
+        if (!isDefined(scope) || !isDefined(packageName)) {
             return undefined;
         }
 
         return `${scope}/${packageName}`;
     }
 
-    return specifier.split("/")[0];
+    return arrayFirst(stringSplit(specifier, "/"));
 };

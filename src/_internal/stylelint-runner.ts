@@ -7,6 +7,7 @@ import {
     receiveMessageOnPort,
     Worker,
 } from "node:worker_threads";
+import { assertDefined, isDefined, safeCastTo } from "ts-extras";
 
 import type {
     SerializableStylelintLintOptions,
@@ -79,11 +80,7 @@ const createCacheKey = (options: SerializableStylelintLintOptions): string =>
 const readWorkerResponse = (
     response: StylelintWorkerResponse | undefined
 ): SerializableStylelintResult => {
-    if (response === undefined) {
-        throw new Error(
-            "Stylelint worker finished without returning a response."
-        );
-    }
+    assertDefined(response);
 
     if (response.ok) {
         return response.result;
@@ -92,7 +89,7 @@ const readWorkerResponse = (
     const error = new Error(response.error.message);
     error.name = response.error.name;
 
-    if (response.error.stack !== undefined) {
+    if (isDefined(response.error.stack)) {
         error.stack = response.error.stack;
     }
 
@@ -106,7 +103,7 @@ export const runStylelintSynchronously = (
     const cacheKey = createCacheKey(options);
     const cachedResult = lintResultCache.get(cacheKey);
 
-    if (cachedResult !== undefined) {
+    if (isDefined(cachedResult)) {
         return cachedResult;
     }
 
@@ -145,7 +142,7 @@ export const runStylelintSynchronously = (
     port1.close();
 
     const result = readWorkerResponse(
-        workerMessage?.message as StylelintWorkerResponse | undefined
+        safeCastTo<StylelintWorkerResponse | undefined>(workerMessage?.message)
     );
 
     lintResultCache.set(cacheKey, result);

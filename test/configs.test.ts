@@ -83,12 +83,16 @@ const getRulesRecord = (value: unknown): UnknownRecord => {
 
 describe("stylelint-2 plugin configs", () => {
     it("exports exactly the supported config keys", () => {
+        expect.hasAssertions();
+
         expect(
             sortStrings(Object.keys(stylelint2Plugin.configs))
         ).toStrictEqual(sortStrings(stylelint2ConfigNames));
     });
 
     it("keeps stylesheet and config presets focused on different file sets", () => {
+        expect.hasAssertions();
+
         expect(stylelint2Plugin.configs.stylelintOnly).toMatchObject(
             expectedStylelintOnlyPresetShape
         );
@@ -102,6 +106,8 @@ describe("stylelint-2 plugin configs", () => {
     });
 
     it("keeps recommended and all as flat-config arrays", () => {
+        expect.hasAssertions();
+
         expect(
             Array.isArray(stylelint2Plugin.configs.recommended)
         ).toBeTruthy();
@@ -111,6 +117,8 @@ describe("stylelint-2 plugin configs", () => {
     });
 
     it("keeps the stylesheet preset focused on the bridge rule only", () => {
+        expect.hasAssertions();
+
         expect(stylelint2Plugin.configs.stylelintOnly).toMatchObject({
             rules: {
                 "stylelint-2/stylelint": "error",
@@ -119,6 +127,8 @@ describe("stylelint-2 plugin configs", () => {
     });
 
     it("keeps the config preset focused on the config-hygiene rules", () => {
+        expect.hasAssertions();
+
         expect(stylelint2Plugin.configs.configuration).toMatchObject({
             rules: {
                 "stylelint-2/disallow-stylelint-allow-empty-input": "warn",
@@ -171,6 +181,8 @@ describe("stylelint-2 plugin configs", () => {
     });
 
     it("keeps recommended focused on the bridge plus broadly useful config hygiene", () => {
+        expect.hasAssertions();
+
         const recommendedPreset = getRecommendedPresetEntries();
         const stylesheetPreset = recommendedPreset[0];
         const recommendedConfigPreset = recommendedPreset[1];
@@ -213,6 +225,8 @@ describe("stylelint-2 plugin configs", () => {
     });
 
     it("keeps the legacy alias presets wired to the preferred preset names", () => {
+        expect.hasAssertions();
+
         expect(stylelint2Plugin.configs.stylesheets).toBe(
             stylelint2Plugin.configs.stylelintOnly
         );

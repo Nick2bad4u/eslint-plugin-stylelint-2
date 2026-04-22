@@ -104,6 +104,8 @@ const canonicalConfigMembership = [
 
 describe("rule meta.docs.configs contract", () => {
     it("matches canonical preset membership", () => {
+        expect.hasAssertions();
+
         for (const [ruleName, ruleModule] of Object.entries(
             stylelint2Plugin.rules
         )) {
@@ -129,6 +131,8 @@ describe("rule meta.docs.configs contract", () => {
     });
 
     it("keeps docs.recommended aligned with recommended preset membership", () => {
+        expect.hasAssertions();
+
         const recommendedMembership = collectEnabledRuleIds(
             stylelint2Plugin.configs.recommended
         );

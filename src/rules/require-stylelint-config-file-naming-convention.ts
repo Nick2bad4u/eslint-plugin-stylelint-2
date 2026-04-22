@@ -2,6 +2,8 @@
  * @packageDocumentation
  * Require canonical Stylelint config filenames for shared configuration files.
  */
+import { arrayAt, stringSplit } from "ts-extras";
+
 import type { RuleModuleWithDocs } from "../_internal/typed-rule.js";
 
 import { isStylelintConfigFile } from "../_internal/stylelint-config-object.js";
@@ -14,11 +16,11 @@ const canonicalStylelintConfigFilenamePattern =
     /^stylelint\.config\.(?:[cm]?js|[cm]?ts)$/u;
 
 const getBasename = (filename: string): string => {
-    const windowsSeparators = filename.split("\\");
-    const lastWindowsSegment = windowsSeparators.at(-1) ?? filename;
-    const posixSeparators = lastWindowsSegment.split("/");
+    const windowsSeparators = stringSplit(filename, "\\");
+    const lastWindowsSegment = arrayAt(windowsSeparators, -1) ?? filename;
+    const posixSeparators = stringSplit(lastWindowsSegment, "/");
 
-    return posixSeparators.at(-1) ?? lastWindowsSegment;
+    return arrayAt(posixSeparators, -1) ?? lastWindowsSegment;
 };
 
 /**

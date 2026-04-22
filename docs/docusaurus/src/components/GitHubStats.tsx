@@ -46,6 +46,7 @@ const stats: readonly GitHubStat[] = [
     },
 ];
 
+/** Render live repository badges for the docs homepage hero. */
 export default function GitHubStats({
     className,
 }: GitHubStatsProperties): JSX.Element {

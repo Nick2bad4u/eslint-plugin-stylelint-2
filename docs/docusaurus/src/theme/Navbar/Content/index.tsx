@@ -71,6 +71,7 @@ function NavbarContentLayout({
     );
 }
 
+/** Render the customized Docusaurus navbar content and search behavior. */
 export default function NavbarContent(): ReactNode {
     const mobileSidebar = useNavbarMobileSidebar();
     const items = useNavbarItems();

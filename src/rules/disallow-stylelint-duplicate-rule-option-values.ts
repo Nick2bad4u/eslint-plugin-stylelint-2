@@ -3,6 +3,9 @@
  * Disallow duplicate values in array-valued Stylelint secondary rule options.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { JsonPrimitive } from "type-fest";
+
+import { arrayJoin, isDefined, setHas } from "ts-extras";
 
 import type { RuleModuleWithDocs } from "../_internal/typed-rule.js";
 
@@ -16,7 +19,7 @@ import {
 } from "../_internal/stylelint-config-rules-object.js";
 import { createTypedRule, toRuleListener } from "../_internal/typed-rule.js";
 
-type ComparableLiteral = boolean | null | number | string;
+type ComparableLiteral = JsonPrimitive;
 type MessageIds = "disallowDuplicateRuleOptionValues";
 type Options = readonly [];
 
@@ -108,13 +111,13 @@ const hasDuplicateComparableLiterals = (
     for (const element of elements) {
         const comparableLiteral = getComparableLiteral(element);
 
-        if (comparableLiteral === undefined) {
+        if (!isDefined(comparableLiteral)) {
             return false;
         }
 
         const signature = `${typeof comparableLiteral}:${String(comparableLiteral)}`;
 
-        if (seenValues.has(signature)) {
+        if (setHas(seenValues, signature)) {
             return true;
         }
 
@@ -133,13 +136,13 @@ const getDedupedElements = (
     for (const element of elements) {
         const comparableLiteral = getComparableLiteral(element);
 
-        if (comparableLiteral === undefined) {
+        if (!isDefined(comparableLiteral)) {
             return elements;
         }
 
         const signature = `${typeof comparableLiteral}:${String(comparableLiteral)}`;
 
-        if (seenValues.has(signature)) {
+        if (setHas(seenValues, signature)) {
             continue;
         }
 
@@ -154,7 +157,10 @@ const getArrayReplacement = (
     sourceCode: Readonly<TSESLint.SourceCode>,
     elements: readonly Readonly<TSESTree.Expression>[]
 ): string =>
-    `[${elements.map((element) => sourceCode.getText(element)).join(", ")}]`;
+    `[${arrayJoin(
+        elements.map((element) => sourceCode.getText(element)),
+        ", "
+    )}]`;
 
 const reportDuplicateOptionArray = (
     context: Readonly<TSESLint.RuleContext<MessageIds, Options>>,

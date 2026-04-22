@@ -5,6 +5,7 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
 import { basename } from "node:path";
+import { arrayFirst } from "ts-extras";
 
 const configBaseNamePattern =
     /^(?:stylelint\.config|\.stylelintrc)\.(?:[cm]?js|[cm]?ts)$/v;
@@ -62,7 +63,7 @@ export const getExportedStylelintConfigObject = (
         declaration.callee.type === "Identifier" &&
         declaration.callee.name === "defineConfig"
     ) {
-        const firstArgument = declaration.arguments[0];
+        const firstArgument = arrayFirst(declaration.arguments);
 
         return firstArgument?.type === "ObjectExpression"
             ? firstArgument
@@ -150,7 +151,10 @@ export const createFixToRemoveObjectProperty = (
     const nextProperty = properties[propertyIndex + 1];
 
     if (nextProperty !== undefined) {
-        return fixer.removeRange([property.range[0], nextProperty.range[0]]);
+        return fixer.removeRange([
+            arrayFirst(property.range),
+            arrayFirst(nextProperty.range),
+        ]);
     }
 
     const previousProperty = properties[propertyIndex - 1];

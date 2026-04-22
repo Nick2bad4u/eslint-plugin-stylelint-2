@@ -63,6 +63,8 @@ const loadPluginWithEslintMajor = async (
 
 describe("stylelint-2 plugin ESLint major override", () => {
     it("omits css language fields when forced to ESLint 9", async () => {
+        expect.hasAssertions();
+
         try {
             const plugin = await loadPluginWithEslintMajor(9);
             const stylelintOnlyPreset = getStylelintOnlyPreset(plugin);
@@ -78,6 +80,8 @@ describe("stylelint-2 plugin ESLint major override", () => {
     });
 
     it("keeps css language fields when forced to ESLint 10", async () => {
+        expect.hasAssertions();
+
         try {
             const plugin = await loadPluginWithEslintMajor(10);
             const stylelintOnlyPreset = getStylelintOnlyPreset(plugin);

@@ -11,6 +11,8 @@ import stylelint2Plugin from "../src/plugin";
 
 describe("rule docs integrity", () => {
     it("keeps one markdown file per registered rule", () => {
+        expect.hasAssertions();
+
         const docsDir = path.join(process.cwd(), "docs", "rules");
 
         for (const ruleName of Object.keys(stylelint2Plugin.rules)) {
@@ -21,6 +23,8 @@ describe("rule docs integrity", () => {
     });
 
     it("keeps one rule test file per registered rule", () => {
+        expect.hasAssertions();
+
         const testDir = path.join(process.cwd(), "test");
 
         for (const ruleName of Object.keys(stylelint2Plugin.rules)) {
@@ -31,6 +35,8 @@ describe("rule docs integrity", () => {
     });
 
     it("keeps docs urls aligned with the canonical docs helper", () => {
+        expect.hasAssertions();
+
         for (const [ruleName, ruleModule] of Object.entries(
             stylelint2Plugin.rules
         )) {

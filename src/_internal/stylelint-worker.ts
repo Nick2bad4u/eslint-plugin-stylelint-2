@@ -4,6 +4,7 @@
  */
 import { isMainThread, parentPort } from "node:worker_threads";
 import stylelint from "stylelint";
+import { arrayFirst, isDefined } from "ts-extras";
 
 import type {
     SerializableStylelintParseError,
@@ -19,28 +20,24 @@ const toSerializableWarning = (
     warning: Readonly<stylelint.Warning>
 ): SerializableStylelintWarning => ({
     column: warning.column,
-    ...(warning.endColumn === undefined
-        ? {}
-        : { endColumn: warning.endColumn }),
-    ...(warning.endLine === undefined ? {} : { endLine: warning.endLine }),
-    ...(warning.fix === undefined ? {} : { fix: warning.fix }),
+    ...(isDefined(warning.endColumn) ? { endColumn: warning.endColumn } : {}),
+    ...(isDefined(warning.endLine) ? { endLine: warning.endLine } : {}),
+    ...(isDefined(warning.fix) ? { fix: warning.fix } : {}),
     line: warning.line,
     rule: warning.rule,
     severity: warning.severity,
     text: warning.text,
-    ...(warning.url === undefined ? {} : { url: warning.url }),
+    ...(isDefined(warning.url) ? { url: warning.url } : {}),
 });
 
 const toSerializableParseError = (
     parseError: Readonly<stylelint.LintResult["parseErrors"][number]>
 ): SerializableStylelintParseError => ({
     column: parseError.column,
-    ...(parseError.endColumn === undefined
-        ? {}
-        : { endColumn: parseError.endColumn }),
-    ...(parseError.endLine === undefined
-        ? {}
-        : { endLine: parseError.endLine }),
+    ...(isDefined(parseError.endColumn)
+        ? { endColumn: parseError.endColumn }
+        : {}),
+    ...(isDefined(parseError.endLine) ? { endLine: parseError.endLine } : {}),
     line: parseError.line,
     message: parseError.text,
     rule: "CssSyntaxError",
@@ -49,7 +46,7 @@ const toSerializableParseError = (
 const toSerializableResult = (
     result: Readonly<stylelint.LinterResult>
 ): SerializableStylelintResult => {
-    const firstResult = result.results[0];
+    const firstResult = arrayFirst(result.results);
 
     return {
         deprecations:
@@ -89,27 +86,27 @@ const handleRequest = async (
             code: request.options.code,
             codeFilename: request.options.codeFilename,
             computeEditInfo: true,
-            ...(request.options.allowEmptyInput === undefined
-                ? {}
-                : { allowEmptyInput: request.options.allowEmptyInput }),
-            ...(request.options.configBasedir === undefined
-                ? {}
-                : { configBasedir: request.options.configBasedir }),
-            ...(request.options.configFile === undefined
-                ? {}
-                : { configFile: request.options.configFile }),
-            ...(request.options.cwd === undefined
-                ? {}
-                : { cwd: request.options.cwd }),
-            ...(request.options.customSyntax === undefined
-                ? {}
-                : { customSyntax: request.options.customSyntax }),
-            ...(request.options.ignoreDisables === undefined
-                ? {}
-                : { ignoreDisables: request.options.ignoreDisables }),
-            ...(request.options.quiet === undefined
-                ? {}
-                : { quiet: request.options.quiet }),
+            ...(isDefined(request.options.allowEmptyInput)
+                ? { allowEmptyInput: request.options.allowEmptyInput }
+                : {}),
+            ...(isDefined(request.options.configBasedir)
+                ? { configBasedir: request.options.configBasedir }
+                : {}),
+            ...(isDefined(request.options.configFile)
+                ? { configFile: request.options.configFile }
+                : {}),
+            ...(isDefined(request.options.cwd)
+                ? { cwd: request.options.cwd }
+                : {}),
+            ...(isDefined(request.options.customSyntax)
+                ? { customSyntax: request.options.customSyntax }
+                : {}),
+            ...(isDefined(request.options.ignoreDisables)
+                ? { ignoreDisables: request.options.ignoreDisables }
+                : {}),
+            ...(isDefined(request.options.quiet)
+                ? { quiet: request.options.quiet }
+                : {}),
         });
 
         notifyCompletion(request, {
@@ -122,9 +119,7 @@ const handleRequest = async (
                 ? {
                       message: error.message,
                       name: error.name,
-                      ...(error.stack === undefined
-                          ? {}
-                          : { stack: error.stack }),
+                      ...(isDefined(error.stack) ? { stack: error.stack } : {}),
                   }
                 : {
                       message: `Unknown Stylelint worker failure: ${String(error)}`,

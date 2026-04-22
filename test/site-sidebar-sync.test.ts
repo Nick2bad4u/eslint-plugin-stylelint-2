@@ -81,7 +81,9 @@ const collectDocIds = (items: readonly SidebarItem[]): string[] => {
 
 describe("docusaurus rules sidebar sync", () => {
     it("includes every registered rule doc id in resolved sidebar items", () => {
-        const rulesSidebarItems = getRulesSidebarItems(sidebars["rules"]);
+        expect.hasAssertions();
+
+        const rulesSidebarItems = getRulesSidebarItems(sidebars.rules);
 
         expect(rulesSidebarItems.length).toBeGreaterThan(0);
 

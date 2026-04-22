@@ -3,6 +3,8 @@
  * Shared preset/config reference constants for eslint-plugin-stylelint-2.
  */
 
+import { objectHasOwn } from "ts-extras";
+
 /** Canonical flat-config preset keys exposed through `plugin.configs`. */
 export const stylelint2ConfigNames = [
     "all",
@@ -93,4 +95,4 @@ export type Stylelint2ConfigReference =
 export const isStylelint2ConfigReference = (
     value: string
 ): value is Stylelint2ConfigReference =>
-    Object.hasOwn(stylelint2ConfigReferenceToName, value);
+    objectHasOwn(stylelint2ConfigReferenceToName, value);

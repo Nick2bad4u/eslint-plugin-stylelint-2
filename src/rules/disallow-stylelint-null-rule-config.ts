@@ -4,6 +4,8 @@
  */
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import type { RuleModuleWithDocs } from "../_internal/typed-rule.js";
 
 import {
@@ -97,12 +99,11 @@ const disallowStylelintNullRuleConfigRule: RuleModuleWithDocs<
                     const ruleName = getRuleName(ruleEntry);
 
                     context.report({
-                        data:
-                            ruleName === undefined
-                                ? {}
-                                : {
-                                      ruleName,
-                                  },
+                        data: isDefined(ruleName)
+                            ? {
+                                  ruleName,
+                              }
+                            : {},
                         messageId: "disallowNullRuleConfig",
                         node: ruleEntry,
                     });

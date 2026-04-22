@@ -56,6 +56,7 @@ const features: readonly Feature[] = [
     },
 ];
 
+/** Render the homepage feature cards that route users into core docs areas. */
 export default function HomepageFeatures(): JSX.Element {
     const cardClassName = styles["card"] ?? "";
     const featuresClassName = styles["features"] ?? "";

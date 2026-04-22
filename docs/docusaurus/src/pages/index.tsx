@@ -96,6 +96,7 @@ const homepageStructuredData = {
     url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/",
 } as const;
 
+/** Render the docs landing page hero, quick links, and entry-point content. */
 export default function Home(): JSX.Element {
     const logoSrc = useBaseUrl("/img/logo.svg");
 

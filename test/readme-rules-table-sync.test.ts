@@ -30,6 +30,8 @@ type ReadmeRuleMap = Readonly<
 
 describe("readme rules table synchronization", () => {
     it("matches the canonical rules matrix generated from plugin metadata", async () => {
+        expect.hasAssertions();
+
         const readmePath = path.join(process.cwd(), "README.md");
         const readmeMarkdown = await fs.readFile(readmePath, "utf8");
 

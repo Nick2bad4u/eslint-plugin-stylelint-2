@@ -3,6 +3,9 @@
  * Shared rule factory for requiring top-level boolean Stylelint config options.
  */
 import type { TSESTree } from "@typescript-eslint/utils";
+import type { Except } from "type-fest";
+
+import { arrayFirst, isPresent } from "ts-extras";
 
 import {
     getExportedStylelintConfigObject,
@@ -16,7 +19,7 @@ import {
 } from "./typed-rule.js";
 
 type ConfigOptionRuleDefinition = Readonly<
-    Omit<RuleModuleWithDocs<MessageIds, Options>, "create"> & {
+    Except<RuleModuleWithDocs<MessageIds, Options>, "create"> & {
         optionName: string;
     }
 >;
@@ -104,8 +107,9 @@ export const createStylelintConfigBooleanOptionRule = (
                     if (existingProperty === undefined) {
                         context.report({
                             fix(fixer) {
-                                const firstProperty =
-                                    configObject.properties[0];
+                                const firstProperty = arrayFirst(
+                                    configObject.properties
+                                );
 
                                 if (firstProperty === undefined) {
                                     return fixer.replaceText(
@@ -143,10 +147,7 @@ export const createStylelintConfigBooleanOptionRule = (
                             if (propertyValue.type === "ArrayExpression") {
                                 const [firstElement] = propertyValue.elements;
 
-                                if (
-                                    firstElement !== undefined &&
-                                    firstElement !== null
-                                ) {
+                                if (isPresent(firstElement)) {
                                     return fixer.replaceText(
                                         firstElement,
                                         "true"

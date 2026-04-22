@@ -79,7 +79,7 @@ const stylelintRuleItems: SidebarDocItem[] = ruleDocIds.map(
     })
 );
 
-const sidebars: SidebarsConfig = {
+const sidebars = {
     rules: [
         {
             className: "sb-cat-guides",
@@ -178,6 +178,6 @@ const sidebars: SidebarsConfig = {
             items: stylelintRuleItems,
         },
     ],
-};
+} satisfies SidebarsConfig;
 
 export default sidebars;

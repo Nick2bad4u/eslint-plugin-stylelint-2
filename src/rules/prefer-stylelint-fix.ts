@@ -4,6 +4,8 @@
  */
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst } from "ts-extras";
+
 import type { RuleModuleWithDocs } from "../_internal/typed-rule.js";
 
 import {
@@ -77,8 +79,9 @@ const preferStylelintFixRule: RuleModuleWithDocs<MessageIds, Options> =
                     if (fixProperty === undefined) {
                         context.report({
                             fix(fixer) {
-                                const firstProperty =
-                                    configObject.properties[0];
+                                const firstProperty = arrayFirst(
+                                    configObject.properties
+                                );
 
                                 if (firstProperty === undefined) {
                                     return fixer.replaceText(

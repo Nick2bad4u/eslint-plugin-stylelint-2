@@ -45,6 +45,8 @@ const createCssLintEngine = (
 
 describe("stylelint bridge rule", () => {
     it("reports Stylelint diagnostics through ESLint", async () => {
+        expect.hasAssertions();
+
         const eslint = createCssLintEngine(false);
         const [result] = await eslint.lintText(`a { color: #ffffff; }`, {
             filePath: "sample.css",
@@ -60,6 +62,8 @@ describe("stylelint bridge rule", () => {
     });
 
     it("supports explicit stylelint invocation options", async () => {
+        expect.hasAssertions();
+
         const eslint = createCssLintEngine(false, {
             allowEmptyInput: false,
             configBasedir: process.cwd(),
@@ -77,6 +81,8 @@ describe("stylelint bridge rule", () => {
     });
 
     it("reports parse errors through eslint diagnostics", async () => {
+        expect.hasAssertions();
+
         const eslint = createCssLintEngine(false);
         const [result] = await eslint.lintText(`a { color: red;`, {
             filePath: "sample.css",
@@ -95,6 +101,8 @@ describe("stylelint bridge rule", () => {
     });
 
     it("surfaces newly added Stylelint core rules through the bridge", async () => {
+        expect.hasAssertions();
+
         const eslint = createCssLintEngine(false, {
             configFile: deprecatedSelectorConfigFilePath,
         });
@@ -111,6 +119,8 @@ describe("stylelint bridge rule", () => {
     });
 
     it("applies Stylelint computed edit info through eslint --fix", async () => {
+        expect.hasAssertions();
+
         const eslint = createCssLintEngine(true);
         const [result] = await eslint.lintText(`a { color: #ffffff; }`, {
             filePath: "sample.css",

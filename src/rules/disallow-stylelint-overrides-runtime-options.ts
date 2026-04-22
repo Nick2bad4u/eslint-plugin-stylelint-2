@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import type { RuleModuleWithDocs } from "../_internal/typed-rule.js";
 
 import {
@@ -86,7 +88,7 @@ const getRuntimeOptionName = (
         propertyName = propertyKey.value;
     }
 
-    if (propertyName === undefined) {
+    if (!isDefined(propertyName)) {
         return undefined;
     }
 
@@ -154,7 +156,7 @@ const disallowStylelintOverridesRuntimeOptionsRule: RuleModuleWithDocs<
                         const runtimeOptionName =
                             getRuntimeOptionName(propertyNode);
 
-                        if (runtimeOptionName === undefined) {
+                        if (!isDefined(runtimeOptionName)) {
                             continue;
                         }
 

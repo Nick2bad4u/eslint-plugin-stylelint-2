@@ -3,6 +3,7 @@
  * Shared rule factory for disallowing top-level Stylelint config options that are better handled elsewhere.
  */
 import type { TSESTree } from "@typescript-eslint/utils";
+import type { Except } from "type-fest";
 
 import {
     createFixToRemoveObjectProperty,
@@ -17,7 +18,7 @@ import {
 } from "./typed-rule.js";
 
 type ConfigOptionRuleDefinition = Readonly<
-    Omit<RuleModuleWithDocs<MessageIds, Options>, "create"> & {
+    Except<RuleModuleWithDocs<MessageIds, Options>, "create"> & {
         optionName: string;
     }
 >;

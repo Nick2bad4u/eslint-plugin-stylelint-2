@@ -3,10 +3,12 @@
  * Public plugin entrypoint for eslint-plugin-stylelint-2 exports and preset wiring.
  */
 import type { ESLint, Linter } from "eslint";
+import type { UnknownRecord } from "type-fest";
 
 import css from "@eslint/css";
 import tsParser from "@typescript-eslint/parser";
 import { ESLint as ESLintRuntime } from "eslint";
+import { isSafeInteger, stringSplit } from "ts-extras";
 
 import packageJson from "../package.json" with { type: "json" };
 import { stylelint2Rules } from "./_internal/rules-registry.js";
@@ -65,13 +67,13 @@ const parsePositiveInteger = (value: string): number | undefined => {
 
     const parsedValue = Number.parseInt(value, 10);
 
-    return Number.isSafeInteger(parsedValue) && parsedValue > 0
+    return isSafeInteger(parsedValue) && parsedValue > 0
         ? parsedValue
         : undefined;
 };
 
 const getEslintMajorVersion = (eslintVersion: string): number => {
-    const [majorText = "0"] = eslintVersion.split(".");
+    const [majorText = "0"] = stringSplit(eslintVersion, ".");
 
     return parsePositiveInteger(majorText) ?? 0;
 };
@@ -93,7 +95,7 @@ const resolvedEslintMajorVersion =
 
 const supportsCssLanguageInFlatConfig = resolvedEslintMajorVersion >= 10;
 
-const cssLanguagePresetFields: Readonly<Record<string, unknown>> =
+const cssLanguagePresetFields: Readonly<UnknownRecord> =
     supportsCssLanguageInFlatConfig
         ? {
               language: "css/css",

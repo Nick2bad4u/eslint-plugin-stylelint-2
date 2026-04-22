@@ -3,6 +3,9 @@
  * Shared rule factories for top-level Stylelint string-array configuration options.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { Except } from "type-fest";
+
+import { arrayJoin, setHas } from "ts-extras";
 
 import {
     getExportedStylelintConfigObject,
@@ -20,7 +23,7 @@ import {
 } from "./typed-rule.js";
 
 type ConfigOptionRuleDefinition<MessageIds extends string> = Readonly<
-    Omit<RuleModuleWithDocs<MessageIds, Options>, "create"> & {
+    Except<RuleModuleWithDocs<MessageIds, Options>, "create"> & {
         optionName: string;
     }
 >;
@@ -45,7 +48,7 @@ const getUniqueLiterals = (
             continue;
         }
 
-        if (seenValues.has(literalValue)) {
+        if (setHas(seenValues, literalValue)) {
             continue;
         }
 
@@ -93,7 +96,10 @@ const toArrayReplacementText = (
     sourceCode: Readonly<TSESLint.SourceCode>,
     literals: readonly Readonly<TSESTree.StringLiteral>[]
 ): string =>
-    `[${literals.map((literal) => getLiteralText(sourceCode, literal)).join(", ")}]`;
+    `[${arrayJoin(
+        literals.map((literal) => getLiteralText(sourceCode, literal)),
+        ", "
+    )}]`;
 
 const getSortedLiteralTexts = (
     sourceCode: Readonly<TSESLint.SourceCode>,
@@ -339,7 +345,7 @@ export const createStylelintConfigSortArrayEntriesRule = (
 
                             return fixer.replaceText(
                                 optionValue.arrayExpression,
-                                `[${sortedLiterals.join(", ")}]`
+                                `[${arrayJoin(sortedLiterals, ", ")}]`
                             );
                         },
                         messageId: "sortArray",

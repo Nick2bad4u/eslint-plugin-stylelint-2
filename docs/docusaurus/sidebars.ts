@@ -90,7 +90,7 @@ const typedocSidebarItems = Array.isArray(typedocSidebar)
     ? typedocSidebar.map((item) => normalizeTypedocSidebarItem(item))
     : [];
 
-const sidebars: SidebarsConfig = {
+const sidebars = {
     docs: [
         {
             className: "sb-cat-developer",
@@ -142,6 +142,6 @@ const sidebars: SidebarsConfig = {
             ],
         },
     ],
-};
+} satisfies SidebarsConfig;
 
 export default sidebars;

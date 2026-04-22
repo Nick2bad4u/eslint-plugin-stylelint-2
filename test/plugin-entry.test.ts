@@ -18,7 +18,9 @@ const packageName = packageJson.name;
 
 describe("plugin entry module", () => {
     it("exports the default plugin object with rule and config registries", () => {
-        expect(stylelint2Plugin).toEqual(
+        expect.hasAssertions();
+
+        expect(stylelint2Plugin).toStrictEqual(
             expect.objectContaining({
                 configs: expect.any(Object),
                 meta: expect.any(Object),
@@ -27,7 +29,7 @@ describe("plugin entry module", () => {
             })
         );
 
-        expect(stylelint2Plugin.meta).toEqual(
+        expect(stylelint2Plugin.meta).toStrictEqual(
             expect.objectContaining({
                 name: "eslint-plugin-stylelint-2",
                 namespace: "stylelint-2",
@@ -37,6 +39,8 @@ describe("plugin entry module", () => {
     });
 
     it("exports the rebuilt rule names", () => {
+        expect.hasAssertions();
+
         expect(
             Object.keys(stylelint2Plugin.rules).toSorted((left, right) =>
                 left.localeCompare(right)
@@ -84,12 +88,14 @@ describe("plugin entry module", () => {
     });
 
     it("resolves the package through self-reference ESM import", async () => {
+        expect.hasAssertions();
+
         // eslint-disable-next-line no-unsanitized/method -- packageName comes from the local package.json fixture for this repository.
         const runtimeModule = (await import(packageName)) as {
             default: unknown;
         };
 
-        expect(runtimeModule.default).toEqual(
+        expect(runtimeModule.default).toStrictEqual(
             expect.objectContaining({
                 meta: expect.objectContaining({
                     name: "eslint-plugin-stylelint-2",
@@ -101,6 +107,8 @@ describe("plugin entry module", () => {
     });
 
     it("resolves the package through self-reference CJS require", () => {
+        expect.hasAssertions();
+
         const runtimePlugin = requireFromTestModule(
             "eslint-plugin-stylelint-2"
         ) as {
@@ -111,7 +119,7 @@ describe("plugin entry module", () => {
             };
         };
 
-        expect(runtimePlugin.meta).toEqual(
+        expect(runtimePlugin.meta).toStrictEqual(
             expect.objectContaining({
                 name: "eslint-plugin-stylelint-2",
                 namespace: "stylelint-2",

@@ -3,6 +3,9 @@
  * Rule factory helpers for validating package-backed Stylelint option entries.
  */
 import type { TSESTree } from "@typescript-eslint/utils";
+import type { Except } from "type-fest";
+
+import { isDefined, setHas } from "ts-extras";
 
 import {
     getExportedStylelintConfigObject,
@@ -24,7 +27,7 @@ import {
 } from "./typed-rule.js";
 
 type ConfigOptionRuleDefinition = Readonly<
-    Omit<RuleModuleWithDocs<"requireInstalledPackage", Options>, "create"> & {
+    Except<RuleModuleWithDocs<"requireInstalledPackage", Options>, "create"> & {
         optionName: "extends" | "plugins";
     }
 >;
@@ -75,7 +78,7 @@ export const createStylelintConfigRequireInstalledPackageOptionRule = (
                     const optionValue =
                         getStringArrayOptionValue(optionProperty);
 
-                    if (optionValue === undefined) {
+                    if (!isDefined(optionValue)) {
                         return;
                     }
 
@@ -84,7 +87,7 @@ export const createStylelintConfigRequireInstalledPackageOptionRule = (
                         context.cwd
                     );
 
-                    if (dependencyNames === undefined) {
+                    if (!isDefined(dependencyNames)) {
                         return;
                     }
 
@@ -107,8 +110,8 @@ export const createStylelintConfigRequireInstalledPackageOptionRule = (
                             getPackageNameFromSpecifier(specifier);
 
                         if (
-                            packageName === undefined ||
-                            dependencyNames.has(packageName)
+                            !isDefined(packageName) ||
+                            setHas(dependencyNames, packageName)
                         ) {
                             continue;
                         }

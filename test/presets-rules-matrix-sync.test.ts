@@ -14,6 +14,8 @@ import { normalizeMarkdownTableSpacing } from "./_internal/markdownTables";
 
 describe("presets rules matrix synchronization", () => {
     it("matches the canonical matrix generated from plugin metadata", async () => {
+        expect.hasAssertions();
+
         const presetsIndexPath = path.join(
             process.cwd(),
             "docs",

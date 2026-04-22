@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import { runStylelintSynchronously } from "../_internal/stylelint-runner.js";
 import {
     createTypedRule,
@@ -64,24 +66,24 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
                     code: sourceCode.text,
                     codeFilename: context.physicalFilename,
                     cwd: context.cwd,
-                    ...(rawOptions.allowEmptyInput === undefined
-                        ? {}
-                        : { allowEmptyInput: rawOptions.allowEmptyInput }),
-                    ...(rawOptions.configBasedir === undefined
-                        ? {}
-                        : { configBasedir: rawOptions.configBasedir }),
-                    ...(rawOptions.configFile === undefined
-                        ? {}
-                        : { configFile: rawOptions.configFile }),
-                    ...(rawOptions.customSyntax === undefined
-                        ? {}
-                        : { customSyntax: rawOptions.customSyntax }),
-                    ...(rawOptions.ignoreDisables === undefined
-                        ? {}
-                        : { ignoreDisables: rawOptions.ignoreDisables }),
-                    ...(rawOptions.quiet === undefined
-                        ? {}
-                        : { quiet: rawOptions.quiet }),
+                    ...(isDefined(rawOptions.allowEmptyInput)
+                        ? { allowEmptyInput: rawOptions.allowEmptyInput }
+                        : {}),
+                    ...(isDefined(rawOptions.configBasedir)
+                        ? { configBasedir: rawOptions.configBasedir }
+                        : {}),
+                    ...(isDefined(rawOptions.configFile)
+                        ? { configFile: rawOptions.configFile }
+                        : {}),
+                    ...(isDefined(rawOptions.customSyntax)
+                        ? { customSyntax: rawOptions.customSyntax }
+                        : {}),
+                    ...(isDefined(rawOptions.ignoreDisables)
+                        ? { ignoreDisables: rawOptions.ignoreDisables }
+                        : {}),
+                    ...(isDefined(rawOptions.quiet)
+                        ? { quiet: rawOptions.quiet }
+                        : {}),
                 });
                 const reportNode = sourceCode.ast as unknown as TSESTree.Node;
 
@@ -107,16 +109,16 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
                         loc: toEslintLoc(warning),
                         messageId: "stylelintProblem",
                         node: reportNode,
-                        ...(fixData === undefined
-                            ? {}
-                            : {
+                        ...(isDefined(fixData)
+                            ? {
                                   fix: (fixer: TSESLint.RuleFixer) =>
                                       replaceTextRange(
                                           fixer,
                                           fixData.range,
                                           fixData.text
                                       ),
-                              }),
+                              }
+                            : {}),
                     });
                 }
 

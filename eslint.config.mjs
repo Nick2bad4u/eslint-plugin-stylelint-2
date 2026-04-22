@@ -3144,6 +3144,19 @@ export default defineConfig([
         },
     },
     {
+        files: [
+            "benchmark/**/*.{ts,tsx,mts,cts,mjs,js,jsx,cjs}",
+            "benchmarks/**/*.{ts,tsx,mts,cts,mjs,js,jsx,cjs}",
+        ],
+        name: "Benchmarks: skip assertion-count rule",
+        rules: {
+            // Benchmarks measure runtime cost; forcing assertion counters inside
+            // `bench(...)` callbacks adds noise and misclassifies perf cases as
+            // correctness tests.
+            "vitest/prefer-expect-assertions": "off",
+        },
+    },
+    {
         files: ["plugin.mjs", "src/**/*.{ts,tsx,mts,cts,js,mjs,cjs}"],
         name: "Source runtime logging policy",
         rules: {

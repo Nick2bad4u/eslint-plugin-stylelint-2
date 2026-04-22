@@ -3,6 +3,9 @@
  * Shared rule creation helpers for eslint-plugin-stylelint-2.
  */
 import type { TSESLint } from "@typescript-eslint/utils";
+import type { Except, UnknownArray, UnknownRecord } from "type-fest";
+
+import { isDefined, objectEntries } from "ts-extras";
 
 import type { Stylelint2ConfigReference } from "./stylelint2-config-references.js";
 
@@ -11,7 +14,7 @@ import { createRuleDocsUrl } from "./rule-docs-url.js";
 /** Small helper for rule context typing in local helpers. */
 export type GenericRuleContext<
     MessageIds extends string,
-    Options extends readonly unknown[],
+    Options extends Readonly<UnknownArray>,
 > = Readonly<TSESLint.RuleContext<MessageIds, Options>>;
 
 /** CSS/JS-agnostic listener map used by this plugin's rules. */
@@ -25,8 +28,8 @@ export type GenericRuleListener = Readonly<
  */
 export type RuleDefinitionWithDocs<
     MessageIds extends string,
-    Options extends readonly unknown[],
-> = Omit<RuleModuleWithDocs<MessageIds, Options>, "create" | "meta"> & {
+    Options extends Readonly<UnknownArray>,
+> = Except<RuleModuleWithDocs<MessageIds, Options>, "create" | "meta"> & {
     create: (
         context: GenericRuleContext<MessageIds, Options>,
         options: Options
@@ -37,7 +40,7 @@ export type RuleDefinitionWithDocs<
 /** Rule module contract used by registry and plugin wiring. */
 export type RuleModuleWithDocs<
     MessageIds extends string,
-    Options extends readonly unknown[],
+    Options extends Readonly<UnknownArray>,
 > = TSESLint.RuleModule<MessageIds, Options> & {
     meta: TSESLint.RuleMetaData<MessageIds, Stylelint2RuleDocs, Options> & {
         deprecated: boolean;
@@ -56,23 +59,21 @@ export type Stylelint2RuleDocs = Readonly<{
     url: string;
 }>;
 
-const isReadonlyRecord = (
-    value: unknown
-): value is Readonly<Record<string, unknown>> =>
+const isReadonlyRecord = (value: unknown): value is Readonly<UnknownRecord> =>
     typeof value === "object" && value !== null && !Array.isArray(value);
 
 const mergeOptionValue = (
     defaultValue: unknown,
     configuredValue: unknown
 ): unknown => {
-    if (configuredValue === undefined) {
+    if (!isDefined(configuredValue)) {
         return defaultValue;
     }
 
     if (isReadonlyRecord(defaultValue) && isReadonlyRecord(configuredValue)) {
-        const mergedValue: Record<string, unknown> = { ...defaultValue };
+        const mergedValue: UnknownRecord = { ...defaultValue };
 
-        for (const [propertyName, propertyValue] of Object.entries(
+        for (const [propertyName, propertyValue] of objectEntries(
             configuredValue
         )) {
             mergedValue[propertyName] = mergeOptionValue(
@@ -87,9 +88,9 @@ const mergeOptionValue = (
     return configuredValue;
 };
 
-const mergeDefaultOptions = <Options extends readonly unknown[]>(
+const mergeDefaultOptions = <Options extends Readonly<UnknownArray>>(
     defaultOptions: Options,
-    configuredOptions: readonly unknown[]
+    configuredOptions: Readonly<UnknownArray>
 ): Options => {
     const mergedOptions: unknown[] = [];
     const maxLength = Math.max(defaultOptions.length, configuredOptions.length);
@@ -103,7 +104,7 @@ const mergeDefaultOptions = <Options extends readonly unknown[]>(
     return mergedOptions as unknown as Options;
 };
 
-const getMergedRuleOptions = <Options extends readonly unknown[]>(
+const getMergedRuleOptions = <Options extends Readonly<UnknownArray>>(
     ruleDefinition: Readonly<{
         meta: {
             defaultOptions?: Options;
@@ -113,7 +114,7 @@ const getMergedRuleOptions = <Options extends readonly unknown[]>(
 ): Options => {
     const { defaultOptions } = ruleDefinition.meta;
 
-    if (defaultOptions === undefined) {
+    if (!isDefined(defaultOptions)) {
         return configuredOptions;
     }
 
@@ -123,7 +124,7 @@ const getMergedRuleOptions = <Options extends readonly unknown[]>(
 /** Identity-preserving rule creator with canonical docs URL enforcement. */
 export const createTypedRule = <
     MessageIds extends string,
-    Options extends readonly unknown[],
+    Options extends Readonly<UnknownArray>,
 >(
     ruleDefinition: Readonly<RuleDefinitionWithDocs<MessageIds, Options>>
 ): RuleModuleWithDocs<MessageIds, Options> => {
@@ -155,7 +156,7 @@ export const createTypedRule = <
 /** Convert a generic string-keyed listener map into an ESLint rule listener. */
 export const toRuleListener = (
     listener: GenericRuleListener
-): TSESLint.RuleListener => listener as unknown as TSESLint.RuleListener;
+): TSESLint.RuleListener => listener;
 
 /** Create a single range replacement fixer for a Stylelint edit. */
 export const replaceTextRange = (
