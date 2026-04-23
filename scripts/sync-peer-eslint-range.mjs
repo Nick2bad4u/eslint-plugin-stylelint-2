@@ -52,6 +52,121 @@ const minimumSupportedPeerRanges = {
 };
 
 /**
+ * Check whether a character is an ASCII digit.
+ *
+ * @type {(character: string) => boolean}
+ *
+ * @param {string} character
+ *
+ * @returns {boolean}
+ */
+const isAsciiDigit = (character) => character >= "0" && character <= "9";
+
+/**
+ * Check whether a string contains only ASCII digits.
+ *
+ * @type {(value: string) => boolean}
+ *
+ * @param {string} value
+ *
+ * @returns {boolean}
+ */
+const isDigitsOnly = (value) => {
+    if (value.length === 0) {
+        return false;
+    }
+
+    for (const character of value) {
+        if (!isAsciiDigit(character)) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+/**
+ * Extract a semver core (`major.minor.patch`) token from a range candidate.
+ *
+ * @type {(rangeCandidate: string) => readonly [string, string, string]}
+ *
+ * @param {string} rangeCandidate
+ *
+ * @returns {readonly [string, string, string]}
+ *
+ * @throws {TypeError} When no valid semver core token can be discovered.
+ */
+const extractSemverCoreParts = (rangeCandidate) => {
+    /** @type {number} */
+    let startIndex = -1;
+
+    for (const [index, character] of rangeCandidate.split("").entries()) {
+        if (isAsciiDigit(character)) {
+            startIndex = index;
+            break;
+        }
+    }
+
+    if (startIndex < 0) {
+        throw new TypeError(
+            `Unable to resolve top supported major from range: ${rangeCandidate}`
+        );
+    }
+
+    /** @type {number} */
+    let endIndex = startIndex;
+
+    for (let index = startIndex; index < rangeCandidate.length; index += 1) {
+        const character = rangeCandidate.at(index);
+
+        if (typeof character !== "string") {
+            break;
+        }
+
+        if (character === "." || isAsciiDigit(character)) {
+            endIndex = index + 1;
+            continue;
+        }
+
+        break;
+    }
+
+    /** @type {string} */
+    const semverCore = rangeCandidate.slice(startIndex, endIndex);
+    /** @type {string[]} */
+    const semverCoreParts = semverCore.split(".");
+
+    if (semverCoreParts.length < 3) {
+        throw new TypeError(
+            `Unable to resolve top supported major from range: ${rangeCandidate}`
+        );
+    }
+
+    /** @type {string} */
+    const majorVersion = semverCoreParts[0] ?? "";
+    /** @type {string} */
+    const minorVersion = semverCoreParts[1] ?? "";
+    /** @type {string} */
+    const patchVersion = semverCoreParts[2] ?? "";
+
+    if (
+        !isDigitsOnly(majorVersion) ||
+        !isDigitsOnly(minorVersion) ||
+        !isDigitsOnly(patchVersion)
+    ) {
+        throw new TypeError(
+            `Unable to resolve top supported major from range: ${rangeCandidate}`
+        );
+    }
+
+    return [
+        majorVersion,
+        minorVersion,
+        patchVersion,
+    ];
+};
+
+/**
  * Read and parse package.json.
  *
  * @type {() => Promise<Record<string, unknown>>}
@@ -113,23 +228,8 @@ const toTopSupportedMajorRange = (rangeExpression) => {
         );
     }
 
-    /** @type {RegExpMatchArray | null} */
-    const semverMatch = /(\d+)\.(\d+)\.(\d+)/u.exec(topCandidate);
-
-    if (semverMatch === null) {
-        throw new TypeError(
-            `Unable to resolve top supported major from range: ${rangeExpression}`
-        );
-    }
-
-    /** @type {string | undefined} */
-    const majorVersion = semverMatch[1];
-
-    if (typeof majorVersion !== "string") {
-        throw new TypeError(
-            `Unable to resolve a major version from range: ${rangeExpression}`
-        );
-    }
+    /** @type {readonly [string, string, string]} */
+    const [majorVersion] = extractSemverCoreParts(topCandidate);
 
     return `^${majorVersion}.0.0`;
 };
