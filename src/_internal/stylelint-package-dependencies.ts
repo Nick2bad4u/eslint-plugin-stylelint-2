@@ -128,15 +128,47 @@ export const getDependencyNamesForFile = (
     const startDirectory = isAbsolute(physicalFilename)
         ? dirname(physicalFilename)
         : cwd;
-    const packageJsonPath =
-        getNearestPackageJsonPath(startDirectory) ??
-        getNearestPackageJsonPath(resolve(cwd));
+    const candidatePackageJsonPaths = new Set<string>();
+    const nearestPackageJsonPath = getNearestPackageJsonPath(startDirectory);
 
-    if (!isDefined(packageJsonPath)) {
+    if (isDefined(nearestPackageJsonPath)) {
+        candidatePackageJsonPaths.add(nearestPackageJsonPath);
+    }
+
+    const cwdPackageJsonPath = getNearestPackageJsonPath(resolve(cwd));
+
+    if (isDefined(cwdPackageJsonPath)) {
+        candidatePackageJsonPaths.add(cwdPackageJsonPath);
+    }
+
+    const processCwdPackageJsonPath = getNearestPackageJsonPath(
+        resolve(process.cwd())
+    );
+
+    if (isDefined(processCwdPackageJsonPath)) {
+        candidatePackageJsonPaths.add(processCwdPackageJsonPath);
+    }
+
+    const dependencyNames = new Set<string>();
+
+    for (const packageJsonPath of candidatePackageJsonPaths) {
+        const dependencyNameSet =
+            readDependencyNamesFromPackageJson(packageJsonPath);
+
+        if (!isDefined(dependencyNameSet)) {
+            continue;
+        }
+
+        for (const dependencyName of dependencyNameSet) {
+            dependencyNames.add(dependencyName);
+        }
+    }
+
+    if (dependencyNames.size === 0) {
         return undefined;
     }
 
-    return readDependencyNamesFromPackageJson(packageJsonPath);
+    return dependencyNames;
 };
 
 /**

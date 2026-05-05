@@ -1,11 +1,11 @@
 /* stylelint-disable selector-pseudo-class-no-unknown -- CSS Modules :global() is valid in this swizzled Docusaurus stylesheet. */
 
-@media (width < 996px) {
+@media (width < 62.25rem) {
     .colorModeToggle {
         display: none;
     }
 }
 
-:global(.navbar__items--right) > :last-child {
+.navbarContent :global(.navbar__items--right) > :last-child {
     padding-inline-end: 0;
 }

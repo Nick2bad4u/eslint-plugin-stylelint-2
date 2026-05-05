@@ -63,7 +63,7 @@ export default function HomepageFeatures(): JSX.Element {
     const gridClassName = styles["grid"] ?? "";
     const linkClassName = styles["link"] ?? "";
     const descriptionClassName = styles["description"] ?? "";
-    const footerClassName = styles["footer"] ?? "";
+    const footerClassName = styles["featureFooter"] ?? "";
     const iconClassName = styles["icon"] ?? "";
 
     return (

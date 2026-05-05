@@ -4,7 +4,7 @@ declare const styles: {
     readonly cardRules: string;
     readonly cardStarted: string;
     readonly description: string;
-    readonly footer: string;
+    readonly featureFooter: string;
     readonly features: string;
     readonly grid: string;
     readonly icon: string;
