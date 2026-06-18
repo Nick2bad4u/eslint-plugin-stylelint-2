@@ -24,14 +24,14 @@ Stylelint documents `overrides.files` as an array of glob patterns. Enforcing ex
 
 ```ts
 export default {
-    overrides: [
-        {
-            files: "**/*.scss",
-            rules: {
-                "at-rule-no-unknown": null,
-            },
-        },
-    ],
+ overrides: [
+  {
+   files: "**/*.scss",
+   rules: {
+    "at-rule-no-unknown": null,
+   },
+  },
+ ],
 };
 ```
 
@@ -39,14 +39,14 @@ export default {
 
 ```ts
 export default {
-    overrides: [
-        {
-            files: ["**/*.scss"],
-            rules: {
-                "at-rule-no-unknown": null,
-            },
-        },
-    ],
+ overrides: [
+  {
+   files: ["**/*.scss"],
+   rules: {
+    "at-rule-no-unknown": null,
+   },
+  },
+ ],
 };
 ```
 

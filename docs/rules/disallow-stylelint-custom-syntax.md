@@ -20,8 +20,8 @@ Top-level `customSyntax` applies globally and can accidentally affect unrelated 
 
 ```ts
 export default {
-    customSyntax: "postcss-scss",
-    rules: {},
+ customSyntax: "postcss-scss",
+ rules: {},
 };
 ```
 
@@ -29,14 +29,14 @@ export default {
 
 ```ts
 export default {
-    overrides: [
-        {
-            customSyntax: "postcss-scss",
-            files: ["**/*.scss"],
-            rules: {},
-        },
-    ],
-    rules: {},
+ overrides: [
+  {
+   customSyntax: "postcss-scss",
+   files: ["**/*.scss"],
+   rules: {},
+  },
+ ],
+ rules: {},
 };
 ```
 

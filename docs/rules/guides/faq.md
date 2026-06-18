@@ -41,7 +41,7 @@ Use package-install validation rules to catch missing dependencies early.
 A config can "work" while still being brittle, duplicated, or hard to review.
 Authoring rules reduce long-term churn and make diffs deterministic.
 
-## What’s the best migration order for existing repos?
+## What's the best migration order for existing repos?
 
 1. Enable one preset.
 2. Run autofix.

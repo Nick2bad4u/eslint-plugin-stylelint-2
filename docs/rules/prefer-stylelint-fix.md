@@ -24,7 +24,7 @@ This rule is intentionally excluded from `stylelint2.configs.recommended` becaus
 
 ```ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 
@@ -32,8 +32,8 @@ export default {
 
 ```ts
 export default {
-    fix: true,
-    rules: {},
+ fix: true,
+ rules: {},
 };
 ```
 
@@ -49,9 +49,9 @@ export default {
 
 ```json
 {
-    "scripts": {
-        "lint:styles": "eslint \"src/**/*.{css,scss}\""
-    }
+ "scripts": {
+  "lint:styles": "eslint \"src/**/*.{css,scss}\""
+ }
 }
 ```
 

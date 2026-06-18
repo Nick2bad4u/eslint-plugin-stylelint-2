@@ -24,9 +24,9 @@ Stylelint can report disable comments that are not scoped to specific rules. Ena
 
 ```ts
 export default {
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 
@@ -34,10 +34,10 @@ export default {
 
 ```ts
 export default {
-    reportUnscopedDisables: true,
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ reportUnscopedDisables: true,
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 
@@ -53,7 +53,7 @@ export default {
 
 ```ts
 export default {
-    reportUnscopedDisables: [true, { severity: "warning" }],
+ reportUnscopedDisables: [true, { severity: "warning" }],
 };
 ```
 
@@ -62,9 +62,7 @@ export default {
 ```ts
 import stylelint2 from "eslint-plugin-stylelint-2";
 
-export default [
-    stylelint2.configs.configuration,
-];
+export default [stylelint2.configs.configuration];
 ```
 
 ## When not to use it

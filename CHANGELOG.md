@@ -1,14 +1,13 @@
 <!-- markdownlint-disable -->
 <!-- eslint-disable markdown/no-missing-label-refs -->
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-
 [a030a19...2266a76](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/compare/a030a19ab6f6c3c50eb7d22f53e2ccbd6cc9eb4c...2266a76345f8ea7c233c7ecebbe34500f52f33d5)
-
 
 ### ✨ Features
 
@@ -19,12 +18,11 @@ All notable changes to this project will be documented in this file.
 - Update styles for card components, including hover effects and transitions
 
 - Refactor feature structure to improve clarity and maintainability
-🧪 [test] Update configs test to include new rules for duplicate extends and plugins
+  🧪 [test] Update configs test to include new rules for duplicate extends and plugins
 
 - Add tests for "disallow-stylelint-duplicate-extends" and "disallow-stylelint-duplicate-plugins"
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`fab4f56`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/fab4f561cdaec2ac89495b5ed51c52a00d5887bc) — ✨ [feat] Add stylelint config hygiene rules and helpers
 
@@ -52,11 +50,9 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 🧪 [test] Adds test coverage for each new rule plus plugin config registry states.
 
-
 - Enables cleaner, deterministic config composition and auditability in stylelint authoring.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`adf5e9c`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/adf5e9c268132c7195e1faaa0f224179a75ab727) — ✨ [feat] Add new Stylelint configuration rules for enhanced hygiene
 
@@ -75,7 +71,7 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Implemented `require-stylelint-overrides-files` to ensure non-empty files matchers in overrides.
 
 - Added `require-stylelint-rules-object` to enforce the presence of a top-level rules object in Stylelint configs.
-🧪 [test] Add tests for new Stylelint configuration rules
+  🧪 [test] Add tests for new Stylelint configuration rules
 
 - Created tests for `disallow-stylelint-allow-empty-input` to validate empty input handling.
 
@@ -95,7 +91,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`b10b6bb`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/b10b6bb0afd81fc55d6c85dd5f7afc138f4038ce) — ✨ [feat] Add new rules to enhance Stylelint configuration hygiene
 
 - Introduced `disallow-stylelint-cache` to prevent cache configuration in Stylelint config files.
@@ -105,19 +100,18 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Implemented `disallow-stylelint-fix` to prevent fix configuration in Stylelint config files.
 
 - Added `disallow-stylelint-ignore-files` to disallow ignore files configuration in Stylelint config files.
-📝 [docs] Update documentation to reflect new rules
+  📝 [docs] Update documentation to reflect new rules
 
 - Updated presets documentation to include new rules with descriptions and autofix capabilities.
 
 - Enhanced configuration documentation to include new rules in the flat config example.
 
 - Updated the rules matrix in the index documentation to include new rules and their respective preset keys.
-🧪 [test] Add tests for new rules
+  🧪 [test] Add tests for new rules
 
 - Created tests for `disallow-stylelint-cache`, `disallow-stylelint-default-severity`, `disallow-stylelint-fix`, and `disallow-stylelint-ignore-files` to ensure correct functionality and error reporting.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`6903302`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/6903302e0e5a7b2a395036da6c197a5994877d73) — ✨ [feat] (homepage) Revamp homepage layout and content
 
@@ -143,7 +137,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`e771060`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/e771060f1a84e8125d75dd646a313d76e7c130f2) — ✨ [feat] (presets) Introduce new configuration presets and update aliases
 
 - Introduced `stylelintOnly` preset for stylesheet linting only, replacing `stylesheets` alias.
@@ -155,21 +148,20 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Updated all relevant code references to use new preset names.
 
 - Ensured backward compatibility for legacy aliases.
-📝 [docs] (presets) Update documentation for new preset structure
+  📝 [docs] (presets) Update documentation for new preset structure
 
 - Added detailed descriptions for `stylelintOnly` and `configuration` presets.
 
 - Updated related documentation links and examples across multiple files.
 
 - Enhanced clarity on the purpose and usage of each preset.
-🧪 [test] (configs) Update tests to reflect new preset names and functionality
+  🧪 [test] (configs) Update tests to reflect new preset names and functionality
 
 - Adjusted tests to verify the behavior of new `stylelintOnly` and `configuration` presets.
 
 - Ensured legacy aliases are still wired correctly to the new presets.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`6571c41`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/6571c418578d8d05f9470c3c18fe5a9df5570c58) — ✨ [feat] Update documentation links and configurations for eslint-plugin-stylelint-2
 
@@ -184,7 +176,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Adjusted internal rule documentation URLs in the source code to point to eslint-plugin-stylelint-2.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`e0a5b55`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/e0a5b558c0f488da9a91613afed207fb6887213e) — ✨ [feat] Add rules to disallow top-level Stylelint config options
 
@@ -204,7 +195,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`f6ee840`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/f6ee8401289f513d88857b05c753d7b075fe6846) — ✨ [feat] Add new Stylelint config hygiene rules
 
 - Introduced five new rules: `prefer-stylelint-report-descriptionless-disables`, `prefer-stylelint-report-invalid-scope-disables`, `prefer-stylelint-report-needless-disables`, `prefer-stylelint-report-unscoped-disables`, and `prefer-stylelint-define-config`.
@@ -214,14 +204,13 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Updated documentation to reflect the new rules and their usage.
 
 - Enhanced the rules matrix and presets to include the new rules, ensuring they are part of the recommended configurations.
-🧪 [test] Add tests for new Stylelint config hygiene rules
+  🧪 [test] Add tests for new Stylelint config hygiene rules
 
 - Created individual test files for each new rule to ensure proper functionality and adherence to expected behaviors.
 
 - Added tests to validate that the rules correctly enforce the required configuration options in various scenarios.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`2b412a3`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/2b412a3bdd82f5a30e40b12af2e7091385b07451) — ✨ [feat] Enhance Stylelint integration and rule definitions
 
@@ -234,7 +223,7 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Refactored rule definitions to ensure immutability and better type safety.
 
 - Enhanced documentation for rule options and configurations to provide clearer guidance.
-🧪 [test] Expand test coverage for Stylelint rules and configurations
+  🧪 [test] Expand test coverage for Stylelint rules and configurations
 
 - Added tests for new `ignoreDisables` option and its impact on linting results.
 
@@ -244,18 +233,13 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
-
 ### 🛠️ Other Changes
 
 - [`f717fc4`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/f717fc456256fa529f7ea4c1d294adc2b8629e96) — Initialize project with basic structure and dependencies
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`a030a19`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/a030a19ab6f6c3c50eb7d22f53e2ccbd6cc9eb4c) — Initial commit
-
-
 
 ### 🎨 Styling
 
@@ -273,8 +257,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
-
 ### 🧹 Chores
 
 - [`69076c3`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/69076c3850dc19675f4aea033f0a4ce4cfde34d6) — 🔧 [chore] Update npm-package-json-lint to version 10.0.0
@@ -285,9 +267,7 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`7018ecb`](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/commit/7018ecba8ae1b47c5a3eb8369afa935a2ba0264c) — 🔧 [chore] Update dependencies in package.json
-
 
 - Upgrade "@stylistic/stylelint-plugin" from "^5.0.1" to "^5.1.0" for improved linting capabilities.
 
@@ -317,13 +297,11 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
-
-
-
-
 ## Contributors
+
 Thanks to all the [contributors](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/graphs/contributors) for their hard work!
+
 ## License
+
 This project is licensed under the [MIT License](https://github.com/Nick2bad4u/eslint-plugin-stylelint-2/blob/main/LICENSE)
-*This changelog was automatically generated with [git-cliff](https://github.com/orhun/git-cliff).*
+_This changelog was automatically generated with [git-cliff](https://github.com/orhun/git-cliff)._

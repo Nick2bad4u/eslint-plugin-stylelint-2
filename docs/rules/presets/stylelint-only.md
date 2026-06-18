@@ -9,9 +9,7 @@ This preset is the clearest choice when you want Stylelint diagnostics and autof
 ```ts
 import stylelint2 from "eslint-plugin-stylelint-2";
 
-export default [
-    stylelint2.configs.stylelintOnly,
-];
+export default [stylelint2.configs.stylelintOnly];
 ```
 
 > Legacy alias: `stylelint2.configs.stylesheets` remains supported for backwards compatibility.
@@ -36,4 +34,4 @@ export default [
 
 | Rule                                                                                       | Fix |
 | ------------------------------------------------------------------------------------------ | :-: |
-| [`stylelint`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/stylelint) |  🔧 |
+| [`stylelint`](https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/stylelint) | 🔧  |

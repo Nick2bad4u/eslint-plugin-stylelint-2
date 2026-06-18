@@ -1,4 +1,3 @@
-/* eslint-disable unused-imports/no-unused-vars -- This file intentionally keeps negative compile-time assignments for d.ts contract testing. */
 import { assertType } from "vitest";
 
 import type {
@@ -28,4 +27,3 @@ assertType(pluginContract.configs.stylesheets);
 assertType(pluginContract.configs.configs);
 assertType(pluginContract.meta.name);
 assertType(pluginContract.meta.namespace);
-/* eslint-enable unused-imports/no-unused-vars -- End of compile-time negative test declarations. */

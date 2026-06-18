@@ -76,7 +76,7 @@ describe("stylelint bridge rule", () => {
         });
 
         expect(result).toBeDefined();
-        expect(Array.isArray(result!.messages)).toBeTruthy();
+        expect(Array.isArray(result!.messages)).toBe(true);
         expect(result!.messages.length).toBeGreaterThanOrEqual(0);
     });
 

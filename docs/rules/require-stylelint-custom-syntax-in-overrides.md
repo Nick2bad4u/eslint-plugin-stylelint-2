@@ -20,10 +20,10 @@ Global syntax declarations can accidentally affect unrelated file types. Declari
 
 ```ts
 export default {
-    customSyntax: "postcss-scss",
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ customSyntax: "postcss-scss",
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 
@@ -31,19 +31,19 @@ export default {
 
 ```ts
 export default {
-    customSyntax: "postcss-scss",
-    overrides: [
-        {
-            customSyntax: "postcss-scss",
-            files: ["**/*.scss"],
-            rules: {
-                "at-rule-no-unknown": null,
-            },
-        },
-    ],
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ customSyntax: "postcss-scss",
+ overrides: [
+  {
+   customSyntax: "postcss-scss",
+   files: ["**/*.scss"],
+   rules: {
+    "at-rule-no-unknown": null,
+   },
+  },
+ ],
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 

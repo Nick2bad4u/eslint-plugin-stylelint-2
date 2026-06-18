@@ -20,8 +20,8 @@ Shared Stylelint configs should reference installed packages explicitly. Missing
 
 ```ts
 export default {
-    extends: ["stylelint-config-does-not-exist"],
-    rules: {},
+ extends: ["stylelint-config-does-not-exist"],
+ rules: {},
 };
 ```
 
@@ -29,8 +29,8 @@ export default {
 
 ```ts
 export default {
-    extends: ["stylelint-config-standard"],
-    rules: {},
+ extends: ["stylelint-config-standard"],
+ rules: {},
 };
 ```
 

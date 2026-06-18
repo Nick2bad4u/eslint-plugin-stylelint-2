@@ -20,8 +20,8 @@ This rule reports Stylelint config objects that include a top-level `allowEmptyI
 
 ```ts
 export default {
-    allowEmptyInput: true,
-    rules: {},
+ allowEmptyInput: true,
+ rules: {},
 };
 ```
 
@@ -29,7 +29,7 @@ export default {
 
 ```ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 

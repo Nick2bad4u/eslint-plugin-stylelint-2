@@ -11,22 +11,19 @@ type UnknownRecord = Readonly<Record<string, unknown>>;
 
 const eslintMajorOverrideEnvironmentVariable = "STYLELINT2_ESLINT_MAJOR";
 const originalEslintMajorOverride =
-    globalThis.process.env[eslintMajorOverrideEnvironmentVariable];
+    process.env[eslintMajorOverrideEnvironmentVariable];
 
 const isRecord = (value: unknown): value is UnknownRecord =>
     typeof value === "object" && value !== null;
 
 const restoreEslintMajorOverrideEnvironmentVariable = (): void => {
     if (typeof originalEslintMajorOverride === "string") {
-        globalThis.process.env[eslintMajorOverrideEnvironmentVariable] =
+        process.env[eslintMajorOverrideEnvironmentVariable] =
             originalEslintMajorOverride;
         return;
     }
 
-    Reflect.deleteProperty(
-        globalThis.process.env,
-        eslintMajorOverrideEnvironmentVariable
-    );
+    Reflect.deleteProperty(process.env, eslintMajorOverrideEnvironmentVariable);
 };
 
 const getStylelintOnlyPreset = (
@@ -52,7 +49,7 @@ const getPluginsRecord = (config: Readonly<UnknownRecord>): UnknownRecord => {
 const loadPluginWithEslintMajor = async (
     eslintMajorVersion: number
 ): Promise<Stylelint2Plugin> => {
-    globalThis.process.env[eslintMajorOverrideEnvironmentVariable] =
+    process.env[eslintMajorOverrideEnvironmentVariable] =
         String(eslintMajorVersion);
     vi.resetModules();
 

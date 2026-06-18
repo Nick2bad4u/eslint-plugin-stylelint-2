@@ -20,8 +20,8 @@ Processor pipelines are often legacy integration paths that hide parsing behavio
 
 ```ts
 export default {
-    processors: ["stylelint-processor-styled-components"],
-    rules: {},
+ processors: ["stylelint-processor-styled-components"],
+ rules: {},
 };
 ```
 
@@ -29,7 +29,7 @@ export default {
 
 ```ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 

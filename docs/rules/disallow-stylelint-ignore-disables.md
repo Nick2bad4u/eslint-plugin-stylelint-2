@@ -22,8 +22,8 @@ That setting is an execution policy decision and is usually a poor fit for a sha
 
 ```ts
 export default {
-    ignoreDisables: true,
-    rules: {},
+ ignoreDisables: true,
+ rules: {},
 };
 ```
 
@@ -31,7 +31,7 @@ export default {
 
 ```ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 
@@ -47,8 +47,8 @@ export default {
 
 ```ts
 await stylelint.lint({
-    code,
-    ignoreDisables: true,
+ code,
+ ignoreDisables: true,
 });
 ```
 
@@ -57,9 +57,7 @@ await stylelint.lint({
 ```ts
 import stylelint2 from "eslint-plugin-stylelint-2";
 
-export default [
-    stylelint2.configs.configuration,
-];
+export default [stylelint2.configs.configuration];
 ```
 
 ## When not to use it

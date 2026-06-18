@@ -58,32 +58,32 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
     MessageIds,
     Options
 >({
-    create(context, [rawOptions = {}]) {
-        return toRuleListener({
+    create: (context, [rawOptions = {}]) =>
+        toRuleListener({
             StyleSheet() {
                 const sourceCode = context.sourceCode;
                 const lintResult = runStylelintSynchronously({
                     code: sourceCode.text,
                     codeFilename: context.physicalFilename,
                     cwd: context.cwd,
-                    ...(isDefined(rawOptions.allowEmptyInput)
-                        ? { allowEmptyInput: rawOptions.allowEmptyInput }
-                        : {}),
-                    ...(isDefined(rawOptions.configBasedir)
-                        ? { configBasedir: rawOptions.configBasedir }
-                        : {}),
-                    ...(isDefined(rawOptions.configFile)
-                        ? { configFile: rawOptions.configFile }
-                        : {}),
-                    ...(isDefined(rawOptions.customSyntax)
-                        ? { customSyntax: rawOptions.customSyntax }
-                        : {}),
-                    ...(isDefined(rawOptions.ignoreDisables)
-                        ? { ignoreDisables: rawOptions.ignoreDisables }
-                        : {}),
-                    ...(isDefined(rawOptions.quiet)
-                        ? { quiet: rawOptions.quiet }
-                        : {}),
+                    ...(isDefined(rawOptions.allowEmptyInput) && {
+                        allowEmptyInput: rawOptions.allowEmptyInput,
+                    }),
+                    ...(isDefined(rawOptions.configBasedir) && {
+                        configBasedir: rawOptions.configBasedir,
+                    }),
+                    ...(isDefined(rawOptions.configFile) && {
+                        configFile: rawOptions.configFile,
+                    }),
+                    ...(isDefined(rawOptions.customSyntax) && {
+                        customSyntax: rawOptions.customSyntax,
+                    }),
+                    ...(isDefined(rawOptions.ignoreDisables) && {
+                        ignoreDisables: rawOptions.ignoreDisables,
+                    }),
+                    ...(isDefined(rawOptions.quiet) && {
+                        quiet: rawOptions.quiet,
+                    }),
                 });
                 const reportNode = sourceCode.ast;
 
@@ -109,16 +109,14 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
                         loc: toEslintLoc(warning),
                         messageId: "stylelintProblem",
                         node: reportNode,
-                        ...(isDefined(fixData)
-                            ? {
-                                  fix: (fixer: TSESLint.RuleFixer) =>
-                                      replaceTextRange(
-                                          fixer,
-                                          fixData.range,
-                                          fixData.text
-                                      ),
-                              }
-                            : {}),
+                        ...(isDefined(fixData) && {
+                            fix: (fixer: TSESLint.RuleFixer) =>
+                                replaceTextRange(
+                                    fixer,
+                                    fixData.range,
+                                    fixData.text
+                                ),
+                        }),
                     });
                 }
 
@@ -150,8 +148,7 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
                     });
                 }
             },
-        });
-    },
+        }),
     meta: {
         defaultOptions: [{}],
         deprecated: false,

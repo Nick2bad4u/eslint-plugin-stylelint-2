@@ -20,8 +20,8 @@ Relative plugin paths are brittle in shared configs and can break when package r
 
 ```ts
 export default {
-    plugins: ["./plugins/local-stylelint-plugin.cjs"],
-    rules: {},
+ plugins: ["./plugins/local-stylelint-plugin.cjs"],
+ rules: {},
 };
 ```
 
@@ -29,8 +29,8 @@ export default {
 
 ```ts
 export default {
-    plugins: ["stylelint-order"],
-    rules: {},
+ plugins: ["stylelint-order"],
+ rules: {},
 };
 ```
 

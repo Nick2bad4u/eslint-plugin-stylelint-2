@@ -20,10 +20,10 @@ Stable key ordering reduces diff noise and makes large shared rulesets easier to
 
 ```ts
 export default {
-    rules: {
-        "color-named": "never",
-        "at-rule-no-unknown": true,
-    },
+ rules: {
+  "color-named": "never",
+  "at-rule-no-unknown": true,
+ },
 };
 ```
 
@@ -31,10 +31,10 @@ export default {
 
 ```ts
 export default {
-    rules: {
-        "at-rule-no-unknown": true,
-        "color-named": "never",
-    },
+ rules: {
+  "at-rule-no-unknown": true,
+  "color-named": "never",
+ },
 };
 ```
 

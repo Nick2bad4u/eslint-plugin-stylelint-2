@@ -20,8 +20,8 @@ Plugin references in shared config should be reproducible across contributors an
 
 ```ts
 export default {
-    plugins: ["stylelint-plugin-does-not-exist"],
-    rules: {},
+ plugins: ["stylelint-plugin-does-not-exist"],
+ rules: {},
 };
 ```
 
@@ -29,8 +29,8 @@ export default {
 
 ```ts
 export default {
-    plugins: ["stylelint-order"],
-    rules: {},
+ plugins: ["stylelint-order"],
+ rules: {},
 };
 ```
 

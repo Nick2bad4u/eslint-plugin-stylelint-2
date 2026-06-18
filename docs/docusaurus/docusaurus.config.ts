@@ -1,9 +1,9 @@
-import { themes as prismThemes } from "prism-react-renderer";
-
-import type { Config, PluginModule } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+import type { Config, PluginModule } from "@docusaurus/types";
+
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
+import { themes as prismThemes } from "prism-react-renderer";
 
 /** Route base path where docs site is deployed (GitHub Pages project path). */
 const baseUrl =
@@ -26,7 +26,7 @@ const siteDescription =
 /** Social preview image used for Open Graph and Twitter cards. */
 const socialCardImagePath = "img/logo.png";
 /** Absolute social preview image URL. */
-const socialCardImageUrl = new URL(socialCardImagePath, siteUrl).toString();
+const socialCardImageUrl = new URL(socialCardImagePath, siteUrl).href;
 /** Client module path for runtime DOM enhancement bootstrap script. */
 const modernEnhancementsClientModule = fileURLToPath(
     new URL("src/js/modernEnhancements.ts", import.meta.url)
@@ -97,70 +97,62 @@ const suppressKnownWebpackWarningsPlugin: PluginModule = () => {
     }
 
     return {
-        configureWebpack() {
-            return {
-                ignoreWarnings: [
-                    {
-                        message:
-                            /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/u,
-                        module: /vscode-languageserver-types[\\/]lib[\\/]umd[\\/]main\.js/u,
-                    },
-                ],
-                resolve: {
-                    alias: {
-                        "vscode-css-languageservice$":
-                            vscodeCssLanguageServiceEsmEntry,
-                        "vscode-languageserver-types$":
-                            vscodeLanguageServerTypesEsmEntry,
-                        "vscode-languageserver-types/lib/umd/main.js$":
-                            vscodeLanguageServerTypesEsmEntry,
-                    },
+        configureWebpack: () => ({
+            ignoreWarnings: [
+                {
+                    message:
+                        /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/u,
+                    module: /vscode-languageserver-types[/\\]lib[/\\]umd[/\\]main\.js/u,
                 },
-            };
-        },
+            ],
+            resolve: {
+                alias: {
+                    "vscode-css-languageservice$":
+                        vscodeCssLanguageServiceEsmEntry,
+                    "vscode-languageserver-types$":
+                        vscodeLanguageServerTypesEsmEntry,
+                    "vscode-languageserver-types/lib/umd/main.js$":
+                        vscodeLanguageServerTypesEsmEntry,
+                },
+            },
+        }),
         name: "suppress-known-webpack-warnings",
     };
 };
 
 /** Docusaurus future flags, including optional experimental fast path. */
 const futureConfig = {
-    ...(enableExperimentalFaster
-        ? {
-              faster: {
-                  mdxCrossCompilerCache: true,
-                  rspackBundler: true,
-                  rspackPersistentCache: true,
-                  ssgWorkerThreads: true,
-              },
-          }
-        : {}),
+    ...(enableExperimentalFaster && {
+        faster: {
+            mdxCrossCompilerCache: true,
+            rspackBundler: true,
+            rspackPersistentCache: true,
+            ssgWorkerThreads: true,
+        },
+    }),
     v4: {
+        fasterByDefault: true,
+        mdx1CompatDisabledByDefault: true,
         [removeHeadAttrFlagKey]: true,
+        removeLegacyPostBuildHeadAttribute: true,
         // NOTE: Enabling cascade layers currently breaks our production CSS output
         // (CssMinimizer parsing errors -> large chunks of CSS dropped), which
         // makes many Infima (--ifm-*) variables undefined across the site.
         // Re-enable only after verifying the build output CSS is valid.
         siteStorageNamespacing: true,
-        fasterByDefault: true,
-        removeLegacyPostBuildHeadAttribute: true,
-        mdx1CompatDisabledByDefault: true,
         useCssCascadeLayers: false,
     },
 } satisfies Config["future"];
 
 /** Full Docusaurus site configuration exported to the build/runtime. */
 const config = {
-    storage: {
-        type: "localStorage",
-        namespace: true,
-    },
     baseUrl,
     baseUrlIssueBanner: true,
+    clientModules: [modernEnhancementsClientModule],
     deploymentBranch: "gh-pages",
     favicon: "img/favicon.ico",
     // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
     future: futureConfig,
-    clientModules: [modernEnhancementsClientModule],
     headTags: [
         {
             attributes: {
@@ -310,12 +302,14 @@ const config = {
                     routeBasePath: "blog",
                     showReadingTime: true,
                 },
+                debug:
+                    process.env["DOCUSAURUS_PRESET_CLASSIC_DEBUG"] === "true",
                 docs: {
                     breadcrumbs: true,
                     editUrl: `https://github.com/${organizationName}/${projectName}/blob/main/docs/docusaurus/`,
-                    path: "site-docs",
                     includeCurrentVersion: true,
                     onInlineTags: "ignore",
+                    path: "site-docs",
                     routeBasePath: "docs",
                     showLastUpdateAuthor: true,
                     showLastUpdateTime: true,
@@ -347,8 +341,6 @@ const config = {
                     showLastUpdateAuthor: true,
                     showLastUpdateTime: true,
                 },
-                debug:
-                    process.env["DOCUSAURUS_PRESET_CLASSIC_DEBUG"] === "true",
                 sitemap: {
                     filename: "sitemap.xml",
                     ignorePatterns: ["/tests/**"],
@@ -385,6 +377,10 @@ const config = {
         ],
     ],
     projectName,
+    storage: {
+        namespace: true,
+        type: "localStorage",
+    },
     tagline:
         "Run Stylelint through ESLint and standardize Stylelint config authoring.",
     themeConfig: {
@@ -393,21 +389,6 @@ const config = {
             disableSwitch: false,
             respectPrefersColorScheme: true,
         },
-        metadata: [
-            {
-                content:
-                    "eslint, eslint-plugin, stylelint, css, flat config, static analysis, docs",
-                name: "keywords",
-            },
-            {
-                content: "summary_large_image",
-                name: "twitter:card",
-            },
-            {
-                content: "eslint-plugin-stylelint-2",
-                property: "og:site_name",
-            },
-        ],
         footer: {
             copyright: footerCopyright,
             links: [
@@ -443,12 +424,12 @@ const config = {
                             label: "🧪 Stylelint Inspector",
                         },
                         {
-                            to: "/docs/developer/api",
                             label: "🧩 API Reference",
+                            to: "/docs/developer/api",
                         },
                         {
-                            to: "/docs/rules/guides/faq",
                             label: "❓ FAQ",
+                            to: "/docs/rules/guides/faq",
                         },
                     ],
                     title: "🔭 Explore More",
@@ -477,24 +458,34 @@ const config = {
             ],
             logo: {
                 alt: "eslint-plugin-stylelint-2 logo",
+                height: 60,
                 href: `https://github.com/${organizationName}/${projectName}`,
                 src: "img/logo.svg",
                 width: 60,
-                height: 60,
             },
             style: "dark",
         },
         image: socialCardImagePath,
+        metadata: [
+            {
+                content:
+                    "eslint, eslint-plugin, stylelint, css, flat config, static analysis, docs",
+                name: "keywords",
+            },
+            {
+                content: "summary_large_image",
+                name: "twitter:card",
+            },
+            {
+                content: "eslint-plugin-stylelint-2",
+                property: "og:site_name",
+            },
+        ],
         navbar: {
-            style: "dark",
             hideOnScroll: true,
             items: [
                 {
                     activeBaseRegex: "^/docs(?:/(?!developer(?:/|$)).*)?$",
-                    label: "📚 Docs",
-                    position: "left",
-                    to: "/docs/rules/guides/intro",
-                    type: "dropdown",
                     items: [
                         {
                             label: "🏁 Overview",
@@ -517,13 +508,13 @@ const config = {
                             to: "/docs/rules/guides/faq",
                         },
                     ],
+                    label: "📚 Docs",
+                    position: "left",
+                    to: "/docs/rules/guides/intro",
+                    type: "dropdown",
                 },
                 {
                     activeBaseRegex: "^/docs/rules(?:/|$)",
-                    label: "📏 Rules",
-                    position: "left",
-                    to: "/docs/rules/getting-started",
-                    type: "dropdown",
                     items: [
                         {
                             label: "📚 Rule Catalog",
@@ -534,13 +525,13 @@ const config = {
                             to: "/docs/rules/guides/stylelint-bridge",
                         },
                     ],
+                    label: "📏 Rules",
+                    position: "left",
+                    to: "/docs/rules/getting-started",
+                    type: "dropdown",
                 },
                 {
                     activeBaseRegex: "^/docs/rules/presets(?:/|$)",
-                    label: "🎛️ Presets",
-                    position: "left",
-                    to: "/docs/rules/presets",
-                    type: "dropdown",
                     items: [
                         {
                             label: "🎛️ Preset Reference",
@@ -563,41 +554,42 @@ const config = {
                             to: "/docs/rules/presets/all",
                         },
                     ],
+                    label: "🎛️ Presets",
+                    position: "left",
+                    to: "/docs/rules/presets",
+                    type: "dropdown",
                 },
                 {
-                    label: "🧩 Dev",
-                    position: "right",
-                    to: "/docs/developer/api",
-                    type: "dropdown",
                     items: [
                         {
                             label: "🧩 API Reference",
                             to: "/docs/developer/api",
                         },
                         {
-                            label: "🔎 ESLint Inspector",
                             href: `https://nick2bad4u.github.io/${projectName}/eslint-inspector/`,
+                            label: "🔎 ESLint Inspector",
                         },
                         {
-                            label: "🧪 Stylelint Inspector",
                             href: `https://nick2bad4u.github.io/${projectName}/stylelint-inspector/`,
+                            label: "🧪 Stylelint Inspector",
                         },
                         {
                             className: "navbar-dropdown-divider-before",
-                            label: "󰏗 npm Package",
                             href: `https://www.npmjs.com/package/${projectName}`,
+                            label: "󰏗 npm Package",
                         },
                         {
-                            label: "🎨 Stylelint",
                             href: "https://stylelint.io/",
+                            label: "🎨 Stylelint",
                         },
                     ],
+                    label: "🧩 Dev",
+                    position: "right",
+                    to: "/docs/developer/api",
+                    type: "dropdown",
                 },
                 {
                     href: `https://github.com/${organizationName}/${projectName}`,
-                    label: "󰊤 GitHub",
-                    position: "right",
-                    type: "dropdown",
                     items: [
                         {
                             href: `https://github.com/${organizationName}/${projectName}`,
@@ -608,8 +600,8 @@ const config = {
                             label: "󰏗 npm",
                         },
                         {
-                            href: `https://nick2bad4u.github.io/${projectName}/eslint-inspector/`,
                             className: "navbar-dropdown-divider-before",
+                            href: `https://nick2bad4u.github.io/${projectName}/eslint-inspector/`,
                             label: "🔎 ESLint Inspector",
                         },
                         {
@@ -617,8 +609,8 @@ const config = {
                             label: "🧪 Stylelint Inspector",
                         },
                         {
-                            href: `https://github.com/${organizationName}/${projectName}/releases`,
                             className: "navbar-dropdown-divider-before",
+                            href: `https://github.com/${organizationName}/${projectName}/releases`,
                             label: "󰫑 Releases",
                         },
                         {
@@ -626,6 +618,9 @@ const config = {
                             label: "󰅙 Issues",
                         },
                     ],
+                    label: "󰊤 GitHub",
+                    position: "right",
+                    type: "dropdown",
                 },
                 {
                     position: "right",
@@ -639,6 +634,7 @@ const config = {
                 src: "img/logo.svg",
                 width: 48,
             },
+            style: "dark",
             title: "eslint-plugin-stylelint-2",
         },
         prism: {

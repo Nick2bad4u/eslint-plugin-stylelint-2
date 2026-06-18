@@ -20,8 +20,8 @@ Relative path references in shared configs are fragile across package boundaries
 
 ```ts
 export default {
-    extends: ["../shared/stylelint.cjs"],
-    rules: {},
+ extends: ["../shared/stylelint.cjs"],
+ rules: {},
 };
 ```
 
@@ -29,8 +29,8 @@ export default {
 
 ```ts
 export default {
-    extends: ["stylelint-config-standard"],
-    rules: {},
+ extends: ["stylelint-config-standard"],
+ rules: {},
 };
 ```
 

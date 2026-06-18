@@ -70,13 +70,12 @@ export const createStylelintConfigDisallowedOptionRule = (
                     }
 
                     context.report({
-                        fix(fixer) {
-                            return createFixToRemoveObjectProperty({
+                        fix: (fixer) =>
+                            createFixToRemoveObjectProperty({
                                 fixer,
                                 objectExpression: configObject,
                                 property: existingProperty,
-                            });
-                        },
+                            }),
                         messageId: "disallowConfigOption",
                         node: existingProperty,
                     });

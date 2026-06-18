@@ -1,8 +1,8 @@
 import type { JSX } from "react";
 
-import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import Heading from "@theme/Heading";
+import clsx from "clsx";
 
 import styles from "./styles.module.css";
 
@@ -11,20 +11,20 @@ type ExternalFeature = Readonly<{
     href: string;
     icon: string;
     linkLabel: string;
-    toneClassName: string;
     title: string;
+    toneClassName: string;
 }>;
+
+type Feature = ExternalFeature | InternalFeature;
 
 type InternalFeature = Readonly<{
     description: string;
     icon: string;
     linkLabel: string;
-    toneClassName: string;
     title: string;
     to: string;
+    toneClassName: string;
 }>;
-
-type Feature = ExternalFeature | InternalFeature;
 
 const features: readonly Feature[] = [
     {
@@ -33,8 +33,8 @@ const features: readonly Feature[] = [
         icon: "",
         linkLabel: "Open section →",
         title: "Get Started",
-        toneClassName: styles["cardStarted"] ?? "",
         to: "/docs/rules/getting-started",
+        toneClassName: styles.cardStarted ?? "",
     },
     {
         description:
@@ -42,8 +42,8 @@ const features: readonly Feature[] = [
         icon: "",
         linkLabel: "Open section →",
         title: "Presets",
-        toneClassName: styles["cardPresets"] ?? "",
         to: "/docs/rules/presets",
+        toneClassName: styles.cardPresets ?? "",
     },
     {
         description:
@@ -51,20 +51,20 @@ const features: readonly Feature[] = [
         icon: "󰘥",
         linkLabel: "Open section →",
         title: "Rule Reference",
-        toneClassName: styles["cardRules"] ?? "",
         to: "/docs/rules/overview",
+        toneClassName: styles.cardRules ?? "",
     },
 ];
 
 /** Render the homepage feature cards that route users into core docs areas. */
 export default function HomepageFeatures(): JSX.Element {
-    const cardClassName = styles["card"] ?? "";
-    const featuresClassName = styles["features"] ?? "";
-    const gridClassName = styles["grid"] ?? "";
-    const linkClassName = styles["link"] ?? "";
-    const descriptionClassName = styles["description"] ?? "";
-    const footerClassName = styles["featureFooter"] ?? "";
-    const iconClassName = styles["icon"] ?? "";
+    const cardClassName = styles.card ?? "";
+    const featuresClassName = styles.features ?? "";
+    const gridClassName = styles.grid ?? "";
+    const linkClassName = styles.link ?? "";
+    const descriptionClassName = styles.description ?? "";
+    const footerClassName = styles.featureFooter ?? "";
+    const iconClassName = styles.icon ?? "";
 
     return (
         <section className={featuresClassName}>
@@ -72,13 +72,13 @@ export default function HomepageFeatures(): JSX.Element {
                 <div className={gridClassName}>
                     {features.map((feature) => (
                         <article
-                            key={feature.title}
                             className={clsx(
                                 "card",
                                 cardClassName,
                                 feature.toneClassName
                             )}
                             data-sb-hover="lift"
+                            key={feature.title}
                         >
                             <Heading as="h2">{feature.title}</Heading>
                             <p className={descriptionClassName}>
@@ -101,8 +101,8 @@ export default function HomepageFeatures(): JSX.Element {
                                     </Link>
                                 )}
                                 <span
-                                    className={iconClassName}
                                     aria-hidden="true"
+                                    className={iconClassName}
                                 >
                                     {feature.icon}
                                 </span>

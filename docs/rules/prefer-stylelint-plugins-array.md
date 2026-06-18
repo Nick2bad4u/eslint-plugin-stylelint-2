@@ -20,8 +20,8 @@ Array form makes plugin composition deterministic and easier to maintain in shar
 
 ```ts
 export default {
-    plugins: "stylelint-order",
-    rules: {},
+ plugins: "stylelint-order",
+ rules: {},
 };
 ```
 
@@ -29,8 +29,8 @@ export default {
 
 ```ts
 export default {
-    plugins: ["stylelint-order"],
-    rules: {},
+ plugins: ["stylelint-order"],
+ rules: {},
 };
 ```
 

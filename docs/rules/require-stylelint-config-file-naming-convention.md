@@ -21,7 +21,7 @@ Canonical filenames improve discoverability in editors, scripts, and monorepos. 
 ```js
 // .stylelintrc.js
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 
@@ -30,7 +30,7 @@ export default {
 ```ts
 // stylelint.config.ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 

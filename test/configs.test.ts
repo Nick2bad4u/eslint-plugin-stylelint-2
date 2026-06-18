@@ -108,10 +108,8 @@ describe("stylelint-2 plugin configs", () => {
     it("keeps recommended and all as flat-config arrays", () => {
         expect.hasAssertions();
 
-        expect(
-            Array.isArray(stylelint2Plugin.configs.recommended)
-        ).toBeTruthy();
-        expect(Array.isArray(stylelint2Plugin.configs.all)).toBeTruthy();
+        expect(Array.isArray(stylelint2Plugin.configs.recommended)).toBe(true);
+        expect(Array.isArray(stylelint2Plugin.configs.all)).toBe(true);
         expect(stylelint2Plugin.configs.recommended).toHaveLength(2);
         expect(stylelint2Plugin.configs.all).toHaveLength(2);
     });

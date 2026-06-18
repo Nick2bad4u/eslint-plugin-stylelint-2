@@ -24,7 +24,7 @@ This rule is intentionally excluded from `stylelint2.configs.recommended` becaus
 
 ```ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 
@@ -32,8 +32,8 @@ export default {
 
 ```ts
 export default {
-    formatter: "json",
-    rules: {},
+ formatter: "json",
+ rules: {},
 };
 ```
 
@@ -49,8 +49,8 @@ export default {
 
 ```ts
 await stylelint.lint({
-    code,
-    formatter: "string",
+ code,
+ formatter: "string",
 });
 ```
 
@@ -59,9 +59,7 @@ await stylelint.lint({
 ```ts
 import stylelint2 from "eslint-plugin-stylelint-2";
 
-export default [
-    stylelint2.configs.configuration,
-];
+export default [stylelint2.configs.configuration];
 ```
 
 ## When not to use it

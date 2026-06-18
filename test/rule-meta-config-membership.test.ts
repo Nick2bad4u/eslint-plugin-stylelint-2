@@ -141,23 +141,23 @@ describe("rule meta.docs.configs contract", () => {
             stylelint2Plugin.rules
         )) {
             const fullRuleId = `${pluginNamespace}/${ruleName}`;
-            const expectedRecommended = recommendedMembership.has(fullRuleId);
+            const isExpectedRecommended = recommendedMembership.has(fullRuleId);
             const possibleMeta = isRecord(ruleModule)
                 ? ruleModule.meta
                 : undefined;
             const possibleDocs = isRecord(possibleMeta)
                 ? possibleMeta["docs"]
                 : undefined;
-            const documentedRecommended =
+            const isDocumentedRecommended =
                 isRecord(possibleDocs) &&
                 typeof possibleDocs["recommended"] === "boolean"
                     ? possibleDocs["recommended"]
                     : false;
 
             expect(
-                documentedRecommended,
-                `${ruleName}: expected docs.recommended to be ${String(expectedRecommended)} to match stylelint2.configs.recommended membership`
-            ).toBe(expectedRecommended);
+                isDocumentedRecommended,
+                `${ruleName}: expected docs.recommended to be ${String(isExpectedRecommended)} to match stylelint2.configs.recommended membership`
+            ).toBe(isExpectedRecommended);
         }
     });
 });

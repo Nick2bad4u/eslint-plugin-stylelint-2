@@ -1,4 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/utils";
+import type { ArrayElement } from "type-fest";
 
 /**
  * @packageDocumentation
@@ -16,7 +17,9 @@ import {
 } from "../_internal/stylelint-config-object.js";
 import { createTypedRule, toRuleListener } from "../_internal/typed-rule.js";
 
-type ArrayExpressionElement = TSESTree.ArrayExpression["elements"][number];
+type ArrayExpressionElement = ArrayElement<
+    TSESTree.ArrayExpression["elements"]
+>;
 type MessageIds = "requireOverrideFilesArray";
 type Options = readonly [];
 

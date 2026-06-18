@@ -20,8 +20,8 @@ Duplicate plugin references make config harder to reason about and create unnece
 
 ```ts
 export default {
-    plugins: ["stylelint-order", "stylelint-order"],
-    rules: {},
+ plugins: ["stylelint-order", "stylelint-order"],
+ rules: {},
 };
 ```
 
@@ -29,8 +29,8 @@ export default {
 
 ```ts
 export default {
-    plugins: ["stylelint-order"],
-    rules: {},
+ plugins: ["stylelint-order"],
+ rules: {},
 };
 ```
 

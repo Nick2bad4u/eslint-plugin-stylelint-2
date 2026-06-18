@@ -22,8 +22,8 @@ Stylelint also documents that `ignoreFiles` is not efficient for broad ignore co
 
 ```ts
 export default {
-    ignoreFiles: ["**/vendor/**/*.css"],
-    rules: {},
+ ignoreFiles: ["**/vendor/**/*.css"],
+ rules: {},
 };
 ```
 
@@ -31,7 +31,7 @@ export default {
 
 ```ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 

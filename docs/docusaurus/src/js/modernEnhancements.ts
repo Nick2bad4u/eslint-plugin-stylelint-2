@@ -5,14 +5,14 @@
 
 type CleanupFunction = () => void;
 
-type CleanupRef = {
+interface CleanupRef {
     current: CleanupFunction | null;
-};
+}
 
-type SidebarLabelMutation = {
+interface SidebarLabelMutation {
     readonly element: HTMLAnchorElement;
     readonly originalLabel: string;
-};
+}
 
 declare global {
     interface Window {
@@ -24,204 +24,10 @@ const INITIAL_HYDRATION_DELAY_MS = 0;
 const ROUTE_REFRESH_DELAY_MS = 100;
 const SIDEBAR_TOKENIZED_DATA_KEY = "sbTokenized";
 
-function isHTMLElement(element: Element | null): element is HTMLElement {
-    return element instanceof HTMLElement;
-}
-
-function isNumberedRuleSidebarLink(link: HTMLAnchorElement): boolean {
-    return link.closest(".sb-cat-rules-stylelint") !== null;
-}
-
-function getRuleNumberPrefix(
-    label: string
-): null | Readonly<{ numberToken: string; remainder: string }> {
-    const match = /^(\d{2,3})\s+(.+)$/u.exec(label);
-
-    if (match === null) {
-        return null;
-    }
-
-    const [
-        ,
-        numberToken,
-        remainder,
-    ] = match;
-
-    if (numberToken === undefined || remainder === undefined) {
-        return null;
-    }
-
-    return {
-        numberToken,
-        remainder,
-    };
-}
-
-function setSidebarLeadingToken(
-    options: Readonly<{
-        link: HTMLAnchorElement;
-        remainderText: string;
-        tokenClassName: string;
-        tokenText: string;
-    }>
-): void {
-    const { link, remainderText, tokenClassName, tokenText } = options;
-    const token = document.createElement("span");
-
-    token.className = tokenClassName;
-    token.textContent = tokenText;
-    link.dataset[SIDEBAR_TOKENIZED_DATA_KEY] = tokenClassName;
-
-    link.replaceChildren(token, document.createTextNode(` ${remainderText}`));
-}
-
-function isSidebarLinkTokenized(link: HTMLAnchorElement): boolean {
-    const tokenizedValue = link.dataset[SIDEBAR_TOKENIZED_DATA_KEY];
-
-    return tokenizedValue !== undefined && tokenizedValue.length > 0;
-}
-
-function applySidebarLabelTokenColoring(): CleanupFunction {
-    const mutations: SidebarLabelMutation[] = [];
-
-    const processLinks = (sidebarLinks: readonly HTMLAnchorElement[]): void => {
-        for (const link of sidebarLinks) {
-            if (isSidebarLinkTokenized(link)) {
-                continue;
-            }
-
-            const linkLabel = link.textContent?.trim();
-
-            if (!linkLabel || !isNumberedRuleSidebarLink(link)) {
-                continue;
-            }
-
-            const ruleNumberPrefix = getRuleNumberPrefix(linkLabel);
-
-            if (ruleNumberPrefix === null) {
-                continue;
-            }
-
-            mutations.push({
-                element: link,
-                originalLabel: linkLabel,
-            });
-
-            setSidebarLeadingToken({
-                link,
-                remainderText: ruleNumberPrefix.remainder,
-                tokenClassName: "sb-inline-rule-number",
-                tokenText: ruleNumberPrefix.numberToken,
-            });
-        }
-    };
-
-    const processSidebarMenuLinks = (): void => {
-        const sidebarLinks = document.querySelectorAll<HTMLAnchorElement>(
-            ".theme-doc-sidebar-menu .menu__link"
-        );
-
-        processLinks(Array.from(sidebarLinks));
-    };
-
-    processSidebarMenuLinks();
-
-    const sidebarMenu = document.querySelector<HTMLElement>(
-        ".theme-doc-sidebar-menu"
-    );
-    let sidebarRefreshTimer: null | ReturnType<typeof setTimeout> = null;
-
-    const scheduleSidebarRefresh = (): void => {
-        if (sidebarRefreshTimer !== null) {
-            clearTimeout(sidebarRefreshTimer);
-        }
-
-        sidebarRefreshTimer = setTimeout(() => {
-            processSidebarMenuLinks();
-            sidebarRefreshTimer = null;
-        }, 0);
-    };
-
-    const handleSidebarInteraction = (): void => {
-        scheduleSidebarRefresh();
-    };
-
-    const sidebarObserver =
-        sidebarMenu === null
-            ? null
-            : new MutationObserver(() => {
-                  scheduleSidebarRefresh();
-              });
-
-    sidebarObserver?.observe(sidebarMenu ?? document.body, {
-        childList: true,
-        subtree: true,
-    });
-
-    sidebarMenu?.addEventListener("click", handleSidebarInteraction);
-
-    return (): void => {
-        sidebarMenu?.removeEventListener("click", handleSidebarInteraction);
-        sidebarObserver?.disconnect();
-
-        if (sidebarRefreshTimer !== null) {
-            clearTimeout(sidebarRefreshTimer);
-            sidebarRefreshTimer = null;
-        }
-
-        for (const mutation of mutations) {
-            if (!mutation.element.isConnected) {
-                continue;
-            }
-
-            delete mutation.element.dataset[SIDEBAR_TOKENIZED_DATA_KEY];
-            mutation.element.textContent = mutation.originalLabel;
-        }
-    };
-}
-
-function createScrollIndicator(): CleanupFunction {
-    const indicator = document.createElement("div");
-
-    indicator.className = "scroll-indicator";
-    indicator.style.cssText = [
-        "position: fixed",
-        "inset-block-start: 0",
-        "inset-inline-start: 0",
-        "z-index: 9999",
-        "height: 3px",
-        "width: 0%",
-        "background: linear-gradient(90deg, var(--ifm-color-primary), var(--ifm-color-primary-light))",
-        "pointer-events: none",
-        "transition: width 80ms linear",
-    ].join(";");
-
-    document.body.append(indicator);
-
-    const update = (): void => {
-        const scrollTop =
-            window.pageYOffset || document.documentElement.scrollTop;
-        const documentHeight =
-            document.documentElement.scrollHeight - window.innerHeight;
-        const safeHeight = documentHeight > 0 ? documentHeight : 1;
-        const scrollPercent = (scrollTop / safeHeight) * 100;
-
-        indicator.style.width = `${Math.max(0, Math.min(100, scrollPercent))}%`;
-    };
-
-    window.addEventListener("scroll", update, { passive: true });
-    update();
-
-    return (): void => {
-        window.removeEventListener("scroll", update);
-        indicator.remove();
-    };
-}
-
 function applyInteractiveHoverEffects(): CleanupFunction {
-    const hoverElements = Array.from(
-        document.querySelectorAll<HTMLElement>("[data-sb-hover]")
-    );
+    const hoverElements = [
+        ...document.querySelectorAll<HTMLElement>("[data-sb-hover]"),
+    ];
 
     if (hoverElements.length === 0) {
         return (): void => {
@@ -283,9 +89,108 @@ function applyInteractiveHoverEffects(): CleanupFunction {
     });
 
     return (): void => {
-        cleanupFunctions.forEach((cleanup) => {
+        for (const cleanup of cleanupFunctions) {
             cleanup();
-        });
+        }
+    };
+}
+
+function applySidebarLabelTokenColoring(): CleanupFunction {
+    const mutations: SidebarLabelMutation[] = [];
+
+    const processLinks = (sidebarLinks: readonly HTMLAnchorElement[]): void => {
+        for (const link of sidebarLinks) {
+            if (isSidebarLinkTokenized(link)) {
+                continue;
+            }
+
+            const linkLabel = link.textContent?.trim();
+
+            if (!linkLabel || !isNumberedRuleSidebarLink(link)) {
+                continue;
+            }
+
+            const ruleNumberPrefix = getRuleNumberPrefix(linkLabel);
+
+            if (ruleNumberPrefix === null) {
+                continue;
+            }
+
+            mutations.push({
+                element: link,
+                originalLabel: linkLabel,
+            });
+
+            setSidebarLeadingToken({
+                link,
+                remainderText: ruleNumberPrefix.remainder,
+                tokenClassName: "sb-inline-rule-number",
+                tokenText: ruleNumberPrefix.numberToken,
+            });
+        }
+    };
+
+    const processSidebarMenuLinks = (): void => {
+        const sidebarLinks = document.querySelectorAll<HTMLAnchorElement>(
+            ".theme-doc-sidebar-menu .menu__link"
+        );
+
+        processLinks([...sidebarLinks]);
+    };
+
+    processSidebarMenuLinks();
+
+    const sidebarMenu = document.querySelector<HTMLElement>(
+        ".theme-doc-sidebar-menu"
+    );
+    let sidebarRefreshTimer: null | ReturnType<typeof setTimeout> = null;
+
+    const scheduleSidebarRefresh = (): void => {
+        if (sidebarRefreshTimer !== null) {
+            clearTimeout(sidebarRefreshTimer);
+        }
+
+        sidebarRefreshTimer = setTimeout(() => {
+            processSidebarMenuLinks();
+            sidebarRefreshTimer = null;
+        }, 0);
+    };
+
+    const handleSidebarInteraction = (): void => {
+        scheduleSidebarRefresh();
+    };
+
+    const sidebarObserver =
+        sidebarMenu === null
+            ? null
+            : new MutationObserver(() => {
+                  scheduleSidebarRefresh();
+              });
+
+    sidebarObserver?.observe(sidebarMenu ?? document.body, {
+        childList: true,
+        subtree: true,
+    });
+
+    sidebarMenu?.addEventListener("click", handleSidebarInteraction);
+
+    return (): void => {
+        sidebarMenu?.removeEventListener("click", handleSidebarInteraction);
+        sidebarObserver?.disconnect();
+
+        if (sidebarRefreshTimer !== null) {
+            clearTimeout(sidebarRefreshTimer);
+            sidebarRefreshTimer = null;
+        }
+
+        for (const mutation of mutations) {
+            if (!mutation.element.isConnected) {
+                continue;
+            }
+
+            delete mutation.element.dataset[SIDEBAR_TOKENIZED_DATA_KEY];
+            mutation.element.textContent = mutation.originalLabel;
+        }
     };
 }
 
@@ -328,24 +233,87 @@ function applyThemeToggleAnimation(): CleanupFunction {
     };
 }
 
+function createScrollIndicator(): CleanupFunction {
+    const indicator = document.createElement("div");
+
+    indicator.className = "scroll-indicator";
+    indicator.style.cssText = [
+        "position: fixed",
+        "inset-block-start: 0",
+        "inset-inline-start: 0",
+        "z-index: 9999",
+        "height: 3px",
+        "width: 0%",
+        "background: linear-gradient(90deg, var(--ifm-color-primary), var(--ifm-color-primary-light))",
+        "pointer-events: none",
+        "transition: width 80ms linear",
+    ].join(";");
+
+    document.body.append(indicator);
+
+    const update = (): void => {
+        const scrollTop =
+            window.pageYOffset || document.documentElement.scrollTop;
+        const documentHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+        const safeHeight = documentHeight > 0 ? documentHeight : 1;
+        const scrollPercent = (scrollTop / safeHeight) * 100;
+
+        indicator.style.width = `${Math.max(0, Math.min(100, scrollPercent))}%`;
+    };
+
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+
+    return (): void => {
+        window.removeEventListener("scroll", update);
+        indicator.remove();
+    };
+}
+
+function getRuleNumberPrefix(
+    label: string
+): null | Readonly<{ numberToken: string; remainder: string }> {
+    const match = /^(\d{2,3})\s+(.+)$/u.exec(label);
+
+    if (match === null) {
+        return null;
+    }
+
+    const [
+        ,
+        numberToken,
+        remainder,
+    ] = match;
+
+    if (numberToken === undefined || remainder === undefined) {
+        return null;
+    }
+
+    return {
+        numberToken,
+        remainder,
+    };
+}
+
 function initializeAdvancedFeatures(): CleanupFunction {
     const cleanupFunctions: CleanupFunction[] = [];
-    const prefersReducedMotion = window.matchMedia(
+    const isPrefersReducedMotion = globalThis.matchMedia(
         "(prefers-reduced-motion: reduce)"
     ).matches;
 
     cleanupFunctions.push(createScrollIndicator());
     cleanupFunctions.push(applySidebarLabelTokenColoring());
 
-    if (!prefersReducedMotion) {
+    if (!isPrefersReducedMotion) {
         cleanupFunctions.push(applyInteractiveHoverEffects());
         cleanupFunctions.push(applyThemeToggleAnimation());
     }
 
     return (): void => {
-        cleanupFunctions.forEach((cleanup) => {
+        for (const cleanup of cleanupFunctions) {
             cleanup();
-        });
+        }
     };
 }
 
@@ -363,7 +331,7 @@ function initializeEnhancements(): CleanupFunction {
 
     const cancelInitialSetup = (): void => {
         if (initialSetupFrame !== null) {
-            window.cancelAnimationFrame(initialSetupFrame);
+            globalThis.cancelAnimationFrame(initialSetupFrame);
             initialSetupFrame = null;
         }
 
@@ -376,7 +344,7 @@ function initializeEnhancements(): CleanupFunction {
     const scheduleInitialSetup = (): void => {
         cancelInitialSetup();
 
-        initialSetupFrame = window.requestAnimationFrame(() => {
+        initialSetupFrame = globalThis.requestAnimationFrame(() => {
             initialSetupFrame = null;
 
             initialSetupTimer = setTimeout(() => {
@@ -443,6 +411,38 @@ function initializeEnhancements(): CleanupFunction {
         window.removeEventListener("beforeunload", handleBeforeUnload);
         handleBeforeUnload();
     };
+}
+
+function isHTMLElement(element: Element | null): element is HTMLElement {
+    return element instanceof HTMLElement;
+}
+
+function isNumberedRuleSidebarLink(link: HTMLAnchorElement): boolean {
+    return link.closest(".sb-cat-rules-stylelint") !== null;
+}
+
+function isSidebarLinkTokenized(link: HTMLAnchorElement): boolean {
+    const tokenizedValue = link.dataset[SIDEBAR_TOKENIZED_DATA_KEY];
+
+    return tokenizedValue !== undefined && tokenizedValue.length > 0;
+}
+
+function setSidebarLeadingToken(
+    options: Readonly<{
+        link: HTMLAnchorElement;
+        remainderText: string;
+        tokenClassName: string;
+        tokenText: string;
+    }>
+): void {
+    const { link, remainderText, tokenClassName, tokenText } = options;
+    const token = document.createElement("span");
+
+    token.className = tokenClassName;
+    token.textContent = tokenText;
+    link.dataset[SIDEBAR_TOKENIZED_DATA_KEY] = tokenClassName;
+
+    link.replaceChildren(token, document.createTextNode(` ${remainderText}`));
 }
 
 if (typeof window !== "undefined" && typeof document !== "undefined") {

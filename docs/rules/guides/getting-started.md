@@ -32,13 +32,13 @@ Example `eslint.config.mjs`:
 import stylelint2 from "eslint-plugin-stylelint-2";
 
 export default [
-  stylelint2.configs.recommended,
-  {
-    rules: {
-      // Optional: tune bridge behavior here.
-      "stylelint2/stylelint": "error",
-    },
+ stylelint2.configs.recommended,
+ {
+  rules: {
+   // Optional: tune bridge behavior here.
+   "stylelint2/stylelint": "error",
   },
+ },
 ];
 ```
 

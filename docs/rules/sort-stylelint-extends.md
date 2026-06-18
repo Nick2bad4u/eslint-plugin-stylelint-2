@@ -20,8 +20,8 @@ Stable sorted arrays reduce diff noise and keep shared config layering predictab
 
 ```ts
 export default {
-    extends: ["stylelint-config-standard", "stylelint-config-recommended"],
-    rules: {},
+ extends: ["stylelint-config-standard", "stylelint-config-recommended"],
+ rules: {},
 };
 ```
 
@@ -29,8 +29,8 @@ export default {
 
 ```ts
 export default {
-    extends: ["stylelint-config-recommended", "stylelint-config-standard"],
-    rules: {},
+ extends: ["stylelint-config-recommended", "stylelint-config-standard"],
+ rules: {},
 };
 ```
 

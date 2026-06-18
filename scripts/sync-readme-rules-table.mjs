@@ -66,7 +66,7 @@ const toPresetLegendLine = (presetName) => {
         throw new TypeError(`Unknown preset '${presetName}'.`);
     }
 
-    return `  - [\`${icon}\`](${preset.href}) — [\`${preset.publicName}\`](${preset.href})`;
+    return `- [\`${icon}\`](${preset.href}) — [\`${preset.publicName}\`](${preset.href})`;
 };
 
 const rulesSectionHeading = "## Rules";
@@ -74,6 +74,54 @@ const rulesSectionHeading = "## Rules";
 /** @param {string} markdown */
 const detectLineEnding = (markdown) =>
     markdown.includes("\r\n") ? "\r\n" : "\n";
+
+/** @param {string} value */
+const normalizeLineEndings = (value) => value.replaceAll("\r\n", "\n");
+
+/** @param {string} markdown */
+const normalizeMarkdownTableSpacing = (markdown) =>
+    normalizeLineEndings(markdown)
+        .split("\n")
+        .map((line) => {
+            const trimmedLine = line.trimEnd();
+            const isTableRow = /^\|.*\|$/v.test(trimmedLine);
+
+            if (!isTableRow) {
+                return trimmedLine;
+            }
+
+            const cells = trimmedLine
+                .split("|")
+                .slice(1, -1)
+                .map((cell) => {
+                    const trimmedCell = cell.trim();
+                    const isSeparatorCell = /^:?-+:?$/v.test(trimmedCell);
+                    const hasStartColon = trimmedCell.startsWith(":");
+                    const hasEndColon = trimmedCell.endsWith(":");
+
+                    if (!isSeparatorCell) {
+                        return trimmedCell;
+                    }
+
+                    if (hasStartColon && hasEndColon) {
+                        return ":-:";
+                    }
+
+                    if (hasStartColon) {
+                        return ":--";
+                    }
+
+                    if (hasEndColon) {
+                        return "--:";
+                    }
+
+                    return "---";
+                });
+
+            return `| ${cells.join(" | ")} |`;
+        })
+        .join("\n")
+        .trim();
 
 /**
  * @param {string} markdown
@@ -237,10 +285,12 @@ export const generateReadmeRulesSectionFromRules = (rules) => {
         "## Rules",
         "",
         "Fix legend:",
+        "",
         "- `🔧` = autofixable",
         "- `—` = report only",
         "",
         "Preset key legend:",
+        "",
         ...stylelint2ConfigNamesByReadmeOrder.map(
             /** @param {keyof typeof presetDocsByName} presetName */
             (presetName) => toPresetLegendLine(presetName)
@@ -282,7 +332,10 @@ export const syncReadmeRulesTable = async ({ writeChanges = false } = {}) => {
         .slice(startOffset, endOffset)
         .trimEnd();
 
-    if (currentSection === expectedSection) {
+    if (
+        normalizeMarkdownTableSpacing(currentSection) ===
+        normalizeMarkdownTableSpacing(expectedSection)
+    ) {
         return { changed: false };
     }
 

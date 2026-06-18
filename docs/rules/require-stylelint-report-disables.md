@@ -20,14 +20,14 @@ Disable-comment usage should stay visible during lint runs. Enabling `reportDisa
 
 ```ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 
 ```ts
 export default {
-    reportDisables: false,
-    rules: {},
+ reportDisables: false,
+ rules: {},
 };
 ```
 
@@ -35,8 +35,8 @@ export default {
 
 ```ts
 export default {
-    reportDisables: true,
-    rules: {},
+ reportDisables: true,
+ rules: {},
 };
 ```
 

@@ -21,9 +21,9 @@ const WORKER_DONE_STATE = 1 as const;
 const lintResultCache = new Map<string, SerializableStylelintResult>();
 
 let stylelintWorker: null | Worker = null;
-const usesTypeScriptSourceWorker = import.meta.url.endsWith(".ts");
+const isUsesTypeScriptSourceWorker = import.meta.url.endsWith(".ts");
 const workerModuleUrl = new URL(
-    usesTypeScriptSourceWorker
+    isUsesTypeScriptSourceWorker
         ? "./stylelint-worker.ts"
         : "./stylelint-worker.js",
     import.meta.url
@@ -32,9 +32,9 @@ const workerModuleUrl = new URL(
 const createWorker = (): Worker =>
     new Worker(workerModuleUrl, {
         name: "stylelint-eslint-bridge",
-        ...(usesTypeScriptSourceWorker
-            ? { execArgv: ["--experimental-strip-types"] }
-            : {}),
+        ...(isUsesTypeScriptSourceWorker && {
+            execArgv: ["--experimental-strip-types"],
+        }),
     });
 
 const resetWorker = (): void => {

@@ -3,6 +3,8 @@
  * Shared preset/config reference constants for eslint-plugin-stylelint-2.
  */
 
+import type { ArrayValues } from "type-fest";
+
 import { objectHasOwn } from "ts-extras";
 
 /** Canonical flat-config preset keys exposed through `plugin.configs`. */
@@ -23,7 +25,7 @@ export type Stylelint2ConfigMetadata = Readonly<{
 }>;
 
 /** Canonical flat-config preset key type exposed through `plugin.configs`. */
-export type Stylelint2ConfigName = (typeof stylelint2ConfigNames)[number];
+export type Stylelint2ConfigName = ArrayValues<typeof stylelint2ConfigNames>;
 
 /** Canonical metadata for each exported preset. */
 export const stylelint2ConfigMetadataByName: Readonly<

@@ -73,8 +73,6 @@ const collectDocIds = (items: readonly SidebarItem[]): string[] => {
             collectedDocIds.push(item.id);
         } else if (isCategorySidebarItem(item)) {
             collectedDocIds.push(...collectDocIds(item.items));
-        } else {
-            continue;
         }
     }
 
@@ -92,7 +90,7 @@ describe("docusaurus rules sidebar sync", () => {
         const sidebarDocIds = new Set(collectDocIds(rulesSidebarItems));
 
         for (const ruleName of Object.keys(stylelint2Plugin.rules)) {
-            expect(sidebarDocIds.has(ruleName)).toBeTruthy();
+            expect(sidebarDocIds.has(ruleName)).toBe(true);
         }
     });
 });

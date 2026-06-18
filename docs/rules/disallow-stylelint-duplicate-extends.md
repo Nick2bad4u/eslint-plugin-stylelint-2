@@ -20,8 +20,8 @@ Duplicate shared-config layers add noise and can obscure real config intent.
 
 ```ts
 export default {
-    extends: ["stylelint-config-standard", "stylelint-config-standard"],
-    rules: {},
+ extends: ["stylelint-config-standard", "stylelint-config-standard"],
+ rules: {},
 };
 ```
 
@@ -29,8 +29,8 @@ export default {
 
 ```ts
 export default {
-    extends: ["stylelint-config-standard"],
-    rules: {},
+ extends: ["stylelint-config-standard"],
+ rules: {},
 };
 ```
 

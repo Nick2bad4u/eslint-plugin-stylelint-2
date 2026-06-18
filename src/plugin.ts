@@ -81,8 +81,7 @@ const getEslintMajorVersion = (eslintVersion: string): number => {
 };
 
 const getEslintMajorVersionOverride = (): number | undefined => {
-    const overrideValue =
-        globalThis.process.env[eslintMajorOverrideEnvironmentVariable];
+    const overrideValue = process.env[eslintMajorOverrideEnvironmentVariable];
 
     if (typeof overrideValue !== "string" || overrideValue.length === 0) {
         return undefined;
@@ -139,7 +138,7 @@ const stylelintOnlyPreset: Linter.Config = {
     ...cssLanguagePresetFields,
     name: stylelint2ConfigMetadataByName.stylelintOnly.presetName,
     plugins: {
-        ...(supportsCssLanguageInFlatConfig ? { css: plugin } : {}),
+        ...(supportsCssLanguageInFlatConfig && { css: plugin }),
         [pluginNamespace]: stylelint2Plugin,
     },
     rules: {

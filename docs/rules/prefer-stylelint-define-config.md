@@ -22,9 +22,9 @@ The helper also gives teams a single recognizable pattern for authored config mo
 
 ```ts
 export default {
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 
@@ -34,9 +34,9 @@ export default {
 import { defineConfig } from "stylelint-define-config";
 
 export default defineConfig({
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 });
 ```
 
@@ -56,9 +56,9 @@ That restraint is deliberate. Broad config rewrites are easier to get wrong than
 import { defineConfig } from "stylelint-define-config";
 
 const config = defineConfig({
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 });
 
 export default config;
@@ -69,9 +69,7 @@ export default config;
 ```ts
 import stylelint2 from "eslint-plugin-stylelint-2";
 
-export default [
-    stylelint2.configs.configuration,
-];
+export default [stylelint2.configs.configuration];
 ```
 
 ## When not to use it

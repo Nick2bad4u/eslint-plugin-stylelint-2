@@ -28,7 +28,7 @@ Without a bridge rule, stylesheet linting usually lives in a separate Stylelint 
 
 ```css
 .button {
-    color: #ffffff;
+ color: #ffffff;
 }
 ```
 
@@ -38,7 +38,7 @@ If the active Stylelint config prefers short hex colors, this stylesheet is repo
 
 ```css
 .button {
-    color: #fff;
+ color: #fff;
 }
 ```
 
@@ -58,18 +58,18 @@ If the active Stylelint config prefers short hex colors, this stylesheet is repo
 import stylelint2 from "eslint-plugin-stylelint-2";
 
 export default [
+ {
+  ...stylelint2.configs.stylelintOnly,
+  rules: {
+   "stylelint-2/stylelint": [
+    "error",
     {
-        ...stylelint2.configs.stylelintOnly,
-        rules: {
-            "stylelint-2/stylelint": [
-                "error",
-                {
-                    configFile: "./stylelint.config.mjs",
-                    ignoreDisables: true,
-                },
-            ],
-        },
+     configFile: "./stylelint.config.mjs",
+     ignoreDisables: true,
     },
+   ],
+  },
+ },
 ];
 ```
 
@@ -78,9 +78,7 @@ export default [
 ```ts
 import stylelint2 from "eslint-plugin-stylelint-2";
 
-export default [
-    ...stylelint2.configs.recommended,
-];
+export default [...stylelint2.configs.recommended];
 ```
 
 ## When not to use it

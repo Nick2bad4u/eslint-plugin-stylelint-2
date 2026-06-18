@@ -22,8 +22,8 @@ Keeping severity explicit per Stylelint rule (or enforced at the ESLint config l
 
 ```ts
 export default {
-    defaultSeverity: "warning",
-    rules: {},
+ defaultSeverity: "warning",
+ rules: {},
 };
 ```
 
@@ -31,7 +31,7 @@ export default {
 
 ```ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 
@@ -47,9 +47,9 @@ export default {
 
 ```ts
 export default {
-    rules: {
-        "number-max-precision": [2, { severity: "warning" }],
-    },
+ rules: {
+  "number-max-precision": [2, { severity: "warning" }],
+ },
 };
 ```
 

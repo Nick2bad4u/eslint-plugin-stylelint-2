@@ -26,9 +26,9 @@ Enabling that option improves review quality because disable comments stop being
 
 ```ts
 export default {
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 
@@ -36,10 +36,10 @@ export default {
 
 ```ts
 export default {
-    reportDescriptionlessDisables: true,
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ reportDescriptionlessDisables: true,
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 
@@ -55,7 +55,7 @@ export default {
 
 ```ts
 export default {
-    reportDescriptionlessDisables: [true, { severity: "warning" }],
+ reportDescriptionlessDisables: [true, { severity: "warning" }],
 };
 ```
 
@@ -64,9 +64,7 @@ export default {
 ```ts
 import stylelint2 from "eslint-plugin-stylelint-2";
 
-export default [
-    stylelint2.configs.configuration,
-];
+export default [stylelint2.configs.configuration];
 ```
 
 ## When not to use it

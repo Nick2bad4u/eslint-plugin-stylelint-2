@@ -20,7 +20,7 @@ A missing `rules` object often indicates partial or placeholder config exports t
 
 ```ts
 export default {
-    reportDescriptionlessDisables: true,
+ reportDescriptionlessDisables: true,
 };
 ```
 
@@ -28,8 +28,8 @@ export default {
 
 ```ts
 export default {
-    reportDescriptionlessDisables: true,
-    rules: {},
+ reportDescriptionlessDisables: true,
+ rules: {},
 };
 ```
 

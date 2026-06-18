@@ -20,9 +20,9 @@ Reports top-level rule entries configured as `null`, for example `"at-rule-no-un
 
 ```ts
 export default {
-    rules: {
-        "at-rule-no-unknown": null,
-    },
+ rules: {
+  "at-rule-no-unknown": null,
+ },
 };
 ```
 
@@ -30,9 +30,9 @@ export default {
 
 ```ts
 export default {
-    rules: {
-        "at-rule-no-unknown": true,
-    },
+ rules: {
+  "at-rule-no-unknown": true,
+ },
 };
 ```
 

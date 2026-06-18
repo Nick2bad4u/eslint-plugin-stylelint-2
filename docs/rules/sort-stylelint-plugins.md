@@ -20,8 +20,8 @@ Sorted plugin arrays create deterministic diffs and improve scanability of share
 
 ```ts
 export default {
-    plugins: ["stylelint-order", "stylelint-a11y"],
-    rules: {},
+ plugins: ["stylelint-order", "stylelint-a11y"],
+ rules: {},
 };
 ```
 
@@ -29,8 +29,8 @@ export default {
 
 ```ts
 export default {
-    plugins: ["stylelint-a11y", "stylelint-order"],
-    rules: {},
+ plugins: ["stylelint-a11y", "stylelint-order"],
+ rules: {},
 };
 ```
 

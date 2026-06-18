@@ -24,15 +24,15 @@ Stylelint documents these as runtime options that should not be overridden per-f
 
 ```ts
 export default {
-    overrides: [
-        {
-            files: ["**/*.scss"],
-            fix: true,
-            rules: {
-                "at-rule-no-unknown": null,
-            },
-        },
-    ],
+ overrides: [
+  {
+   files: ["**/*.scss"],
+   fix: true,
+   rules: {
+    "at-rule-no-unknown": null,
+   },
+  },
+ ],
 };
 ```
 
@@ -40,14 +40,14 @@ export default {
 
 ```ts
 export default {
-    overrides: [
-        {
-            files: ["**/*.scss"],
-            rules: {
-                "at-rule-no-unknown": null,
-            },
-        },
-    ],
+ overrides: [
+  {
+   files: ["**/*.scss"],
+   rules: {
+    "at-rule-no-unknown": null,
+   },
+  },
+ ],
 };
 ```
 

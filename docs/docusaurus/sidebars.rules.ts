@@ -1,30 +1,15 @@
+import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
+
+import { readdirSync } from "node:fs";
+import * as path from "node:path";
+import { fileURLToPath } from "node:url";
+
 /**
  * @packageDocumentation
  * Dynamic sidebar generation for plugin rule documentation sections.
  */
-import { readdirSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 
-import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
-
-type SidebarDocItem = {
-    className?: string;
-    customProps?: Record<string, string>;
-    id: string;
-    label: string;
-    type: "doc";
-};
-
-type SidebarLinkItem = {
-    className?: string;
-    customProps?: Record<string, string>;
-    href: string;
-    label: string;
-    type: "link";
-};
-
-type SidebarCategoryItem = {
+interface SidebarCategoryItem {
     className?: string;
     collapsed?: boolean;
     collapsible?: boolean;
@@ -33,22 +18,38 @@ type SidebarCategoryItem = {
     label: string;
     link?:
         | {
-              id: string;
-              type: "doc";
-          }
-        | {
               description?: string;
               slug?: string;
               title?: string;
               type: "generated-index";
+          }
+        | {
+              id: string;
+              type: "doc";
           };
     type: "category";
-};
+}
+
+interface SidebarDocItem {
+    className?: string;
+    customProps?: Record<string, string>;
+    id: string;
+    label: string;
+    type: "doc";
+}
 
 type SidebarItem = SidebarCategoryItem | SidebarDocItem | SidebarLinkItem;
 
-const sidebarDirectoryPath = dirname(fileURLToPath(import.meta.url));
-const rulesDirectoryPath = join(sidebarDirectoryPath, "..", "rules");
+interface SidebarLinkItem {
+    className?: string;
+    customProps?: Record<string, string>;
+    href: string;
+    label: string;
+    type: "link";
+}
+
+const sidebarDirectoryPath = path.dirname(fileURLToPath(import.meta.url));
+const rulesDirectoryPath = path.join(sidebarDirectoryPath, "..", "rules");
 const nonRuleDocIds = new Set(["getting-started", "overview"]);
 const pinnedRuleDocIds = ["stylelint"];
 const pinnedRuleDocIdSet = new Set(pinnedRuleDocIds);
@@ -90,8 +91,6 @@ const sidebars: SidebarsConfig = {
             className: "sb-cat-guides",
             collapsed: false,
             collapsible: true,
-            type: "category",
-            label: "🧭 Guides",
             items: [
                 {
                     id: "guides/intro",
@@ -119,22 +118,18 @@ const sidebars: SidebarsConfig = {
                     type: "doc",
                 },
             ],
+            label: "🧭 Guides",
+            type: "category",
         },
         {
             className: "sb-cat-presets",
             collapsed: false,
             collapsible: true,
-            description:
-                "Pre-configured sets of rules for common use cases and configurations.",
             customProps: {
                 badge: "presets",
             },
-            type: "category",
-            label: "🎛️ Presets",
-            link: {
-                type: "doc",
-                id: "presets/index",
-            },
+            description:
+                "Pre-configured sets of rules for common use cases and configurations.",
             items: [
                 {
                     className: "sb-preset-recommended",
@@ -161,26 +156,32 @@ const sidebars: SidebarsConfig = {
                     type: "doc",
                 },
             ],
+            label: "🎛️ Presets",
+            link: {
+                id: "presets/index",
+                type: "doc",
+            },
+            type: "category",
         },
         {
             className: "sb-cat-rules",
             collapsed: false,
             collapsible: true,
-            description:
-                "The full set of rules provided by eslint-plugin-stylelint-2, including core rules for bridging Stylelint into ESLint and standardizing Stylelint config authoring, as well as rules for individual Stylelint rules.",
             customProps: {
                 badge: "rules",
             },
-            type: "category",
+            description:
+                "The full set of rules provided by eslint-plugin-stylelint-2, including core rules for bridging Stylelint into ESLint and standardizing Stylelint config authoring, as well as rules for individual Stylelint rules.",
+            items: stylelintRuleItems,
             label: "Rules",
             link: {
-                type: "generated-index",
-                title: "Rule Reference",
-                slug: "/",
                 description:
                     "Rule documentation for every eslint-plugin-stylelint-2 rule.",
+                slug: "/",
+                title: "Rule Reference",
+                type: "generated-index",
             },
-            items: stylelintRuleItems,
+            type: "category",
         },
     ],
 } satisfies SidebarsConfig;

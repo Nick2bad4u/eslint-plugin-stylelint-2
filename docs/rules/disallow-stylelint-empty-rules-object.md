@@ -20,7 +20,7 @@ An empty `rules` object in committed shared config is usually accidental drift. 
 
 ```ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 
@@ -28,9 +28,9 @@ export default {
 
 ```ts
 export default {
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 

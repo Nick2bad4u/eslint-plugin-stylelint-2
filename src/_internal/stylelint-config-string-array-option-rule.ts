@@ -107,13 +107,8 @@ const getSortedLiteralTexts = (
     literals: readonly Readonly<TSESTree.StringLiteral>[]
 ): string[] => {
     const sortedItems = getSortedLiteralItems(sourceCode, literals);
-    const sortedTexts: string[] = [];
 
-    for (const sortedItem of sortedItems) {
-        sortedTexts.push(sortedItem.text);
-    }
-
-    return sortedTexts;
+    return Array.from(sortedItems, (sortedItem) => sortedItem.text);
 };
 
 const getRelativeLiterals = (
@@ -188,12 +183,11 @@ export const createStylelintConfigPreferArrayOptionRule = (
                     }
 
                     context.report({
-                        fix(fixer) {
-                            return fixer.replaceText(
+                        fix: (fixer) =>
+                            fixer.replaceText(
                                 optionValue.stringLiteral,
                                 `[${getLiteralText(sourceCode, optionValue.stringLiteral)}]`
-                            );
-                        },
+                            ),
                         messageId: "preferArray",
                         node: optionProperty,
                     });

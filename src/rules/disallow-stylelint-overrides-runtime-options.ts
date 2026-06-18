@@ -107,13 +107,12 @@ const reportRuntimeOption = (
         data: {
             optionName,
         },
-        fix(fixer) {
-            return createFixToRemoveObjectProperty({
+        fix: (fixer) =>
+            createFixToRemoveObjectProperty({
                 fixer,
                 objectExpression: overrideEntry,
                 property: propertyNode,
-            });
-        },
+            }),
         messageId: "disallowRuntimeOptionInOverride",
         node: propertyNode,
     });

@@ -20,8 +20,8 @@ Array form is easier to append, reorder, and review safely in shared config file
 
 ```ts
 export default {
-    extends: "stylelint-config-standard",
-    rules: {},
+ extends: "stylelint-config-standard",
+ rules: {},
 };
 ```
 
@@ -29,8 +29,8 @@ export default {
 
 ```ts
 export default {
-    extends: ["stylelint-config-standard"],
-    rules: {},
+ extends: ["stylelint-config-standard"],
+ rules: {},
 };
 ```
 

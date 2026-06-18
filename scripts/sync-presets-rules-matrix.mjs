@@ -80,12 +80,60 @@ const toPresetLegendLine = (presetName) => {
         throw new TypeError(`Unknown preset '${presetName}'.`);
     }
 
-    return `  - [\`${preset.icon}\`](${preset.href}) — [\`${preset.publicName}\`](${preset.href})`;
+    return `- [\`${preset.icon}\`](${preset.href}) — [\`${preset.publicName}\`](${preset.href})`;
 };
 
 /** @param {string} markdown */
 const detectLineEnding = (markdown) =>
     markdown.includes("\r\n") ? "\r\n" : "\n";
+
+/** @param {string} value */
+const normalizeLineEndings = (value) => value.replaceAll("\r\n", "\n");
+
+/** @param {string} markdown */
+const normalizeMarkdownTableSpacing = (markdown) =>
+    normalizeLineEndings(markdown)
+        .split("\n")
+        .map((line) => {
+            const trimmedLine = line.trimEnd();
+            const isTableRow = /^\|.*\|$/v.test(trimmedLine);
+
+            if (!isTableRow) {
+                return trimmedLine;
+            }
+
+            const cells = trimmedLine
+                .split("|")
+                .slice(1, -1)
+                .map((cell) => {
+                    const trimmedCell = cell.trim();
+                    const isSeparatorCell = /^:?-+:?$/v.test(trimmedCell);
+                    const hasStartColon = trimmedCell.startsWith(":");
+                    const hasEndColon = trimmedCell.endsWith(":");
+
+                    if (!isSeparatorCell) {
+                        return trimmedCell;
+                    }
+
+                    if (hasStartColon && hasEndColon) {
+                        return ":-:";
+                    }
+
+                    if (hasStartColon) {
+                        return ":--";
+                    }
+
+                    if (hasEndColon) {
+                        return "--:";
+                    }
+
+                    return "---";
+                });
+
+            return `| ${cells.join(" | ")} |`;
+        })
+        .join("\n")
+        .trim();
 
 /**
  * @param {string} markdown
@@ -199,10 +247,12 @@ export const generatePresetsRulesMatrixSectionFromRules = () => {
         "## Rule matrix",
         "",
         "Fix legend:",
+        "",
         "- `🔧` = autofixable",
         "- `—` = report only",
         "",
         "Preset key legend:",
+        "",
         ...presetDisplayOrder.map(toPresetLegendLine),
         "",
         "| Rule | Fix | Preset key |",
@@ -221,7 +271,10 @@ export const syncPresetsRulesMatrix = async ({ writeChanges = false } = {}) => {
     const { endOffset, startOffset } = getMatrixSectionBounds(markdown);
     const currentSection = markdown.slice(startOffset, endOffset).trimEnd();
 
-    if (currentSection === expectedSection) {
+    if (
+        normalizeMarkdownTableSpacing(currentSection) ===
+        normalizeMarkdownTableSpacing(expectedSection)
+    ) {
         return { changed: false };
     }
 

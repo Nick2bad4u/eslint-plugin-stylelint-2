@@ -24,7 +24,7 @@ This rule is opinionated. It is useful when you want config files to advertise t
 
 ```ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 
@@ -32,8 +32,8 @@ export default {
 
 ```ts
 export default {
-    cache: true,
-    rules: {},
+ cache: true,
+ rules: {},
 };
 ```
 
@@ -49,9 +49,9 @@ export default {
 
 ```json
 {
-    "scripts": {
-        "lint:stylelint": "stylelint --cache \"src/**/*.{css,scss}\""
-    }
+ "scripts": {
+  "lint:stylelint": "stylelint --cache \"src/**/*.{css,scss}\""
+ }
 }
 ```
 

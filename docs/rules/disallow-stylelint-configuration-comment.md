@@ -20,8 +20,8 @@ This rule reports Stylelint config objects that include a top-level `configurati
 
 ```ts
 export default {
-    configurationComment: "stylelint-enable",
-    rules: {},
+ configurationComment: "stylelint-enable",
+ rules: {},
 };
 ```
 
@@ -29,7 +29,7 @@ export default {
 
 ```ts
 export default {
-    rules: {},
+ rules: {},
 };
 ```
 

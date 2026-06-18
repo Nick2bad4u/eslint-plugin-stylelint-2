@@ -20,14 +20,14 @@ Duplicate option values add noise and can obscure actual rule intent during conf
 
 ```ts
 export default {
-    rules: {
-        "selector-class-pattern": [
-            "^[a-z]+$",
-            {
-                resolveNestedSelectors: [":global", ":global", ":host"],
-            },
-        ],
-    },
+ rules: {
+  "selector-class-pattern": [
+   "^[a-z]+$",
+   {
+    resolveNestedSelectors: [":global", ":global", ":host"],
+   },
+  ],
+ },
 };
 ```
 
@@ -35,14 +35,14 @@ export default {
 
 ```ts
 export default {
-    rules: {
-        "selector-class-pattern": [
-            "^[a-z]+$",
-            {
-                resolveNestedSelectors: [":global", ":host"],
-            },
-        ],
-    },
+ rules: {
+  "selector-class-pattern": [
+   "^[a-z]+$",
+   {
+    resolveNestedSelectors: [":global", ":host"],
+   },
+  ],
+ },
 };
 ```
 

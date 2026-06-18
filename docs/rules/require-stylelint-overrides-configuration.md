@@ -20,15 +20,15 @@ Stylelint override entries are intended to apply specific configuration changes 
 
 ```ts
 export default {
-    overrides: [
-        {
-            files: ["**/*.scss"],
-            name: "SCSS files",
-        },
-    ],
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ overrides: [
+  {
+   files: ["**/*.scss"],
+   name: "SCSS files",
+  },
+ ],
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 
@@ -36,18 +36,18 @@ export default {
 
 ```ts
 export default {
-    overrides: [
-        {
-            files: ["**/*.scss"],
-            customSyntax: "postcss-scss",
-            rules: {
-                "at-rule-no-unknown": null,
-            },
-        },
-    ],
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ overrides: [
+  {
+   files: ["**/*.scss"],
+   customSyntax: "postcss-scss",
+   rules: {
+    "at-rule-no-unknown": null,
+   },
+  },
+ ],
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 

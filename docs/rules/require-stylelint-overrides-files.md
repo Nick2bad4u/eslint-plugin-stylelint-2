@@ -24,16 +24,16 @@ Overrides without explicit file scope are brittle and easy to misread. A non-emp
 
 ```ts
 export default {
-    overrides: [
-        {
-            rules: {
-                "at-rule-no-unknown": null,
-            },
-        },
-    ],
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ overrides: [
+  {
+   rules: {
+    "at-rule-no-unknown": null,
+   },
+  },
+ ],
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 
@@ -41,17 +41,17 @@ export default {
 
 ```ts
 export default {
-    overrides: [
-        {
-            files: ["**/*.scss"],
-            rules: {
-                "at-rule-no-unknown": null,
-            },
-        },
-    ],
-    rules: {
-        "color-no-invalid-hex": true,
-    },
+ overrides: [
+  {
+   files: ["**/*.scss"],
+   rules: {
+    "at-rule-no-unknown": null,
+   },
+  },
+ ],
+ rules: {
+  "color-no-invalid-hex": true,
+ },
 };
 ```
 

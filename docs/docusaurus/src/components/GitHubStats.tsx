@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 
-import clsx from "clsx";
 import Link from "@docusaurus/Link";
+import clsx from "clsx";
 
 type GitHubStat = Readonly<{
     alt: string;
@@ -54,8 +54,8 @@ export default function GitHubStats({
         <div className={clsx(className)}>
             {stats.map((stat) => (
                 <Link
-                    key={stat.alt}
                     href={stat.href}
+                    key={stat.alt}
                     rel="noreferrer"
                     target="_blank"
                 >

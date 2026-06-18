@@ -63,7 +63,7 @@ const getLineEnding = (text: string): "\n" | "\r\n" =>
     text.includes("\r\n") ? "\r\n" : "\n";
 
 const getIndentation = (node: Readonly<TSESTree.Node> | undefined): string =>
-    node === undefined ? "    " : " ".repeat(node.loc.start.column);
+    node === undefined ? " ".repeat(4) : " ".repeat(node.loc.start.column);
 
 /**
  * Create a rule that requires one top-level Stylelint boolean or report-style

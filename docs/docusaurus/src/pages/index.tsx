@@ -3,8 +3,8 @@ import type { JSX } from "react";
 import Head from "@docusaurus/Head";
 import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
-import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
+import Layout from "@theme/Layout";
 
 import GitHubStats from "../components/GitHubStats";
 import HomepageFeatures from "../components/HomepageFeatures";
@@ -18,12 +18,12 @@ type HeroBadge = Readonly<{
 
 type HeroQuickLink = Readonly<
     | {
-          label: string;
-          to: string;
-      }
-    | {
           href: string;
           label: string;
+      }
+    | {
+          label: string;
+          to: string;
       }
 >;
 
@@ -31,19 +31,19 @@ const heroBadges = [
     {
         description:
             "Drop-in bridge for running Stylelint inside your existing ESLint command and editor workflow.",
-        icon: "\uf013",
+        icon: "\u{F013}",
         label: "ESLint-first workflow",
     },
     {
         description:
             "Configuration-focused rules that make Stylelint disable comments and reporting defaults safer.",
-        icon: "\ue628",
+        icon: "\u{E628}",
         label: "Safer config authoring",
     },
     {
         description:
             "Actionable diagnostics with autofixes and suggestions where automatic changes are safe.",
-        icon: "\uf0ad",
+        icon: "\u{F0AD}",
         label: "DX-focused diagnostics",
     },
 ] as const satisfies readonly HeroBadge[];
@@ -71,10 +71,10 @@ const heroQuickLinks = [
     },
 ] as const satisfies readonly HeroQuickLink[];
 
-const comparePresetsButtonIcon = "\udb85\udc92";
-const heroKickerIcon = "\uf0ad";
-const heroKickerIcon2 = "\uf135";
-const overviewButtonIcon = "\udb81\udf1d";
+const comparePresetsButtonIcon = "\u{F1492}";
+const heroKickerIcon = "\u{F0AD}";
+const heroKickerIcon2 = "\u{F135}";
+const overviewButtonIcon = "\u{F071D}";
 
 const homepageDescription =
     "Explore eslint-plugin-stylelint-2 docs, presets, and rules for running Stylelint through ESLint and enforcing safer Stylelint config authoring patterns.";
@@ -102,8 +102,8 @@ export default function Home(): JSX.Element {
 
     return (
         <Layout
-            title="Stylelint + ESLint in one workflow | eslint-plugin-stylelint-2"
             description={homepageDescription}
+            title="Stylelint + ESLint in one workflow | eslint-plugin-stylelint-2"
         >
             <Head>
                 <meta content={homepageKeywords} name="keywords" />
@@ -150,8 +150,8 @@ export default function Home(): JSX.Element {
                             <div className={styles["heroBadgeRow"]}>
                                 {heroBadges.map((badge) => (
                                     <article
-                                        key={badge.label}
                                         className={styles["heroBadge"]}
+                                        key={badge.label}
                                     >
                                         <p className={styles["heroBadgeLabel"]}>
                                             <span
@@ -210,10 +210,10 @@ export default function Home(): JSX.Element {
                     >
                         {heroQuickLinks.map((quickLink) => (
                             <Link
-                                key={quickLink.label}
                                 className={
                                     styles["heroQuickLink"] ?? "heroQuickLink"
                                 }
+                                key={quickLink.label}
                                 {...("to" in quickLink
                                     ? { to: quickLink.to }
                                     : {

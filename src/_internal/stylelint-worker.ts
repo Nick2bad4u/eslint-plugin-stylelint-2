@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * Dedicated worker that runs Stylelint's async Node API for sync ESLint rule consumers.
@@ -20,24 +22,22 @@ const toSerializableWarning = (
     warning: Readonly<stylelint.Warning>
 ): SerializableStylelintWarning => ({
     column: warning.column,
-    ...(isDefined(warning.endColumn) ? { endColumn: warning.endColumn } : {}),
-    ...(isDefined(warning.endLine) ? { endLine: warning.endLine } : {}),
-    ...(isDefined(warning.fix) ? { fix: warning.fix } : {}),
+    ...(isDefined(warning.endColumn) && { endColumn: warning.endColumn }),
+    ...(isDefined(warning.endLine) && { endLine: warning.endLine }),
+    ...(isDefined(warning.fix) && { fix: warning.fix }),
     line: warning.line,
     rule: warning.rule,
     severity: warning.severity,
     text: warning.text,
-    ...(isDefined(warning.url) ? { url: warning.url } : {}),
+    ...(isDefined(warning.url) && { url: warning.url }),
 });
 
 const toSerializableParseError = (
-    parseError: Readonly<stylelint.LintResult["parseErrors"][number]>
+    parseError: Readonly<ArrayElement<stylelint.LintResult["parseErrors"]>>
 ): SerializableStylelintParseError => ({
     column: parseError.column,
-    ...(isDefined(parseError.endColumn)
-        ? { endColumn: parseError.endColumn }
-        : {}),
-    ...(isDefined(parseError.endLine) ? { endLine: parseError.endLine } : {}),
+    ...(isDefined(parseError.endColumn) && { endColumn: parseError.endColumn }),
+    ...(isDefined(parseError.endLine) && { endLine: parseError.endLine }),
     line: parseError.line,
     message: parseError.text,
     rule: "CssSyntaxError",
@@ -86,27 +86,25 @@ const handleRequest = async (
             code: request.options.code,
             codeFilename: request.options.codeFilename,
             computeEditInfo: true,
-            ...(isDefined(request.options.allowEmptyInput)
-                ? { allowEmptyInput: request.options.allowEmptyInput }
-                : {}),
-            ...(isDefined(request.options.configBasedir)
-                ? { configBasedir: request.options.configBasedir }
-                : {}),
-            ...(isDefined(request.options.configFile)
-                ? { configFile: request.options.configFile }
-                : {}),
-            ...(isDefined(request.options.cwd)
-                ? { cwd: request.options.cwd }
-                : {}),
-            ...(isDefined(request.options.customSyntax)
-                ? { customSyntax: request.options.customSyntax }
-                : {}),
-            ...(isDefined(request.options.ignoreDisables)
-                ? { ignoreDisables: request.options.ignoreDisables }
-                : {}),
-            ...(isDefined(request.options.quiet)
-                ? { quiet: request.options.quiet }
-                : {}),
+            ...(isDefined(request.options.allowEmptyInput) && {
+                allowEmptyInput: request.options.allowEmptyInput,
+            }),
+            ...(isDefined(request.options.configBasedir) && {
+                configBasedir: request.options.configBasedir,
+            }),
+            ...(isDefined(request.options.configFile) && {
+                configFile: request.options.configFile,
+            }),
+            ...(isDefined(request.options.cwd) && { cwd: request.options.cwd }),
+            ...(isDefined(request.options.customSyntax) && {
+                customSyntax: request.options.customSyntax,
+            }),
+            ...(isDefined(request.options.ignoreDisables) && {
+                ignoreDisables: request.options.ignoreDisables,
+            }),
+            ...(isDefined(request.options.quiet) && {
+                quiet: request.options.quiet,
+            }),
         });
 
         notifyCompletion(request, {
@@ -119,7 +117,7 @@ const handleRequest = async (
                 ? {
                       message: error.message,
                       name: error.name,
-                      ...(isDefined(error.stack) ? { stack: error.stack } : {}),
+                      ...(isDefined(error.stack) && { stack: error.stack }),
                   }
                 : {
                       message: `Unknown Stylelint worker failure: ${String(error)}`,
