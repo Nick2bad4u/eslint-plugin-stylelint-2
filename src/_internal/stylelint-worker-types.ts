@@ -69,8 +69,7 @@ export type StylelintWorkerRequest = Readonly<{
 
 /** Worker response union used by the sync client. */
 export type StylelintWorkerResponse =
-    | StylelintWorkerErrorResponse
-    | StylelintWorkerSuccessResponse;
+    StylelintWorkerErrorResponse | StylelintWorkerSuccessResponse;
 
 /** Success response posted from the worker. */
 export type StylelintWorkerSuccessResponse = Readonly<{

@@ -78,12 +78,10 @@ const preferStylelintDefineConfigRule: RuleModuleWithDocs<MessageIds, Options> =
 
                     context.report({
                         fix(fixer) {
-                            const fixes = [
-                                fixer.replaceText(
-                                    exportDefaultNode.declaration,
-                                    `defineConfig(${sourceCode.getText(exportDefaultNode.declaration)})`
-                                ),
-                            ];
+                            const wrapConfigFix = fixer.replaceText(
+                                exportDefaultNode.declaration,
+                                `defineConfig(${sourceCode.getText(exportDefaultNode.declaration)})`
+                            );
 
                             if (!hasDefineConfigImport(sourceCode.ast.body)) {
                                 const insertionOffset =
@@ -91,17 +89,18 @@ const preferStylelintDefineConfigRule: RuleModuleWithDocs<MessageIds, Options> =
                                         sourceCode.ast.body
                                     );
 
-                                fixes.unshift(
+                                return [
                                     fixer.insertTextBeforeRange(
                                         [insertionOffset, insertionOffset],
                                         insertionOffset === 0
                                             ? `${defineConfigImport}\n`
                                             : `\n${defineConfigImport}`
-                                    )
-                                );
+                                    ),
+                                    wrapConfigFix,
+                                ];
                             }
 
-                            return fixes;
+                            return [wrapConfigFix];
                         },
                         messageId: "preferDefineConfig",
                         node: exportDefaultNode.declaration,

@@ -15,9 +15,7 @@ import {
 } from "../_internal/typed-rule.js";
 
 type MessageIds =
-    | "stylelintConfigWarning"
-    | "stylelintParseError"
-    | "stylelintProblem";
+    "stylelintConfigWarning" | "stylelintParseError" | "stylelintProblem";
 
 type Options = readonly [StylelintRuleOption?];
 
