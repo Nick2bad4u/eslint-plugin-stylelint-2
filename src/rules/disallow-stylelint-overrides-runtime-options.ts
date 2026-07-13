@@ -23,8 +23,10 @@ type Options = readonly [];
 
 const isDisallowedRuntimeOptionName = (
     name: string
-): name is "allowEmptyInput" | "cache" | "fix" =>
-    name === "allowEmptyInput" || name === "cache" || name === "fix";
+): name is
+    | "allowEmptyInput"
+    | "cache"
+    | "fix" => name === "allowEmptyInput" || name === "cache" || name === "fix";
 
 const isPropertyExpressionValue = (
     value: Readonly<TSESTree.Property["value"]>

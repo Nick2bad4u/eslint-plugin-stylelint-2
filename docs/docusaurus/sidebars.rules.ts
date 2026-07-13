@@ -38,7 +38,10 @@ interface SidebarDocItem {
     type: "doc";
 }
 
-type SidebarItem = SidebarCategoryItem | SidebarDocItem | SidebarLinkItem;
+type SidebarItem =
+    | SidebarCategoryItem
+    | SidebarDocItem
+    | SidebarLinkItem;
 
 interface SidebarLinkItem {
     className?: string;

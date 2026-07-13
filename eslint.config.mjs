@@ -15,6 +15,7 @@ const config = [
         ignores: [
             "benchmark/**",
             "benchmarks/**",
+            "**/*.css",
             "docs/docusaurus/typedoc-plugins/**",
             "knip.config.ts",
             "plugin.d.cts",
@@ -105,6 +106,7 @@ const config = [
             "unicorn/no-global-object-property-assignment": "off",
             "unicorn/no-unnecessary-global-this": "off",
             "unicorn/prefer-global-this": "off",
+            "unicorn/prefer-observer-apis": "off",
             "unicorn/prefer-single-call": "off",
         },
     },
@@ -125,9 +127,17 @@ const config = [
             "unicorn/no-break-in-nested-loop": "off",
             "unicorn/no-error-property-assignment": "off",
             "unicorn/no-top-level-assignment-in-function": "off",
+            "unicorn/prefer-error-is-error": "off",
             "unicorn/prefer-includes-over-repeated-comparisons": "off",
             "unicorn/prefer-number-coercion": "off",
             "unicorn/try-complexity": "off",
+        },
+    },
+    {
+        files: ["src/rules/**/*.{ts,mts,cts,tsx}"],
+        name: "Rule Export Naming Compatibility",
+        rules: {
+            "unicorn/consistent-boolean-name": "off",
         },
     },
     {
