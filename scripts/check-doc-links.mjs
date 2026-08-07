@@ -14,6 +14,7 @@ import { readdir, readFile, stat } from "node:fs/promises";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import pc from "picocolors";
+import { remark } from "remark";
 
 const argv = process.argv.slice(2);
 const isVerbose = argv.includes("--verbose") || argv.includes("-v");
@@ -67,10 +68,6 @@ const IGNORED_DIRECTORIES = new Set([
     ".stryker-tmp",
 ]);
 
-// Capture Markdown links like [text](url) and images ![alt](url)
-// NOTE: for more accuracy use a Markdown parser (remark) instead of regex.
-const LINK_PATTERN = /!?\[[^\]]*]\(([^)]+)\)/g;
-
 const EXTERNAL_PROTOCOLS = [
     "http:",
     "https:",
@@ -81,8 +78,6 @@ const EXTERNAL_PROTOCOLS = [
     "vscode:",
     "file:",
 ];
-
-const LEADING_BANG = /^!/;
 
 /**
  * Truncate safely, keeping the last `max` code points.
@@ -171,6 +166,41 @@ function normalizeLink(rawLink) {
     const [cleanPath] = pathPart.split("?");
     if (!cleanPath) return "";
     return cleanPath.trim();
+}
+
+/**
+ * Extract inline Markdown links through the repository's Markdown parser.
+ * Parsed code blocks are ignored automatically, and AST traversal has linear
+ * complexity in the number of syntax nodes.
+ *
+ * @param {string} content
+ *
+ * @returns {{ isImage: boolean; link: string }[]}
+ */
+function extractMarkdownLinks(content) {
+    const links = [];
+    const tree = remark().parse(content);
+    const nodes = [...tree.children];
+
+    while (nodes.length > 0) {
+        const node = nodes.pop();
+
+        if (node === undefined) {
+            continue;
+        }
+
+        if (node.type === "image") {
+            links.push({ isImage: true, link: node.url });
+        } else if (node.type === "link") {
+            links.push({ isImage: false, link: node.url });
+        }
+
+        if ("children" in node && Array.isArray(node.children)) {
+            nodes.push(...node.children);
+        }
+    }
+
+    return links;
 }
 
 /**
@@ -305,27 +335,24 @@ async function checkFile(markdownPath, issues, issueSet, metrics) {
     }
 
     const content = await readFile(markdownPath, "utf8");
-    // Skip fenced code blocks
-    const contentWithoutCodeBlocks = content.replaceAll(/```[\s\S]*?```/g, "");
-    const matches = Array.from(contentWithoutCodeBlocks.matchAll(LINK_PATTERN));
+    const links = extractMarkdownLinks(content);
 
-    if (matches.length === 0) {
+    if (links.length === 0) {
         metrics.filesWithNoLinks++;
     } else {
         metrics.filesWithLinks++;
     }
 
-    for (const match of matches) {
-        const fullMatch = match[0];
-        const link = match[1];
-        if (LEADING_BANG.test(fullMatch)) {
+    for (const markdownLink of links) {
+        if (markdownLink.isImage) {
             metrics.imageLinksIgnored++;
             continue;
         }
-        if (link) {
+
+        if (markdownLink.link.length > 0) {
             const broken = await validateLink(
                 markdownPath,
-                link,
+                markdownLink.link,
                 issues,
                 issueSet,
                 metrics

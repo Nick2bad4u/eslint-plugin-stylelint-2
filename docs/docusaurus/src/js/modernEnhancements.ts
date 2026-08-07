@@ -266,7 +266,7 @@ function createScrollIndicator(): CleanupFunction {
 function getRuleNumberPrefix(
     label: string
 ): null | Readonly<{ numberToken: string; remainder: string }> {
-    const match = /^(\d{2,3})\s+(.+)$/u.exec(label);
+    const match = /^(\d{2,3})\s+(\S.*)$/u.exec(label);
 
     if (match === null) {
         return null;
