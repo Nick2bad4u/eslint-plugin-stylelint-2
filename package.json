@@ -312,6 +312,7 @@
     "allowScripts": {
         "core-js": false,
         "esbuild@0.28.1": true,
+        "fsevents@2.3.3": false,
         "unrs-resolver@1.12.2": true,
         "@swc/core@1.15.47": true
     },
