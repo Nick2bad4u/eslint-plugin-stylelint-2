@@ -96,6 +96,7 @@ const disallowStylelintEmptyRulesObjectRule: RuleModuleWithDocs<
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-empty-rules-object",
         },
+        languages: ["js/js"],
         messages: {
             disallowEmptyRulesObject:
                 "Avoid `rules: {}` in shared Stylelint config files. Either define explicit rules or remove the empty object.",

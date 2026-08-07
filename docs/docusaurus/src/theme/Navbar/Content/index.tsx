@@ -21,6 +21,10 @@ import clsx from "clsx";
 import styles from "./styles.module.css";
 
 const useNavbarItems = (): NavbarItemConfig[] =>
+    /* Docusaurus validates navbar items at configuration load time, but its
+     * public ThemeConfig type still widens each item's discriminant to string.
+     * This mirrors the upstream theme's temporary cast until that type is fixed. */
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Upstream Docusaurus ThemeConfig typing does not preserve validated navbar discriminants.
     useThemeConfig().navbar.items as NavbarItemConfig[];
 
 /** Render the customized Docusaurus navbar content and search behavior. */
@@ -42,19 +46,19 @@ export default function NavbarContent(): ReactNode {
                 <>
                     {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
                     <NavbarLogo />
-                    <NavbarItems items={leftItems} />
+                    {renderNavbarItems(leftItems)}
                 </>
             }
             right={
                 <>
-                    <NavbarItems items={rightItemsWithoutSearch} />
+                    {renderNavbarItems(rightItemsWithoutSearch)}
                     <NavbarColorModeToggle
                         className={
                             styles["colorModeToggle"] ?? "colorModeToggle"
                         }
                     />
                     {rightSearchItems.length > 0 ? (
-                        <NavbarItems items={rightSearchItems} />
+                        renderNavbarItems(rightSearchItems)
                     ) : (
                         <NavbarSearch>
                             <SearchBar />
@@ -95,9 +99,9 @@ function NavbarContentLayout({
     );
 }
 
-function NavbarItems({
-    items,
-}: Readonly<{ items: readonly NavbarItemConfig[] }>): ReactNode {
+function renderNavbarItems(
+    items: readonly Readonly<NavbarItemConfig>[]
+): ReactNode {
     return items.map((item, index) => (
         <ErrorCauseBoundary
             key={`${item.type ?? "default"}-${String(index)}`}

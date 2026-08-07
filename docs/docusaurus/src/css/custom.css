@@ -73,8 +73,7 @@
 }
 
 @media (width >= 62.3125rem) {
-    html[data-theme="dark"] .navbar,
-    html[data-theme="light"] .navbar {
+    .navbar {
         backdrop-filter: blur(18px);
     }
 }
@@ -245,7 +244,14 @@
 .sb-cat-api-runtime > .menu__list-item-collapsible .menu__link,
 .sb-cat-api-public > .menu__list-item-collapsible .menu__link,
 .sb-cat-api-internal > .menu__list-item-collapsible .menu__link,
-.sb-cat-api-overview > .menu__link,
+.sb-cat-api-overview > .menu__link {
+    border-inline-start: 4px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding-inline-start: calc(var(--ifm-menu-link-padding-horizontal) - 4px);
+}
+
 .sb-cat-presets > .menu__list-item-collapsible .menu__link,
 .sb-cat-rules > .menu__list-item-collapsible .menu__link {
     border-inline-start: 4px solid transparent;

@@ -16,12 +16,13 @@ import {
 } from "./stylelint-config-object.js";
 import {
     createTypedRule,
+    type RuleDefinitionWithDocs,
     type RuleModuleWithDocs,
     toRuleListener,
 } from "./typed-rule.js";
 
 type ConfigOptionRuleDefinition = Readonly<
-    Except<RuleModuleWithDocs<MessageIds, Options>, "create"> & {
+    Except<RuleDefinitionWithDocs<MessageIds, Options>, "create"> & {
         optionName: string;
     }
 >;
@@ -89,7 +90,7 @@ export const createStylelintConfigBooleanOptionRule = (
             const lineEnding = getLineEnding(sourceCode.text);
 
             return toRuleListener({
-                ExportDefaultDeclaration(node: unknown) {
+                ExportDefaultDeclaration: (node: unknown) => {
                     if (!isExportDefaultDeclarationNode(node)) {
                         return;
                     }
@@ -169,6 +170,10 @@ export const createStylelintConfigBooleanOptionRule = (
                     });
                 },
             });
+        },
+        meta: {
+            ...ruleDefinition.meta,
+            languages: ["js/js"],
         },
     }) satisfies RuleModuleWithDocs<MessageIds, Options>;
 };

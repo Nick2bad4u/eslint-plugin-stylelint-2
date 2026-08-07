@@ -34,9 +34,9 @@ const hasOverridesCustomSyntax = (
         return false;
     }
 
-    for (const element of overridesValue.elements) {
+    return overridesValue.elements.some((element) => {
         if (element?.type !== AST_NODE_TYPES.ObjectExpression) {
-            continue;
+            return false;
         }
 
         const customSyntaxProperty = getObjectPropertyByName(
@@ -45,25 +45,21 @@ const hasOverridesCustomSyntax = (
         );
 
         if (customSyntaxProperty === undefined) {
-            continue;
+            return false;
         }
 
         const customSyntaxValue = customSyntaxProperty.value;
 
         if (!isPropertyExpressionValue(customSyntaxValue)) {
-            continue;
+            return false;
         }
 
-        if (
+        return (
             customSyntaxValue.type === AST_NODE_TYPES.Literal &&
             typeof customSyntaxValue.value === "string" &&
             customSyntaxValue.value.trim().length > 0
-        ) {
-            return true;
-        }
-    }
-
-    return false;
+        );
+    });
 };
 
 /** Rule module that requires customSyntax to be scoped to overrides. */
@@ -149,6 +145,7 @@ const requireStylelintCustomSyntaxInOverridesRule: RuleModuleWithDocs<
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-custom-syntax-in-overrides",
         },
+        languages: ["js/js"],
         messages: {
             requireCustomSyntaxInOverrides:
                 "Move `customSyntax` into scoped `overrides` entries so syntax parsing stays explicit per file pattern.",

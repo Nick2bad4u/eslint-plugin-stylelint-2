@@ -7,6 +7,22 @@ const stylelint2 = /** @type {import("./src/plugin").Stylelint2Plugin} */ (
     plugin
 );
 
+/**
+ * Distinguish a single flat config from a preset config array.
+ *
+ * @param {import("./src/plugin").Stylelint2Config} candidate Preset value.
+ * @returns {candidate is import("eslint").Linter.Config} Whether the value is a single config.
+ */
+const isSingleFlatConfig = (candidate) => !Array.isArray(candidate);
+
+const stylelintConfigurationPreset = stylelint2.configs.configuration;
+
+if (!isSingleFlatConfig(stylelintConfigurationPreset)) {
+    throw new TypeError(
+        "stylelint2.configs.configuration must be a single flat config.",
+    );
+}
+
 /** @type {import("eslint").Linter.Config[]} */
 const config = [
     ...nickTwoBadFourU.configs.withoutStylelint2,
@@ -43,14 +59,9 @@ const config = [
         plugins: {
             "stylelint-2": stylelint2,
         },
-        /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access -- plugin config arrays are runtime-validated ESLint rule maps. */
         rules: {
-            // @ts-expect-error -- plugin.mjs is typed as generic ESLint.Plugin.
-            ...stylelint2.configs.all[0].rules,
-            // @ts-expect-error -- plugin.mjs is typed as generic ESLint.Plugin.
-            ...stylelint2.configs.all[1].rules,
+            ...stylelintConfigurationPreset.rules,
         },
-        /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access -- end local override for plugin rule map spreads. */
     },
     {
         files: [
@@ -62,6 +73,40 @@ const config = [
             // Benchmark callbacks measure runtime cost and do not always
             // represent assertion-driven correctness tests.
             "vitest/prefer-expect-assertions": "off",
+        },
+    },
+    {
+        files: [".github/hooks/hooks.json"],
+        name: "GitHub Copilot Hook Schema Compatibility",
+        rules: {
+            // This is a GitHub Copilot repository-hooks document, not a Codex
+            // hooks document. The upstream Codex plugin currently classifies
+            // every hooks/hooks.json path as Codex configuration.
+            "codex/no-ignored-hook-matcher": "off",
+            "codex/no-mixed-hook-representations": "off",
+            "codex/no-unsupported-hook-handler": "off",
+            "codex/require-valid-hook-events": "off",
+            "codex/require-valid-hook-structure": "off",
+        },
+    },
+    {
+        files: ["docs/docusaurus/sidebars.ts"],
+        name: "Generated TypeDoc Sidebar Compatibility",
+        rules: {
+            // TypeDoc emits a CommonJS sidebar at build time. Docusaurus loads
+            // sidebar configuration synchronously, so createRequire is the
+            // supported bridge for this generated artifact.
+            "import-x/extensions": "off",
+            "import-x/no-commonjs": "off",
+        },
+    },
+    {
+        files: ["docs/docusaurus/site-docs/**/*.md", "docs/rules/**/*.md"],
+        name: "Docusaurus Frontmatter Heading Compatibility",
+        rules: {
+            // Docusaurus frontmatter titles are counted as headings by the
+            // Markdown parser, while remark correctly requires an authored H1.
+            "markdown/no-multiple-h1": "off",
         },
     },
     {
@@ -122,7 +167,14 @@ const config = [
         files: ["src/**/*.{ts,mts,cts,tsx}"],
         name: "Source Compatibility Relaxations",
         rules: {
+            "import-x/no-cycle": "error",
             "n/no-process-env": "off",
+            // ESLint visitor functions are named after case-sensitive AST node
+            // types such as ExportDefaultDeclaration and StyleSheet.
+            "sonarjs/function-name": [
+                "warn",
+                { format: "^[_a-zA-Z][a-zA-Z0-9]*$" },
+            ],
             "unicorn/import-style": "off",
             "unicorn/no-break-in-nested-loop": "off",
             "unicorn/no-error-property-assignment": "off",
@@ -137,6 +189,24 @@ const config = [
         files: ["src/rules/**/*.{ts,mts,cts,tsx}"],
         name: "Rule Export Naming Compatibility",
         rules: {
+            // The shared ordering predates ESLint's meta.languages property.
+            // Keep the existing sequence and place languages before type so
+            // meta ordering and natural object sorting agree.
+            "eslint-plugin/meta-property-ordering": [
+                "error",
+                [
+                    "defaultOptions",
+                    "deprecated",
+                    "docs",
+                    "fixable",
+                    "hasSuggestions",
+                    "languages",
+                    "messages",
+                    "replacedBy",
+                    "schema",
+                    "type",
+                ],
+            ],
             "unicorn/consistent-boolean-name": "off",
         },
     },

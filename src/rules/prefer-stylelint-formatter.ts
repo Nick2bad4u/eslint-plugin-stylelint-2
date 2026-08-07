@@ -110,6 +110,7 @@ const preferStylelintFormatterRule: RuleModuleWithDocs<MessageIds, Options> =
                 requiresTypeChecking: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-formatter",
             },
+            languages: ["js/js"],
             messages: {
                 preferFormatter:
                     "Configure a top-level `formatter` so Stylelint output stays explicit and predictable across runners.",

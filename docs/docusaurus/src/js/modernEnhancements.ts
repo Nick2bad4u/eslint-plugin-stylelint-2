@@ -47,12 +47,12 @@ function applyInteractiveHoverEffects(): CleanupFunction {
             element.style.setProperty("--sb-hover-y", `${relativeY}%`);
         };
 
-        const handlePointerEnter = (event: PointerEvent): void => {
+        const handlePointerEnter = (event: Readonly<PointerEvent>): void => {
             element.classList.add("is-hover-active");
             setPointerPosition(event.clientX, event.clientY);
         };
 
-        const handlePointerMove = (event: PointerEvent): void => {
+        const handlePointerMove = (event: Readonly<PointerEvent>): void => {
             setPointerPosition(event.clientX, event.clientY);
         };
 
@@ -98,44 +98,36 @@ function applyInteractiveHoverEffects(): CleanupFunction {
 function applySidebarLabelTokenColoring(): CleanupFunction {
     const mutations: SidebarLabelMutation[] = [];
 
-    const processLinks = (sidebarLinks: readonly HTMLAnchorElement[]): void => {
-        for (const link of sidebarLinks) {
-            if (isSidebarLinkTokenized(link)) {
-                continue;
-            }
-
-            const linkLabel = link.textContent?.trim();
-
-            if (!linkLabel || !isNumberedRuleSidebarLink(link)) {
-                continue;
-            }
-
-            const ruleNumberPrefix = getRuleNumberPrefix(linkLabel);
-
-            if (ruleNumberPrefix === null) {
-                continue;
-            }
-
-            mutations.push({
-                element: link,
-                originalLabel: linkLabel,
-            });
-
-            setSidebarLeadingToken({
-                link,
-                remainderText: ruleNumberPrefix.remainder,
-                tokenClassName: "sb-inline-rule-number",
-                tokenText: ruleNumberPrefix.numberToken,
-            });
-        }
-    };
-
     const processSidebarMenuLinks = (): void => {
         const sidebarLinks = document.querySelectorAll<HTMLAnchorElement>(
             ".theme-doc-sidebar-menu .menu__link"
         );
 
-        processLinks([...sidebarLinks]);
+        for (const link of sidebarLinks) {
+            if (isSidebarLinkTokenized(link)) {
+                continue;
+            }
+
+            const linkLabel = link.textContent.trim();
+
+            if (linkLabel && isNumberedRuleSidebarLink(link)) {
+                const ruleNumberPrefix = getRuleNumberPrefix(linkLabel);
+
+                if (ruleNumberPrefix !== null) {
+                    mutations.push({
+                        element: link,
+                        originalLabel: linkLabel,
+                    });
+
+                    setSidebarLeadingToken({
+                        link,
+                        remainderText: ruleNumberPrefix.remainder,
+                        tokenClassName: "sb-inline-rule-number",
+                        tokenText: ruleNumberPrefix.numberToken,
+                    });
+                }
+            }
+        }
     };
 
     processSidebarMenuLinks();
@@ -413,15 +405,17 @@ function initializeEnhancements(): CleanupFunction {
     };
 }
 
-function isHTMLElement(element: Element | null): element is HTMLElement {
+function isHTMLElement(
+    element: null | Readonly<Element>
+): element is HTMLElement {
     return element instanceof HTMLElement;
 }
 
-function isNumberedRuleSidebarLink(link: HTMLAnchorElement): boolean {
+function isNumberedRuleSidebarLink(link: Readonly<HTMLAnchorElement>): boolean {
     return link.closest(".sb-cat-rules-stylelint") !== null;
 }
 
-function isSidebarLinkTokenized(link: HTMLAnchorElement): boolean {
+function isSidebarLinkTokenized(link: Readonly<HTMLAnchorElement>): boolean {
     const tokenizedValue = link.dataset[SIDEBAR_TOKENIZED_DATA_KEY];
 
     return tokenizedValue !== undefined && tokenizedValue.length > 0;

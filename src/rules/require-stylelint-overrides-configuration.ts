@@ -73,24 +73,13 @@ const hasSpreadProperty = (
 
 const hasEffectiveConfigurationProperty = (
     overrideEntry: Readonly<TSESTree.ObjectExpression>
-): boolean => {
-    for (const propertyNode of overrideEntry.properties) {
-        if (propertyNode.type !== AST_NODE_TYPES.Property) {
-            continue;
-        }
-
-        if (
-            isPropertyNamed(propertyNode, "files") ||
-            isPropertyNamed(propertyNode, "name")
-        ) {
-            continue;
-        }
-
-        return true;
-    }
-
-    return false;
-};
+): boolean =>
+    overrideEntry.properties.some(
+        (propertyNode) =>
+            propertyNode.type === AST_NODE_TYPES.Property &&
+            !isPropertyNamed(propertyNode, "files") &&
+            !isPropertyNamed(propertyNode, "name")
+    );
 
 /** Rule module that requires meaningful configuration content in overrides. */
 const requireStylelintOverridesConfigurationRule: RuleModuleWithDocs<
@@ -120,18 +109,15 @@ const requireStylelintOverridesConfigurationRule: RuleModuleWithDocs<
                 const overrideEntries = getOverrideEntries(configObject);
 
                 for (const overrideEntry of overrideEntries) {
-                    if (hasSpreadProperty(overrideEntry)) {
-                        continue;
+                    if (
+                        !hasSpreadProperty(overrideEntry) &&
+                        !hasEffectiveConfigurationProperty(overrideEntry)
+                    ) {
+                        context.report({
+                            messageId: "requireOverrideConfiguration",
+                            node: overrideEntry,
+                        });
                     }
-
-                    if (hasEffectiveConfigurationProperty(overrideEntry)) {
-                        continue;
-                    }
-
-                    context.report({
-                        messageId: "requireOverrideConfiguration",
-                        node: overrideEntry,
-                    });
                 }
             },
         });
@@ -151,6 +137,7 @@ const requireStylelintOverridesConfigurationRule: RuleModuleWithDocs<
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-overrides-configuration",
         },
+        languages: ["js/js"],
         messages: {
             requireOverrideConfiguration:
                 "Each Stylelint `overrides` entry should include at least one configuration property (for example `rules`, `customSyntax`, `extends`, or `plugins`) in addition to `files`.",

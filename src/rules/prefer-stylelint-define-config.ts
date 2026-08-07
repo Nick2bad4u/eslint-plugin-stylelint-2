@@ -123,6 +123,7 @@ const preferStylelintDefineConfigRule: RuleModuleWithDocs<MessageIds, Options> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-define-config",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferDefineConfig:
                     "Wrap the exported Stylelint config object in `defineConfig(...)` so editors and TypeScript can infer the config shape.",

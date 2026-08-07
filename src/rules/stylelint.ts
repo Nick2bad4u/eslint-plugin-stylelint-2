@@ -165,6 +165,7 @@ const stylelintRule: RuleModuleWithDocs<MessageIds, Options> = createTypedRule<
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/stylelint",
         },
         fixable: "code",
+        languages: ["css/css"],
         messages: {
             stylelintConfigWarning:
                 "Stylelint configuration warning: {{message}}",

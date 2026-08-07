@@ -197,6 +197,7 @@ const sortStylelintRuleKeysRule: RuleModuleWithDocs<MessageIds, Options> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/sort-stylelint-rule-keys",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 sortRuleKeys:
                     "Sort top-level Stylelint `rules` keys for deterministic diffs and consistent review order.",

@@ -5,17 +5,16 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import { themes as prismThemes } from "prism-react-renderer";
 
-/** Route base path where docs site is deployed (GitHub Pages project path). */
-const baseUrl =
-    process.env["DOCUSAURUS_BASE_URL"] ?? "/eslint-plugin-stylelint-2/";
-/** Opt-in flag for experimental Docusaurus performance features. */
-const enableExperimentalFaster =
-    process.env["DOCUSAURUS_ENABLE_EXPERIMENTAL"] === "true";
-
 /** GitHub organization used for edit links and project metadata. */
 const organizationName = "Nick2bad4u";
 /** Repository name used for edit links and project metadata. */
 const projectName = "eslint-plugin-stylelint-2";
+/** Route base path where docs site is deployed (GitHub Pages project path). */
+const baseUrl = process.env["DOCUSAURUS_BASE_URL"] ?? `/${projectName}/`;
+/** Opt-in flag for experimental Docusaurus performance features. */
+const enableExperimentalFaster =
+    process.env["DOCUSAURUS_ENABLE_EXPERIMENTAL"] === "true";
+
 /** Public origin for the published documentation site. */
 const siteOrigin = "https://nick2bad4u.github.io";
 /** Canonical public site URL including the GitHub Pages project path. */
@@ -32,10 +31,12 @@ const modernEnhancementsClientModule = fileURLToPath(
     new URL("src/js/modernEnhancements.ts", import.meta.url)
 );
 
+/** Shared dark-purple base color used by PWA browser metadata. */
+const pwaBaseColor = "#170724";
 /** PWA theme-color meta value for Chromium-based browsers. */
-const pwaThemeColor = "#170724";
+const pwaThemeColor = pwaBaseColor;
 /** Windows tile color for pinned-site metadata. */
-const pwaTileColor = "#170724";
+const pwaTileColor = pwaBaseColor;
 /** Safari pinned-tab mask icon color. */
 const pwaMaskIconColor = "#a855f7";
 /** Footer copyright HTML used by the site theme config. */
@@ -177,7 +178,7 @@ const config = {
                 "@type": "WebSite",
                 description: siteDescription,
                 image: socialCardImageUrl,
-                name: "eslint-plugin-stylelint-2",
+                name: projectName,
                 publisher: {
                     "@type": "Person",
                     name: "Nick2bad4u",
@@ -223,7 +224,7 @@ const config = {
                 ],
                 pwaHead: [
                     {
-                        href: `${baseUrl}manifest.json`,
+                        href: `${baseUrl}manifest.webmanifest`,
                         rel: "manifest",
                         tagName: "link",
                     },
@@ -284,11 +285,10 @@ const config = {
             "classic",
             {
                 blog: {
-                    blogDescription:
-                        "Updates, architecture notes, and practical guidance for eslint-plugin-stylelint-2 users.",
+                    blogDescription: `Updates, architecture notes, and practical guidance for ${projectName} users.`,
                     blogSidebarCount: "ALL",
                     blogSidebarTitle: "All posts",
-                    blogTitle: "eslint-plugin-stylelint-2 Blog",
+                    blogTitle: `${projectName} Blog`,
                     editUrl: `https://github.com/${organizationName}/${projectName}/blob/main/docs/docusaurus/`,
                     feedOptions: {
                         type: ["rss", "atom"],
@@ -457,7 +457,7 @@ const config = {
                 },
             ],
             logo: {
-                alt: "eslint-plugin-stylelint-2 logo",
+                alt: `${projectName} logo`,
                 height: 60,
                 href: `https://github.com/${organizationName}/${projectName}`,
                 src: "img/logo.svg",
@@ -477,7 +477,7 @@ const config = {
                 name: "twitter:card",
             },
             {
-                content: "eslint-plugin-stylelint-2",
+                content: projectName,
                 property: "og:site_name",
             },
         ],
@@ -628,14 +628,14 @@ const config = {
                 },
             ],
             logo: {
-                alt: "eslint-plugin-stylelint-2 logo",
+                alt: `${projectName} logo`,
                 height: 48,
                 href: baseUrl,
                 src: "img/logo.svg",
                 width: 48,
             },
             style: "dark",
-            title: "eslint-plugin-stylelint-2",
+            title: projectName,
         },
         prism: {
             additionalLanguages: [
@@ -693,7 +693,7 @@ const config = {
             },
         ],
     ],
-    title: "eslint-plugin-stylelint-2",
+    title: projectName,
     trailingSlash: false,
     url: siteOrigin,
 } satisfies Config;

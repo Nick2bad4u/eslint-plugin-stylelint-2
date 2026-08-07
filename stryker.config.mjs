@@ -54,7 +54,11 @@ const config = {
         "!src/**/*.*.ts",
     ],
     packageManager: "npm",
-    plugins: ["@stryker-mutator/*", "@stryker-ignorer/*"],
+    plugins: [
+        "@stryker-ignorer/console-all",
+        "@stryker-mutator/typescript-checker",
+        "@stryker-mutator/vitest-runner",
+    ],
     reporters: [
         "clear-text",
         "html",

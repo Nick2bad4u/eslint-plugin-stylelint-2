@@ -23,31 +23,58 @@ export type GenericRuleListener = Readonly<
 >;
 
 /**
+ * Metadata accepted by higher-order rule factories before they add the
+ * JavaScript language declaration.
+ */
+export interface RuleDefinitionMetadataWithDocs<
+    MessageIds extends string,
+    Options extends Readonly<UnknownArray>,
+> extends TSESLint.RuleMetaData<MessageIds, Stylelint2RuleDocs, Options> {
+    deprecated: boolean;
+    docs: Stylelint2RuleDocs;
+    languages?: readonly RuleLanguageIdentifier[];
+}
+
+/**
  * Rule definition shape accepted by `createTypedRule`, including typed
  * `create(context, options)` access with merged default options.
  */
-export type RuleDefinitionWithDocs<
+export interface RuleDefinitionWithDocs<
     MessageIds extends string,
     Options extends Readonly<UnknownArray>,
-> = Except<RuleModuleWithDocs<MessageIds, Options>, "create" | "meta"> & {
+> {
     create: (
         context: GenericRuleContext<MessageIds, Options>,
         options: Options
     ) => TSESLint.RuleListener;
-    meta: RuleModuleWithDocs<MessageIds, Options>["meta"];
-};
+    defaultOptions?: Options;
+    meta: RuleDefinitionMetadataWithDocs<MessageIds, Options>;
+    name: string;
+}
 
-/** Rule module contract used by registry and plugin wiring. */
-export type RuleModuleWithDocs<
+/** ESLint 10 rule language identifier. */
+export type RuleLanguageIdentifier = "*" | `${string}/${string}`;
+
+/** Rule metadata contract including plugin docs and ESLint 10 languages. */
+export interface RuleMetadataWithDocs<
     MessageIds extends string,
     Options extends Readonly<UnknownArray>,
-> = TSESLint.RuleModule<MessageIds, Options> & {
-    meta: TSESLint.RuleMetaData<MessageIds, Stylelint2RuleDocs, Options> & {
-        deprecated: boolean;
-        docs: Stylelint2RuleDocs;
-    };
+> extends RuleDefinitionMetadataWithDocs<MessageIds, Options> {
+    languages: readonly RuleLanguageIdentifier[];
+}
+
+/** Rule module contract used by registry and plugin wiring. */
+export interface RuleModuleWithDocs<
+    MessageIds extends string,
+    Options extends Readonly<UnknownArray>,
+> {
+    create: (
+        context: GenericRuleContext<MessageIds, Options>
+    ) => TSESLint.RuleListener;
+    defaultOptions?: Options;
+    meta: RuleMetadataWithDocs<MessageIds, Options>;
     name: string;
-};
+}
 
 /** Plugin-specific metadata extensions for `meta.docs`. */
 export type Stylelint2RuleDocs = Readonly<{
@@ -127,7 +154,11 @@ export const createTypedRule = <
     MessageIds extends string,
     Options extends Readonly<UnknownArray>,
 >(
-    ruleDefinition: Readonly<RuleDefinitionWithDocs<MessageIds, Options>>
+    ruleDefinition: Readonly<
+        Except<RuleDefinitionWithDocs<MessageIds, Options>, "meta"> & {
+            meta: RuleMetadataWithDocs<MessageIds, Options>;
+        }
+    >
 ): RuleModuleWithDocs<MessageIds, Options> => {
     const canonicalDocsUrl = createRuleDocsUrl(ruleDefinition.name);
 

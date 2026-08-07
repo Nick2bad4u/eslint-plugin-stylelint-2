@@ -120,24 +120,19 @@ const requireStylelintOverridesFilesArrayRule: RuleModuleWithDocs<
                         "files"
                     );
 
-                    if (filesProperty === undefined) {
-                        continue;
+                    if (filesProperty !== undefined) {
+                        const filesPropertyValue = filesProperty.value;
+
+                        if (
+                            isPropertyExpressionValue(filesPropertyValue) &&
+                            !hasStrictFilesArrayShape(filesPropertyValue)
+                        ) {
+                            context.report({
+                                messageId: "requireOverrideFilesArray",
+                                node: filesProperty,
+                            });
+                        }
                     }
-
-                    const filesPropertyValue = filesProperty.value;
-
-                    if (!isPropertyExpressionValue(filesPropertyValue)) {
-                        continue;
-                    }
-
-                    if (hasStrictFilesArrayShape(filesPropertyValue)) {
-                        continue;
-                    }
-
-                    context.report({
-                        messageId: "requireOverrideFilesArray",
-                        node: filesProperty,
-                    });
                 }
             },
         });
@@ -157,6 +152,7 @@ const requireStylelintOverridesFilesArrayRule: RuleModuleWithDocs<
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-overrides-files-array",
         },
+        languages: ["js/js"],
         messages: {
             requireOverrideFilesArray:
                 'Stylelint override `files` must be a non-empty array of non-empty glob strings (for example `["**/*.scss"]`).',

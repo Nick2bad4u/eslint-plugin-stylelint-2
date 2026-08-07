@@ -34,7 +34,7 @@ const features: readonly Feature[] = [
         linkLabel: "Open section →",
         title: "Get Started",
         to: "/docs/rules/getting-started",
-        toneClassName: styles.cardStarted ?? "",
+        toneClassName: styles.cardStarted,
     },
     {
         description:
@@ -43,7 +43,7 @@ const features: readonly Feature[] = [
         linkLabel: "Open section →",
         title: "Presets",
         to: "/docs/rules/presets",
-        toneClassName: styles.cardPresets ?? "",
+        toneClassName: styles.cardPresets,
     },
     {
         description:
@@ -52,19 +52,19 @@ const features: readonly Feature[] = [
         linkLabel: "Open section →",
         title: "Rule Reference",
         to: "/docs/rules/overview",
-        toneClassName: styles.cardRules ?? "",
+        toneClassName: styles.cardRules,
     },
 ];
 
 /** Render the homepage feature cards that route users into core docs areas. */
 export default function HomepageFeatures(): JSX.Element {
-    const cardClassName = styles.card ?? "";
-    const featuresClassName = styles.features ?? "";
-    const gridClassName = styles.grid ?? "";
-    const linkClassName = styles.link ?? "";
-    const descriptionClassName = styles.description ?? "";
-    const footerClassName = styles.featureFooter ?? "";
-    const iconClassName = styles.icon ?? "";
+    const cardClassName = styles.card;
+    const featuresClassName = styles.features;
+    const gridClassName = styles.grid;
+    const linkClassName = styles.link;
+    const descriptionClassName = styles.description;
+    const footerClassName = styles.featureFooter;
+    const iconClassName = styles.icon;
 
     return (
         <section className={featuresClassName}>

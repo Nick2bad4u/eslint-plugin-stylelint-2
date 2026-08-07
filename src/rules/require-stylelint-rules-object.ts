@@ -101,6 +101,7 @@ const requireStylelintRulesObjectRule: RuleModuleWithDocs<MessageIds, Options> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-rules-object",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 requireRulesObject:
                     "Add a top-level `rules` object so Stylelint rule configuration stays explicit and reviewable.",

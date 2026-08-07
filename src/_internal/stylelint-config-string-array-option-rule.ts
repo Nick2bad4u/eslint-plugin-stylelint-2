@@ -19,12 +19,13 @@ import {
 } from "./stylelint-config-string-array-option.js";
 import {
     createTypedRule,
+    type RuleDefinitionWithDocs,
     type RuleModuleWithDocs,
     toRuleListener,
 } from "./typed-rule.js";
 
 type ConfigOptionRuleDefinition<MessageIds extends string> = Readonly<
-    Except<RuleModuleWithDocs<MessageIds, Options>, "create"> & {
+    Except<RuleDefinitionWithDocs<MessageIds, Options>, "create"> & {
         optionName: string;
     }
 >;
@@ -45,16 +46,13 @@ const getUniqueLiterals = (
     for (const literal of literals) {
         const literalValue = literal.value;
 
-        if (typeof literalValue !== "string") {
-            continue;
+        if (
+            typeof literalValue === "string" &&
+            !setHas(seenValues, literalValue)
+        ) {
+            seenValues.add(literalValue);
+            uniqueLiterals.push(literal);
         }
-
-        if (setHas(seenValues, literalValue)) {
-            continue;
-        }
-
-        seenValues.add(literalValue);
-        uniqueLiterals.push(literal);
     }
 
     return uniqueLiterals;
@@ -194,6 +192,10 @@ export const createStylelintConfigPreferArrayOptionRule = (
                 },
             });
         },
+        meta: {
+            ...ruleDefinition.meta,
+            languages: ["js/js"],
+        },
     }) satisfies RuleModuleWithDocs<"preferArray", Options>;
 };
 
@@ -269,6 +271,10 @@ export const createStylelintConfigDisallowDuplicateArrayEntriesRule = (
                     });
                 },
             });
+        },
+        meta: {
+            ...ruleDefinition.meta,
+            languages: ["js/js"],
         },
     }) satisfies RuleModuleWithDocs<"disallowDuplicates", Options>;
 };
@@ -346,6 +352,10 @@ export const createStylelintConfigSortArrayEntriesRule = (
                 },
             });
         },
+        meta: {
+            ...ruleDefinition.meta,
+            languages: ["js/js"],
+        },
     }) satisfies RuleModuleWithDocs<"sortArray", Options>;
 };
 
@@ -401,6 +411,10 @@ export const createStylelintConfigDisallowRelativeArrayEntriesRule = (
                     }
                 },
             });
+        },
+        meta: {
+            ...ruleDefinition.meta,
+            languages: ["js/js"],
         },
     }) satisfies RuleModuleWithDocs<"disallowRelative", Options>;
 };

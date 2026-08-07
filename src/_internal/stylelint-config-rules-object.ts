@@ -53,20 +53,9 @@ export const getTopLevelRulesObject = (
  */
 export const getTopLevelRuleEntries = (
     rulesObject: Readonly<TSESTree.ObjectExpression>
-): readonly TSESTree.Property[] => {
-    const ruleEntries: TSESTree.Property[] = [];
-
-    for (const property of rulesObject.properties) {
-        if (property.type !== AST_NODE_TYPES.Property) {
-            continue;
-        }
-
-        if (property.kind !== "init") {
-            continue;
-        }
-
-        ruleEntries.push(property);
-    }
-
-    return ruleEntries;
-};
+): readonly TSESTree.Property[] =>
+    rulesObject.properties.filter(
+        (property): property is TSESTree.Property =>
+            property.type === AST_NODE_TYPES.Property &&
+            property.kind === "init"
+    );

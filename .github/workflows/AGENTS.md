@@ -308,7 +308,7 @@ jobs:
      run: npm install --no-save --force eslint@${{ matrix.eslint-version }} @eslint/js@${{ matrix.eslint-version }}
 
    - name: Run compat lint
-     run: npm run lint:compat:eslint9 -- --expect-eslint-major=9
+     run: node scripts/eslint9-compat-smoke.mjs --expect-eslint-major=9
 ```
 
 ### **3. Self-Hosted Runners**

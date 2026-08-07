@@ -121,23 +121,19 @@ const requireStylelintOverridesFilesRule: RuleModuleWithDocs<
                             messageId: "requireOverrideFiles",
                             node: element,
                         });
-                        continue;
+                    } else {
+                        const filesPropertyValue = filesProperty.value;
+
+                        if (
+                            isPropertyExpressionValue(filesPropertyValue) &&
+                            !hasNonEmptyFilesMatcher(filesPropertyValue)
+                        ) {
+                            context.report({
+                                messageId: "requireOverrideFiles",
+                                node: filesProperty,
+                            });
+                        }
                     }
-
-                    const filesPropertyValue = filesProperty.value;
-
-                    if (!isPropertyExpressionValue(filesPropertyValue)) {
-                        continue;
-                    }
-
-                    if (hasNonEmptyFilesMatcher(filesPropertyValue)) {
-                        continue;
-                    }
-
-                    context.report({
-                        messageId: "requireOverrideFiles",
-                        node: filesProperty,
-                    });
                 }
             },
         });
@@ -157,6 +153,7 @@ const requireStylelintOverridesFilesRule: RuleModuleWithDocs<
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-overrides-files",
         },
+        languages: ["js/js"],
         messages: {
             requireOverrideFiles:
                 "Each Stylelint `overrides` entry must define a non-empty `files` matcher so override scope is explicit.",

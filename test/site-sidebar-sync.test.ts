@@ -71,7 +71,9 @@ const collectDocIds = (items: readonly SidebarItem[]): string[] => {
     for (const item of items) {
         if (isDocSidebarItem(item)) {
             collectedDocIds.push(item.id);
-        } else if (isCategorySidebarItem(item)) {
+        }
+
+        if (isCategorySidebarItem(item)) {
             collectedDocIds.push(...collectDocIds(item.items));
         }
     }

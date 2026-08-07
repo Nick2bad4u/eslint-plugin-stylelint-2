@@ -280,6 +280,7 @@ const disallowStylelintDuplicateRuleOptionValuesRule: RuleModuleWithDocs<
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-duplicate-rule-option-values",
         },
         fixable: "code",
+        languages: ["js/js"],
         messages: {
             disallowDuplicateRuleOptionValues:
                 "Remove duplicate values from this Stylelint secondary option array so rule behavior remains explicit.",
