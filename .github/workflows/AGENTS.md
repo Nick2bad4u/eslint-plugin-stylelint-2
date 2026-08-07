@@ -302,13 +302,16 @@ jobs:
       cache-dependency-path: package-lock.json
 
    - name: Install dependencies
-     run: npm ci --force
+     run: npm ci
 
    - name: Install ESLint
-     run: npm install --no-save --force eslint@${{ matrix.eslint-version }} @eslint/js@${{ matrix.eslint-version }}
+     working-directory: ${{ runner.temp }}
+     run: npm install --prefix eslint9-runtime --no-save --package-lock=false eslint@${{ matrix.eslint-version }} @eslint/js@${{ matrix.eslint-version }}
 
    - name: Run compat lint
      run: node scripts/eslint9-compat-smoke.mjs --expect-eslint-major=9
+     env:
+      ESLINT_RUNTIME_DIRECTORY: ${{ runner.temp }}/eslint9-runtime
 ```
 
 ### **3. Self-Hosted Runners**

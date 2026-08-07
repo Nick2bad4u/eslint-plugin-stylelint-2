@@ -1,4 +1,7 @@
-import { ESLint } from "eslint";
+import { createRequire } from "node:module";
+import { pathToFileURL } from "node:url";
+
+import { ESLint as LocalESLint } from "eslint";
 import pc from "picocolors";
 
 /** @typedef {import("eslint").Linter.Config} FlatConfig */
@@ -8,6 +11,49 @@ import pc from "picocolors";
  * major.
  */
 const pluginEslintMajorOverrideEnvironmentVariable = "STYLELINT2_ESLINT_MAJOR";
+const eslintRuntimeDirectoryEnvironmentVariable = "ESLINT_RUNTIME_DIRECTORY";
+
+const require = createRequire(import.meta.url);
+
+/**
+ * @param {unknown} value
+ *
+ * @returns {value is { ESLint: typeof LocalESLint }}
+ */
+const isEslintRuntimeModule = (value) =>
+    typeof value === "object" &&
+    value !== null &&
+    "ESLint" in value &&
+    typeof value.ESLint === "function";
+
+/**
+ * Load the repository ESLint runtime by default, or an isolated compatibility
+ * runtime when CI provides one.
+ *
+ * @returns {Promise<typeof LocalESLint>}
+ */
+const loadEslintRuntime = async () => {
+    const runtimeDirectory =
+        process.env[eslintRuntimeDirectoryEnvironmentVariable];
+
+    if (runtimeDirectory === undefined || runtimeDirectory.length === 0) {
+        return LocalESLint;
+    }
+
+    const runtimeEntryPath = require.resolve("eslint", {
+        paths: [runtimeDirectory],
+    });
+    /** @type {unknown} */
+    const runtimeModule = await import(pathToFileURL(runtimeEntryPath).href);
+
+    if (!isEslintRuntimeModule(runtimeModule)) {
+        throw new TypeError(
+            `The isolated ESLint runtime at ${runtimeEntryPath} does not export ESLint.`
+        );
+    }
+
+    return runtimeModule.ESLint;
+};
 
 const positiveIntegerPattern = /^(?:[1-9]\d*)$/u;
 
@@ -126,6 +172,7 @@ const loadPluginConfigs = async () => {
 };
 
 const run = async () => {
+    const ESLint = await loadEslintRuntime();
     const expectedEslintMajor = getExpectedEslintMajor(process.argv.slice(2));
     const installedEslintMajor = getEslintMajorVersion(ESLint.version);
 
