@@ -22,12 +22,16 @@ import {
 } from "./stylelint-package-dependencies.js";
 import {
     createTypedRule,
+    type RuleDefinitionWithDocs,
     type RuleModuleWithDocs,
     toRuleListener,
 } from "./typed-rule.js";
 
 type ConfigOptionRuleDefinition = Readonly<
-    Except<RuleModuleWithDocs<"requireInstalledPackage", Options>, "create"> & {
+    Except<
+        RuleDefinitionWithDocs<"requireInstalledPackage", Options>,
+        "create"
+    > & {
         optionName: "extends" | "plugins";
     }
 >;
@@ -99,32 +103,32 @@ export const createStylelintConfigRequireInstalledPackageOptionRule = (
                         const specifier = stringLiteral.value.trim();
 
                         if (
-                            specifier.length === 0 ||
-                            isRelativeSpecifier(specifier)
+                            specifier.length > 0 &&
+                            !isRelativeSpecifier(specifier)
                         ) {
-                            continue;
+                            const packageName =
+                                getPackageNameFromSpecifier(specifier);
+
+                            if (
+                                isDefined(packageName) &&
+                                !setHas(dependencyNames, packageName)
+                            ) {
+                                context.report({
+                                    data: {
+                                        packageName,
+                                    },
+                                    messageId: "requireInstalledPackage",
+                                    node: stringLiteral,
+                                });
+                            }
                         }
-
-                        const packageName =
-                            getPackageNameFromSpecifier(specifier);
-
-                        if (
-                            !isDefined(packageName) ||
-                            setHas(dependencyNames, packageName)
-                        ) {
-                            continue;
-                        }
-
-                        context.report({
-                            data: {
-                                packageName,
-                            },
-                            messageId: "requireInstalledPackage",
-                            node: stringLiteral,
-                        });
                     }
                 },
             });
+        },
+        meta: {
+            ...ruleDefinition.meta,
+            languages: ["js/js"],
         },
     }) satisfies RuleModuleWithDocs<"requireInstalledPackage", Options>;
 };

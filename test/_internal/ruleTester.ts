@@ -30,13 +30,11 @@ assertRuleTesterHook(it, "it");
 RuleTester.it = it;
 const vitestItOnly: unknown = Reflect.get(it, "only");
 assertRuleTesterHook(vitestItOnly, "it.only");
-const typedVitestItOnly = vitestItOnly as (
-    ...arguments_: UnknownArray
-) => unknown;
+const typedVitestItOnly = vitestItOnly as (...args: UnknownArray) => unknown;
 RuleTester.itOnly = (
-    ...arguments_: readonly [...Parameters<typeof RuleTester.itOnly>]
+    ...args: readonly [...Parameters<typeof RuleTester.itOnly>]
 ) => {
-    Reflect.apply(typedVitestItOnly, undefined, arguments_);
+    Reflect.apply(typedVitestItOnly, undefined, args);
     return undefined;
 };
 

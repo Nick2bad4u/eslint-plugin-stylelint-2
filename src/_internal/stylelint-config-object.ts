@@ -124,7 +124,7 @@ export const getObjectPropertyByName = (
  *
  * @returns Top-level object properties in source order.
  */
-export const getObjectProperties = (
+const getObjectProperties = (
     objectExpression: Readonly<TSESTree.ObjectExpression>
 ): readonly TSESTree.Property[] => {
     const properties: TSESTree.Property[] = [];

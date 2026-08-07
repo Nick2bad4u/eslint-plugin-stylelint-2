@@ -156,16 +156,14 @@ const disallowStylelintOverridesRuntimeOptionsRule: RuleModuleWithDocs<
                         const runtimeOptionName =
                             getRuntimeOptionName(propertyNode);
 
-                        if (!isDefined(runtimeOptionName)) {
-                            continue;
+                        if (isDefined(runtimeOptionName)) {
+                            reportRuntimeOption(
+                                context,
+                                overrideEntry,
+                                propertyNode,
+                                runtimeOptionName
+                            );
                         }
-
-                        reportRuntimeOption(
-                            context,
-                            overrideEntry,
-                            propertyNode,
-                            runtimeOptionName
-                        );
                     }
                 }
             },
@@ -187,6 +185,7 @@ const disallowStylelintOverridesRuntimeOptionsRule: RuleModuleWithDocs<
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-overrides-runtime-options",
         },
         fixable: "code",
+        languages: ["js/js"],
         messages: {
             disallowRuntimeOptionInOverride:
                 "Move `{{optionName}}` out of `overrides`. This runtime option should not be configured per-file and belongs at invocation scope instead.",

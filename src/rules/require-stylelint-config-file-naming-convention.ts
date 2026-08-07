@@ -71,6 +71,7 @@ const requireStylelintConfigFileNamingConventionRule: RuleModuleWithDocs<
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/require-stylelint-config-file-naming-convention",
         },
+        languages: ["js/js"],
         messages: {
             requireCanonicalStylelintConfigFilename:
                 "Use canonical `stylelint.config.*` naming for shared Stylelint config files to improve discoverability.",

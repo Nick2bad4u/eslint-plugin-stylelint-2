@@ -10,75 +10,42 @@ import type { KnipConfig } from "knip";
  * repository layout.
  */
 const knipConfig: KnipConfig = {
-    $schema: "https://unpkg.com/knip@5/schema.json",
-    entry: [],
-    ignore: [
-        "docs/docusaurus/src/css/custom.css.d.ts",
-        "docs/docusaurus/typedoc-plugins/hashToBangLinks.mjs",
-        "docs/docusaurus/typedoc-plugins/hashToBangLinksCore.d.mts",
-        "docs/docusaurus/typedoc-plugins/hashToBangLinksCore.mjs",
-        "docs/docusaurus/typedoc-plugins/prefixDocLinks.mjs",
-        "docs/docusaurus/typedoc-plugins/prefixDocLinksCore.d.mts",
-        "docs/docusaurus/typedoc-plugins/prefixDocLinksCore.mjs",
-    ],
+    $schema: "https://unpkg.com/knip@6/schema.json",
     ignoreBinaries: [
-        "git-cz",
+        // Installed as standalone system tools in local and CI environments.
+        "actionlint",
+        "detect-secrets",
+        "gitleaks",
         "grype",
-        "open-cli",
-        // False-positve Knip thinks knip.config.ts is a binary entry point, but it's actually just a config file.
+        // Knip 6 misclassifies its own `-c knip.config.ts` argument as a binary.
         "knip.config.ts",
+        "lychee",
     ],
     ignoreDependencies: [
-        ".*prettier.*",
-        "@docusaurus/faster",
-        "@easyops-cn/docusaurus-search-local",
+        // Internal theme name resolved by @easyops-cn/docusaurus-search-local.
         "@easyops-cn/docusaurus-theme-docusaurus-search-local",
-        "@eslint.*",
-        "@microsoft/tsdoc-config",
-        "@secretlint/secretlint-rule-anthropic",
-        "@secretlint/secretlint-rule-aws",
-        "@secretlint/secretlint-rule-database-connection-string",
-        "@secretlint/secretlint-rule-gcp",
-        "@secretlint/secretlint-rule-github",
-        "@secretlint/secretlint-rule-no-dotenv",
-        "@secretlint/secretlint-rule-no-homedir",
-        "@secretlint/secretlint-rule-npm",
-        "@secretlint/secretlint-rule-openai",
-        "@secretlint/secretlint-rule-pattern",
-        "@secretlint/secretlint-rule-preset-recommend",
-        "@secretlint/secretlint-rule-privatekey",
-        "@secretlint/secretlint-rule-secp256k1-privatekey",
-        "@stylelint.*",
-        "@types.*",
-        "eslint.*",
-        "madge",
-        "postcss.*",
-        "remark.*",
-        "stylelint.*",
-        "ts.*",
-        "type.*",
-        "unified",
-
-        // Items flagged by knip report (ignored to suppress false-positives / repo-local tools)
-        "clsx",
-        "react-github-btn",
-        "actionlint",
-        "commitlint",
-        "gitleaks-secret-scanner",
-        "htmlhint",
-        "leasot",
-        "markdown-link-check",
-        "sloc",
-        "storybook",
-        "yamllint-js",
+        // React is referenced by the shared root tsconfig's JSX runtime option.
         "react",
+        // Dependencies and plugins loaded by the shared Stylelint config.
+        "@double-great/stylelint-a11y",
+        "@stylistic/stylelint-plugin",
+        "postcss.*",
+        "stylelint.*",
+        // Loaded by command-line tools through package paths or shared config files.
+        "git-cliff",
+        "gitcliff-config-nick2bad4u",
+        "gitleaks-config-nick2bad4u",
+        "jscpd-config-nick2bad4u",
+        "lychee-config-nick2bad4u",
+        "ncu-config-nick2bad4u",
+        "tsdoc-config-nick2bad4u",
+        "yamllint-config-nick2bad4u",
     ],
     ignoreExportsUsedInFile: {
         interface: true,
         type: true,
     },
     includeEntryExports: true,
-    project: [],
     rules: {
         binaries: "error",
         catalog: "error",
@@ -98,16 +65,42 @@ const knipConfig: KnipConfig = {
     },
     workspaces: {
         ".": {
-            entry: [],
-            project: [],
-        },
-        src: {
-            entry: ["src/plugin.ts"],
-            project: [
-                "!src/**/*.spec.{js,ts,tsx,jsx,mts,cjs,cts,mjs}",
-                "!src/**/*.test.{js,ts,tsx,jsx,mts,cjs,cts,mjs}",
-                "src/**/*.{js,ts,tsx,jsx,mts,cjs,cts,mjs}",
+            entry: [
+                ".secretlintrc.cjs",
+                "benchmarks/fixtures/stylelint.config.invalid.ts",
+                "scripts/bootstrap-eslint-repo.mjs",
+                "scripts/create-eslint-plugin-project.mjs",
+                "scripts/sync-presets-rules-matrix.d.mts",
+                "scripts/sync-readme-rules-table.d.mts",
+                "src/_internal/stylelint-worker.ts",
+                "src/plugin.ts",
+                "vitest.stryker.config.ts",
             ],
+            eslint: {
+                config: ["eslint.config.mjs"],
+            },
+            project: [
+                "*.{js,mjs,cjs,ts,mts,cts}",
+                "benchmarks/**/*.{js,mjs,cjs,ts,mts,cts}",
+                "scripts/**/*.{js,mjs,cjs,ts,mts,cts}",
+                "src/**/*.{js,mjs,cjs,ts,mts,cts}",
+                "test/**/*.{js,mjs,cjs,ts,mts,cts}",
+            ],
+        },
+        "docs/docusaurus": {
+            entry: ["src/**/*.{ts,tsx}"],
+            ignoreIssues: {
+                "src/components/HomepageFeatures/styles.module.css.d.ts": [
+                    "exports",
+                ],
+            },
+            includeEntryExports: false,
+            ignoreDependencies: [
+                "@easyops-cn/docusaurus-search-local",
+                "typed-css-modules",
+                "typedoc-config-nick2bad4u",
+            ],
+            project: ["*.ts", "**/*.{mdx,ts,tsx}"],
         },
     },
 };

@@ -86,28 +86,23 @@ const disallowStylelintNullRuleConfigRule: RuleModuleWithDocs<
                 for (const ruleEntry of ruleEntries) {
                     const ruleEntryValue = ruleEntry.value;
 
-                    if (!isPropertyExpressionValue(ruleEntryValue)) {
-                        continue;
-                    }
-
                     if (
-                        ruleEntryValue.type !== AST_NODE_TYPES.Literal ||
-                        ruleEntryValue.value !== null
+                        isPropertyExpressionValue(ruleEntryValue) &&
+                        ruleEntryValue.type === AST_NODE_TYPES.Literal &&
+                        ruleEntryValue.value === null
                     ) {
-                        continue;
+                        const ruleName = getRuleName(ruleEntry);
+
+                        context.report({
+                            data: isDefined(ruleName)
+                                ? {
+                                      ruleName,
+                                  }
+                                : {},
+                            messageId: "disallowNullRuleConfig",
+                            node: ruleEntry,
+                        });
                     }
-
-                    const ruleName = getRuleName(ruleEntry);
-
-                    context.report({
-                        data: isDefined(ruleName)
-                            ? {
-                                  ruleName,
-                              }
-                            : {},
-                        messageId: "disallowNullRuleConfig",
-                        node: ruleEntry,
-                    });
                 }
             },
         });
@@ -127,6 +122,7 @@ const disallowStylelintNullRuleConfigRule: RuleModuleWithDocs<
             requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/disallow-stylelint-null-rule-config",
         },
+        languages: ["js/js"],
         messages: {
             disallowNullRuleConfig:
                 "Avoid configuring Stylelint rule `{{ruleName}}` as `null` in shared config. Prefer explicit rule behavior that is reviewable in preset policy.",

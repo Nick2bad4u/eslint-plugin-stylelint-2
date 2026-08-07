@@ -87,6 +87,19 @@ describe("plugin entry module", () => {
         ]);
     });
 
+    it("declares the ESLint language used by every rule", () => {
+        expect.hasAssertions();
+
+        for (const [ruleName, ruleModule] of Object.entries(
+            stylelint2Plugin.rules
+        )) {
+            expect(
+                ruleModule.meta?.languages,
+                `${ruleName}: expected an explicit ESLint 10 language`
+            ).toStrictEqual([ruleName === "stylelint" ? "css/css" : "js/js"]);
+        }
+    });
+
     it("resolves the package through self-reference ESM import", async () => {
         expect.hasAssertions();
 

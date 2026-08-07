@@ -142,8 +142,3 @@ export const stylelint2Rules: Stylelint2RulesRegistry = {
     "sort-stylelint-rule-keys": sortStylelintRuleKeysRule,
     stylelint: stylelintRule,
 } as const satisfies Stylelint2RulesRegistry;
-
-/** Unqualified rule name supported by this plugin. */
-export type Stylelint2RuleNamePattern = keyof typeof stylelint2Rules;
-
-export default stylelint2Rules;

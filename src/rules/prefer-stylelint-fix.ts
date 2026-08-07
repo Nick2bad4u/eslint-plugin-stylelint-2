@@ -138,6 +138,7 @@ const preferStylelintFixRule: RuleModuleWithDocs<MessageIds, Options> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-stylelint-2/docs/rules/prefer-stylelint-fix",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferFix:
                     "Enable `fix` so Stylelint autofix stays on by default for supported workflows.",

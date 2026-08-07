@@ -31,7 +31,7 @@ ruleTester.run(
         valid: [
             {
                 code: `export default {
-    extends: ["stylelint-config-standard", "stylelint-config-recommended"],
+    extends: ["stylelint-config-standard", "stylelint-config-nick2bad4u"],
     rules: {},
 };`,
                 filename: "stylelint.config.ts",

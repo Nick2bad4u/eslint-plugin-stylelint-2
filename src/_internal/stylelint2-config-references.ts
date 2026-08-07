@@ -5,8 +5,6 @@
 
 import type { ArrayValues } from "type-fest";
 
-import { objectHasOwn } from "ts-extras";
-
 /** Canonical flat-config preset keys exposed through `plugin.configs`. */
 export const stylelint2ConfigNames = [
     "all",
@@ -63,15 +61,6 @@ export const stylelint2ConfigMetadataByName: Readonly<
     },
 };
 
-/** Stable README legend/rendering order for preset icons. */
-export const stylelint2ConfigNamesByReadmeOrder: readonly Stylelint2ConfigName[] =
-    [
-        "recommended",
-        "stylelintOnly",
-        "configuration",
-        "all",
-    ];
-
 /** Fully-qualified preset references used in rule metadata. */
 export const stylelint2ConfigReferenceToName: Readonly<{
     "stylelint2.configs.all": "all";
@@ -92,9 +81,3 @@ export const stylelint2ConfigReferenceToName: Readonly<{
 /** Fully-qualified preset reference type accepted in docs metadata. */
 export type Stylelint2ConfigReference =
     keyof typeof stylelint2ConfigReferenceToName;
-
-/** Check whether a string is a supported preset reference. */
-export const isStylelint2ConfigReference = (
-    value: string
-): value is Stylelint2ConfigReference =>
-    objectHasOwn(stylelint2ConfigReferenceToName, value);
