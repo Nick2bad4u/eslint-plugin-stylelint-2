@@ -11,7 +11,9 @@ const stylelint2 = /** @type {import("./src/plugin").Stylelint2Plugin} */ (
  * Distinguish a single flat config from a preset config array.
  *
  * @param {import("./src/plugin").Stylelint2Config} candidate Preset value.
- * @returns {candidate is import("eslint").Linter.Config} Whether the value is a single config.
+ *
+ * @returns {candidate is import("eslint").Linter.Config} Whether the value is a
+ *   single config.
  */
 const isSingleFlatConfig = (candidate) => !Array.isArray(candidate);
 
@@ -19,7 +21,7 @@ const stylelintConfigurationPreset = stylelint2.configs.configuration;
 
 if (!isSingleFlatConfig(stylelintConfigurationPreset)) {
     throw new TypeError(
-        "stylelint2.configs.configuration must be a single flat config.",
+        "stylelint2.configs.configuration must be a single flat config."
     );
 }
 
