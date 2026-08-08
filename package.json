@@ -1,7 +1,7 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
     "name": "eslint-plugin-stylelint-2",
-    "version": "1.1.7",
+    "version": "1.1.5",
     "private": false,
     "description": "ESLint plugin that runs Stylelint through ESLint and adds Stylelint-specific authoring rules.",
     "keywords": [
@@ -167,7 +167,7 @@
         "lint:yamllint": "yamllint -c .yamllint .",
         "open:coverage": "npx open-cli coverage/index.html",
         "prepublishOnly": "npm run release:check",
-        "release:check": "npm run release:verify",
+        "release:check": "node scripts/expose-local-bin-to-github-actions.mjs && npm run release:verify",
         "release:verify": "npx cross-env NODE_OPTIONS= npm run build && npx cross-env NODE_OPTIONS= npm run verify:package-version && npx cross-env NODE_OPTIONS= npm run docs:api && npx cross-env NODE_OPTIONS= npm run lint && npx cross-env NODE_OPTIONS= npm run typecheck && npx cross-env NODE_OPTIONS= VITEST_TYPECHECK=false npm run test && npx cross-env NODE_OPTIONS= npm run sync:readme-rules-table && npx cross-env NODE_OPTIONS= npm run sync:presets-rules-matrix && npx cross-env NODE_OPTIONS= npm run docs:check-links && npx cross-env NODE_OPTIONS= npm pack --dry-run",
         "remark:fix": "npx remark --rc-path .remarkrc.mjs --silently-ignore --ignore-path .remarkignore --frail --quiet --output -- \"*.{md,mdx}\" \"docs/**/*.{md,mdx}\"",
         "remark:test-config": "npx remark --rc-path .remarkrc.mjs --silently-ignore --ignore-path .remarkignore --frail \"README.md\"",
