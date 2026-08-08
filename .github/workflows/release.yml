@@ -195,18 +195,34 @@ jobs:
               env:
                   EXPLICIT_VERSION: "${{ inputs.version }}"
                   RELEASE_TYPE: "${{ inputs.release_type }}"
+                  RUN_ATTEMPT: "${{ github.run_attempt }}"
               run: |
                   set -euo pipefail
 
                   if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-                    explicit_version="${EXPLICIT_VERSION:-}"
-                    if [ -n "$explicit_version" ]; then
-                      npm version "$explicit_version" --no-git-tag-version
-                      version="$explicit_version"
+                    current_version=$(node -p "require('./package.json').version")
+                    current_tag="v${current_version}"
+                    run_attempt="${RUN_ATTEMPT:-1}"
+
+                    if [ "$run_attempt" -gt 1 ] && git show-ref --verify --quiet "refs/tags/${current_tag}"; then
+                      tag_commit=$(git rev-parse "refs/tags/${current_tag}^{commit}")
+                      head_commit=$(git rev-parse HEAD)
+                      if ! git merge-base --is-ancestor "$tag_commit" "$head_commit"; then
+                        echo "Existing retry tag ${current_tag} at ${tag_commit} is not an ancestor of HEAD ${head_commit}." >&2
+                        exit 1
+                      fi
+                      version="$current_version"
+                      echo "Resuming unpublished ${current_tag} during workflow attempt ${run_attempt}."
                     else
-                      release_type="${RELEASE_TYPE:-patch}"
-                      npm version "$release_type" --no-git-tag-version
-                      version=$(node -p "require('./package.json').version")
+                      explicit_version="${EXPLICIT_VERSION:-}"
+                      if [ -n "$explicit_version" ]; then
+                        npm version "$explicit_version" --no-git-tag-version
+                        version="$explicit_version"
+                      else
+                        release_type="${RELEASE_TYPE:-patch}"
+                        npm version "$release_type" --no-git-tag-version
+                        version=$(node -p "require('./package.json').version")
+                      fi
                     fi
                   else
                     tag="${GITHUB_REF_NAME}"
@@ -260,13 +276,41 @@ jobs:
               if: "github.event_name == 'workflow_dispatch'"
               env:
                   BRANCH: "${{ steps.target_ref.outputs.branch }}"
+                  RUN_ATTEMPT: "${{ github.run_attempt }}"
                   TAG: "${{ steps.version.outputs.tag }}"
               run: |
                   set -euo pipefail
 
-                  if git rev-parse "$TAG" >/dev/null 2>&1; then
-                    echo "Tag $TAG already exists locally." >&2
-                    exit 1
+                  tag_ref="refs/tags/${TAG}"
+                  run_attempt="${RUN_ATTEMPT:-1}"
+                  if git show-ref --verify --quiet "$tag_ref"; then
+                    if [ "$run_attempt" -le 1 ]; then
+                      echo "Tag $TAG already exists during the first workflow attempt." >&2
+                      exit 1
+                    fi
+
+                    previous_tag_object=$(git rev-parse "$tag_ref")
+                    tag_commit=$(git rev-parse "${tag_ref}^{commit}")
+                    head_commit=$(git rev-parse HEAD)
+                    if ! git merge-base --is-ancestor "$tag_commit" "$head_commit"; then
+                      echo "Retry tag $TAG at ${tag_commit} is not an ancestor of HEAD ${head_commit}." >&2
+                      exit 1
+                    fi
+                    if ! git diff --quiet || ! git diff --cached --quiet; then
+                      echo "Retry checkout contains unexpected tracked changes." >&2
+                      git status --short
+                      exit 1
+                    fi
+
+                    if [ "$tag_commit" = "$head_commit" ]; then
+                      echo "Retry tag $TAG already points to HEAD ${head_commit}."
+                      exit 0
+                    fi
+
+                    git tag --force --annotate "$TAG" --message "$TAG"
+                    git push --force-with-lease="${tag_ref}:${previous_tag_object}" origin "$tag_ref"
+                    echo "Moved retry tag $TAG from ${tag_commit} to ${head_commit}."
+                    exit 0
                   fi
 
                   git add -A
@@ -316,7 +360,7 @@ jobs:
                   fi
 
                   mkdir -p temp
-                  git cliff --config node_modules/gitcliff-config-nick2bad4u/cliff.toml --github-repo Nick2bad4u/eslint-plugin-stylelint-2 --current --output "${RELEASE_NOTES_PATH}"
+                  ./node_modules/.bin/git-cliff --config node_modules/gitcliff-config-nick2bad4u/cliff.toml --github-repo Nick2bad4u/eslint-plugin-stylelint-2 --current --output "${RELEASE_NOTES_PATH}"
                   if [ ! -s "${RELEASE_NOTES_PATH}" ]; then
                     echo "No release notes were generated by git-cliff." > "${RELEASE_NOTES_PATH}"
                   fi
