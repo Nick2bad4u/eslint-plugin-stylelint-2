@@ -775,6 +775,8 @@ dist-*/
 node_modules/
 coverage/
 .cache/
+reports/
+.lychee.report.md
 
 # Binary and media files
 *.png

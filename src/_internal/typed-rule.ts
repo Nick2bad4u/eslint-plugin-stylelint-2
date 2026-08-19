@@ -149,7 +149,12 @@ const getMergedRuleOptions = <Options extends Readonly<UnknownArray>>(
     return mergeDefaultOptions(defaultOptions, configuredOptions);
 };
 
-/** Identity-preserving rule creator with canonical docs URL enforcement. */
+/**
+ * Identity-preserving rule creator with canonical docs URL enforcement.
+ *
+ * @throws TypeError when the rule's declared documentation URL is not the
+ *   canonical URL for its rule name.
+ */
 export const createTypedRule = <
     MessageIds extends string,
     Options extends Readonly<UnknownArray>,
