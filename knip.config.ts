@@ -32,7 +32,6 @@ const knipConfig: KnipConfig = {
         "postcss.*",
         "stylelint.*",
         // Loaded by command-line tools through package paths or shared config files.
-        "git-cliff",
         "gitcliff-config-nick2bad4u",
         "gitleaks-config-nick2bad4u",
         "jscpd-config-nick2bad4u",

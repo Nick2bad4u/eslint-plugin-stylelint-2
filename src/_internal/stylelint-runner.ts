@@ -96,7 +96,12 @@ const readWorkerResponse = (
     throw error;
 };
 
-/** Run Stylelint synchronously for one source string. */
+/**
+ * Run Stylelint synchronously for one source string.
+ *
+ * @throws Error when the worker times out, fails to complete, or returns an
+ *   error instead of a Stylelint result.
+ */
 export const runStylelintSynchronously = (
     options: SerializableStylelintLintOptions
 ): SerializableStylelintResult => {

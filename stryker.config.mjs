@@ -1,6 +1,8 @@
 // @ts-check
 const processEnvironment = process.env;
 const isCI = (processEnvironment["CI"] ?? "").toLowerCase() === "true";
+const hasStrykerDashboardApiKey =
+    (processEnvironment["STRYKER_DASHBOARD_API_KEY"] ?? "").length > 0;
 
 /** @type {import("@stryker-mutator/api/core").PartialStrykerOptions} */
 const config = {
@@ -47,25 +49,28 @@ const config = {
         fileName: "coverage/stryker.json",
     },
     maxTestRunnerReuse: 0,
-    mutate: [
-        "src/**/*.ts",
-        "src/**/*.mjs",
-        "src/**/*.js",
-        "!src/**/*.*.ts",
-    ],
+    mutate: ["src/**/*.ts"],
     packageManager: "npm",
     plugins: [
         "@stryker-ignorer/console-all",
         "@stryker-mutator/typescript-checker",
         "@stryker-mutator/vitest-runner",
     ],
-    reporters: [
-        "clear-text",
-        "html",
-        "json",
-        "dashboard",
-        "progress",
-    ],
+    reporters:
+        isCI && hasStrykerDashboardApiKey
+            ? [
+                  "clear-text",
+                  "html",
+                  "json",
+                  "dashboard",
+                  "progress",
+              ]
+            : [
+                  "clear-text",
+                  "html",
+                  "json",
+                  "progress",
+              ],
     symlinkNodeModules: true,
     testRunner: "vitest",
     thresholds: {
