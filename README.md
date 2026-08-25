@@ -4,6 +4,8 @@
 
 `eslint-plugin-stylelint-2` brings Stylelint reporting and autofix support into ESLint while also adding Stylelint-specific authoring rules for Stylelint config files.
 
+> **Oxlint:** Not compatible as a complete plugin (verified with Oxlint 1.80.0); the core `stylelint` bridge rule and aggregate presets target CSS through the `@eslint/css` language plugin, and [Oxlint JavaScript plugins do not support custom formats](https://oxc.rs/docs/guide/usage/linter/js-plugins.html#api-support), so use ESLint for the full 38-rule plugin.
+
 This package exists as `eslint-plugin-stylelint-2` on npm because `eslint-plugin-stylelint` is already taken.
 
 ## Installation
